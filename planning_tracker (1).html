@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IZI Safety – Planning Tracker</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f4f8; color: #1a1a2e; }
+
+  header {
+    background: linear-gradient(135deg, #1F3864, #2E5FA3);
+    color: white; padding: 20px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  header h1 { font-size: 18px; font-weight: 700; }
+  header span { font-size: 12px; opacity: 0.8; }
+
+  .header-right { display: flex; align-items: center; gap: 16px; }
+
+  .lang-toggle {
+    display: flex; border: 2px solid rgba(255,255,255,0.4); border-radius: 20px; overflow: hidden;
+  }
+  .lang-btn {
+    padding: 5px 14px; cursor: pointer; font-size: 12px; font-weight: 700;
+    color: rgba(255,255,255,0.6); background: transparent; transition: all 0.2s;
+    border: none; letter-spacing: 0.3px;
+  }
+  .lang-btn.active { background: rgba(255,255,255,0.25); color: white; }
+  .lang-btn:hover { color: white; }
+
+  .tabs { display: flex; background: #1F3864; padding: 0 32px; }
+  .tab {
+    padding: 12px 24px; cursor: pointer; color: rgba(255,255,255,0.6);
+    font-size: 13px; font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s;
+  }
+  .tab.active { color: white; border-bottom-color: #F4B942; }
+  .tab:hover { color: white; }
+
+  .container { padding: 24px 32px; }
+
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .card { background: white; border-radius: 8px; padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); border-left: 4px solid #2E5FA3; }
+  .card .label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+  .card .value { font-size: 28px; font-weight: 700; color: #1F3864; margin-top: 4px; }
+  .card.green { border-left-color: #70AD47; } .card.green .value { color: #4a7a2e; }
+  .card.orange { border-left-color: #F4B942; } .card.orange .value { color: #c8912a; }
+
+  .gantt-wrap { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 24px; }
+  .gantt-wrap h2 { font-size: 14px; color: #1F3864; margin-bottom: 16px; font-weight: 700; }
+  .gantt-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .gantt-table th { background: #2E5FA3; color: white; padding: 8px 6px; text-align: center; font-weight: 600; }
+  .gantt-table th.left { text-align: left; padding-left: 12px; }
+  .gantt-table td { padding: 6px; border-bottom: 1px solid #e8ecf0; }
+  .gantt-table tr:last-child td { border-bottom: none; }
+  .gantt-table tr:nth-child(even) td { background: #f7f9fc; }
+  .gantt-bar { background: #2E5FA3; color: white; text-align: center; border-radius: 4px; padding: 4px 0; font-size: 11px; font-weight: 600; }
+
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge.not-started { background: #f0f0f0; color: #666; }
+  .badge.in-progress { background: #fff3cd; color: #856404; }
+  .badge.completed { background: #d4edda; color: #155724; }
+
+  .detail-wrap { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .detail-wrap h2 { font-size: 14px; color: #1F3864; margin-bottom: 12px; font-weight: 700; }
+
+  .steps-legend { background: #f0f4ff; border: 1px solid #c8d8f0; border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; }
+  .steps-legend-title { font-weight: 700; color: #1F3864; margin-bottom: 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .step-pill { display: flex; align-items: flex-start; gap: 8px; background: white; border: 1px solid #dde6f5; border-radius: 6px; padding: 8px 10px; font-size: 11px; line-height: 1.4; }
+  .step-pill .snum { background: #2E5FA3; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-pill.add-step { border: 2px dashed #F4B942; background: #fffdf0; cursor: pointer; color: #856404; font-weight: 600; align-items: center; justify-content: center; text-align: center; min-height: 52px; }
+  .step-pill.add-step:hover { background: #fff8d6; }
+
+  .filters { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filters select, .filters input { border: 1px solid #ddd; border-radius: 6px; padding: 7px 12px; font-size: 12px; color: #333; background: white; }
+
+  .detail-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .detail-table th { background: #2E5FA3; color: white; padding: 10px 8px; text-align: center; font-weight: 600; white-space: nowrap; }
+  .detail-table th.left { text-align: left; padding-left: 12px; }
+  .detail-table td { padding: 8px; border-bottom: 1px solid #eef0f3; vertical-align: middle; text-align: center; }
+  .detail-table td.left { text-align: left; }
+  .detail-table tr:hover td { background: #f0f4ff; }
+  .detail-table tr:nth-child(even) td { background: #f7f9fc; }
+  .detail-table tr:nth-child(even):hover td { background: #f0f4ff; }
+
+  .region-tag { display: inline-block; background: #e8eef8; color: #2E5FA3; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 11px; }
+  .step-check { cursor: pointer; font-size: 15px; user-select: none; }
+  .step-check.done { color: #70AD47; }
+  .step-check.pending { color: #ccc; }
+
+  .prog-wrap { background: #eef0f3; border-radius: 4px; height: 6px; width: 70px; display: inline-block; vertical-align: middle; }
+  .prog-bar { height: 6px; border-radius: 4px; background: #2E5FA3; transition: width 0.3s; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: white; border-radius: 12px; padding: 28px 32px; width: 420px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+  .modal h3 { font-size: 15px; color: #1F3864; margin-bottom: 6px; }
+  .modal p { font-size: 12px; color: #666; margin-bottom: 20px; line-height: 1.5; }
+  .modal label { font-size: 12px; font-weight: 700; color: #444; display: block; margin-bottom: 6px; }
+  .modal input, .modal textarea { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 9px 12px; font-size: 13px; margin-bottom: 16px; font-family: Arial, sans-serif; }
+  .modal textarea { height: 80px; resize: vertical; }
+  .modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+  .btn { padding: 9px 20px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; }
+  .btn-primary { background: #2E5FA3; color: white; }
+  .btn-primary:hover { background: #1F3864; }
+  .btn-secondary { background: #f0f0f0; color: #444; }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1 id="h-title">IZI Safety — User Profile Harmonization</h1>
+    <span id="h-sub">Planning Tracker | Schedule: 01/04/2026 – 31/12/2026</span>
+  </div>
+  <div class="header-right">
+    <div style="text-align:right;font-size:12px;opacity:0.8" id="h-meta">45 subsidiaries · 8 regions · 9 months</div>
+    <div class="lang-toggle">
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('summary')" id="tab-btn-summary">Overview</div>
+  <div class="tab" onclick="switchTab('detail')" id="tab-btn-detail">Subsidiary Detail</div>
+</div>
+
+<div class="container">
+
+  <div class="tab-panel active" id="tab-summary">
+    <div class="cards">
+      <div class="card"><div class="label" id="card-total-lbl">Total Subsidiaries</div><div class="value">45</div></div>
+      <div class="card green"><div class="label" id="card-done-lbl">Completed</div><div class="value" id="cnt-done">0</div></div>
+      <div class="card orange"><div class="label" id="card-prog-lbl">In Progress</div><div class="value" id="cnt-progress">0</div></div>
+      <div class="card"><div class="label" id="card-pend-lbl">Not Started</div><div class="value" id="cnt-pending">45</div></div>
+    </div>
+    <div class="gantt-wrap">
+      <h2 id="gantt-title">General Schedule – Gantt View by Region</h2>
+      <table class="gantt-table">
+        <thead>
+          <tr>
+            <th class="left" style="width:130px" id="gh-region">Region</th>
+            <th style="width:50px" id="gh-subs"># Subs.</th>
+            <th id="gh-m0">Apr.</th><th id="gh-m1">May</th><th id="gh-m2">Jun.</th><th id="gh-m3">Jul.</th>
+            <th id="gh-m4">Aug.</th><th id="gh-m5">Sep.</th><th id="gh-m6">Oct.</th><th id="gh-m7">Nov.</th><th id="gh-m8">Dec.</th>
+            <th style="width:110px" id="gh-status">Progress</th>
+          </tr>
+        </thead>
+        <tbody id="gantt-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-detail">
+    <div class="detail-wrap">
+      <h2 id="detail-title">Detailed Tracking by Subsidiary</h2>
+      <div class="steps-legend">
+        <div class="steps-legend-title" id="legend-title">Tracked Steps — click any checkbox to mark it done / undone</div>
+        <div class="steps-grid" id="steps-legend-grid"></div>
+      </div>
+      <div class="filters">
+        <select id="filter-region" onchange="renderDetail()"></select>
+        <input type="text" id="filter-search" oninput="renderDetail()">
+        <select id="filter-status" onchange="renderDetail()"></select>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="detail-table">
+          <thead><tr id="detail-head"></tr></thead>
+          <tbody id="detail-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <h3 id="modal-title">Add a New Step</h3>
+    <p id="modal-desc">Define the step number, a short label, and an optional description. It will be tracked for all subsidiaries.</p>
+    <label id="modal-lbl-num">Step Number</label>
+    <input type="text" id="modal-step-num">
+    <label id="modal-lbl-label">Short Label (column header)</label>
+    <input type="text" id="modal-step-label">
+    <label id="modal-lbl-desc">Full Description (tooltip)</label>
+    <textarea id="modal-step-desc"></textarea>
+    <div class="modal-btns">
+      <button class="btn btn-secondary" onclick="closeModal()" id="modal-cancel">Cancel</button>
+      <button class="btn btn-primary" onclick="addStep()" id="modal-confirm">Add Step</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const REGIONS = [
+  { name:"AFR/AFO",  count:8,  start:0, end:0, subs:["Ghana","Togo","Guinée Conakry","Cameroun","Sénégal","Côte d'Ivoire","Gabon","Guinée Equatoriale"] },
+  { name:"AFR/MOI",  count:8,  start:1, end:1, subs:["Tunisie","Maurice","Maroc","Algérie","Egypte","Ethiopie","Madagascar","Mozambique"] },
+  { name:"AFR/NG",   count:1,  start:2, end:2, subs:["Nigéria"] },
+  { name:"AFR/ACE",  count:8,  start:2, end:3, subs:["Malawi","Zambie","RDC","Congo","Ouganda","Kenya","Tanzanie","Zimbabwe"] },
+  { name:"AFR/ASNE", count:2,  start:4, end:4, subs:["Afrique du Sud","Namibie"] },
+  { name:"APMO",     count:5,  start:5, end:6, subs:["Cambodge","Fidji","Inde","Jordanie","Liban"] },
+  { name:"EOMC",     count:7,  start:6, end:7, subs:["Caraïbes","Rép. Dominicaine","Polynésie","Jamaïque","Mayotte","Porto Rico","Réunion"] },
+  { name:"LUB",      count:6,  start:7, end:8, subs:["Argentine","Brésil","Chili","Mexique","TEAFS","USA"] },
+];
+
+// ─────────────────────────────────────────────────────────────
+// STEPS CONFIGURATION
+// To add a step in code, append an object to this array:
+// { num:8, key:'s8', labelEN:'Step 8', labelFR:'Étape 8', descEN:'...', descFR:'...' }
+// ─────────────────────────────────────────────────────────────
+let STEPS = [
+  { num:1, key:'s1', labelEN:'Step 1', labelFR:'Étape 1', descEN:'Initial communication to subsidiary', descFR:'Communication initiale à la filiale' },
+  { num:2, key:'s2', labelEN:'Step 2', labelFR:'Étape 2', descEN:'Gap analysis: harmonized vs operational matrix', descFR:'Analyse comparative matrice harmonisée vs opérationnelle' },
+  { num:3, key:'s3', labelEN:'Step 3', labelFR:'Étape 3', descEN:'Review meeting with subsidiary administrators', descFR:'Réunion de revue avec les administrateurs' },
+  { num:4, key:'s4', labelEN:'Step 4', labelFR:'Étape 4', descEN:'Communication to contractors (IZI Safety support informed)', descFR:'Communication aux contractants (support IZI informé)' },
+  { num:5, key:'s5', labelEN:'Step 5', labelFR:'Étape 5', descEN:'Effective update of user profiles on the platform', descFR:'Mise à jour effective des profils sur la plateforme' },
+  { num:6, key:'s6', labelEN:'Step 6', labelFR:'Étape 6', descEN:'Project closure communication to admins and contractors', descFR:'Communication de clôture auprès des admins et contractants' },
+  { num:7, key:'s7', labelEN:'Step 7', labelFR:'Étape 7', descEN:'Post-deployment support and impact analysis', descFR:'Accompagnement post-déploiement et analyse d\'impact' },
+  // ── ADD NEW STEPS HERE ──
+];
+
+const state = {};
+REGIONS.forEach(r => r.subs.forEach(s => {
+  const key = `${r.name}|${s}`;
+  state[key] = {};
+  STEPS.forEach(st => state[key][st.key] = false);
+}));
+
+let lang = 'en';
+
+const T = {
+  en: {
+    hTitle:'IZI Safety — User Profile Harmonization', hSub:'Planning Tracker | Schedule: 01/04/2026 – 31/12/2026', hMeta:'45 subsidiaries · 8 regions · 9 months',
+    tabOverview:'Overview', tabDetail:'Subsidiary Detail',
+    cardTotal:'Total Subsidiaries', cardDone:'Completed', cardProg:'In Progress', cardPend:'Not Started',
+    ganttTitle:'General Schedule – Gantt View by Region',
+    ghRegion:'Region', ghSubs:'# Subs.', ghStatus:'Progress',
+    months:['Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'],
+    monthsFull:['April','May','June','July','August','September','October','November','December'],
+    detailTitle:'Detailed Tracking by Subsidiary',
+    legendTitle:'Tracked Steps — click any checkbox to mark it done / undone',
+    addStepBtn:'+ Add Step',
+    filterAllRegions:'All regions', filterSearch:'Search subsidiary…',
+    filterAllStatus:'All statuses', filterNotStarted:'Not started', filterInProgress:'In progress', filterCompleted:'Completed',
+    thRegion:'Region', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status',
+    badgeNotStarted:'Not started', badgeInProgress:'In progress', badgeCompleted:'Completed',
+    modalTitle:'Add a New Step', modalDesc:'Define the step number, a short label, and an optional description. It will be tracked for all subsidiaries.',
+    modalLblNum:'Step Number', modalLblLabel:'Short Label (column header)', modalLblDesc:'Full Description (tooltip)',
+    modalCancel:'Cancel', modalConfirm:'Add Step',
+    modalPlNum:'e.g. 8, 9…', modalPlLabel:'e.g. Audit Follow-up', modalPlDesc:'e.g. Verification of implemented changes',
+    alertLabel:'Please enter a label.',
+  },
+  fr: {
+    hTitle:'IZI Safety — Harmonisation des Profils Utilisateurs', hSub:'Planning Tracker | Calendrier : 01/04/2026 – 31/12/2026', hMeta:'45 filiales · 8 régions · 9 mois',
+    tabOverview:'Vue Générale', tabDetail:'Détail par Filiale',
+    cardTotal:'Total Filiales', cardDone:'Complétées', cardProg:'En cours', cardPend:'Non démarrées',
+    ganttTitle:'Planning Général – Vue Gantt par Région',
+    ghRegion:'Région', ghSubs:'# Fil.', ghStatus:'Avancement',
+    months:['Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
+    monthsFull:['Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
+    detailTitle:'Suivi Détaillé par Filiale',
+    legendTitle:'Étapes suivies — cliquer sur une case pour la marquer faite / non faite',
+    addStepBtn:'+ Ajouter une étape',
+    filterAllRegions:'Toutes les régions', filterSearch:'Rechercher une filiale…',
+    filterAllStatus:'Tous les statuts', filterNotStarted:'Non démarré', filterInProgress:'En cours', filterCompleted:'Complété',
+    thRegion:'Région', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut',
+    badgeNotStarted:'Non démarré', badgeInProgress:'En cours', badgeCompleted:'Complété',
+    modalTitle:'Ajouter une nouvelle étape', modalDesc:'Définissez le numéro, un libellé court et une description. Elle sera suivie pour toutes les filiales.',
+    modalLblNum:"Numéro d'étape", modalLblLabel:'Libellé court (en-tête colonne)', modalLblDesc:'Description complète (info-bulle)',
+    modalCancel:'Annuler', modalConfirm:'Ajouter',
+    modalPlNum:'ex. 8, 9…', modalPlLabel:'ex. Audit de suivi', modalPlDesc:'ex. Vérification des modifications mises en œuvre',
+    alertLabel:'Veuillez saisir un libellé.',
+  }
+};
+
+function t(k) { return T[lang][k] || k; }
+
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.trim() === l.toUpperCase()));
+  applyLang();
+  initFilters();
+  renderAll();
+}
+
+function applyLang() {
+  const ids = {
+    'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta',
+    'tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail',
+    'card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend',
+    'gantt-title':'ganttTitle','gh-region':'ghRegion','gh-subs':'ghSubs','gh-status':'ghStatus',
+    'detail-title':'detailTitle','legend-title':'legendTitle',
+    'modal-title':'modalTitle','modal-desc':'modalDesc',
+    'modal-lbl-num':'modalLblNum','modal-lbl-label':'modalLblLabel','modal-lbl-desc':'modalLblDesc',
+    'modal-cancel':'modalCancel','modal-confirm':'modalConfirm',
+  };
+  Object.entries(ids).forEach(([id,k]) => { const el=document.getElementById(id); if(el) el.textContent=t(k); });
+  document.getElementById('filter-search').placeholder = t('filterSearch');
+  document.getElementById('modal-step-num').placeholder = t('modalPlNum');
+  document.getElementById('modal-step-label').placeholder = t('modalPlLabel');
+  document.getElementById('modal-step-desc').placeholder = t('modalPlDesc');
+  t('months').forEach((m,i) => { const el=document.getElementById(`gh-m${i}`); if(el) el.textContent=m; });
+}
+
+function getStatus(stepMap) {
+  const vals = STEPS.map(s => stepMap[s.key]);
+  const done = vals.filter(Boolean).length;
+  if (done === 0) return 'not-started';
+  if (done === vals.length) return 'completed';
+  return 'in-progress';
+}
+
+function statusBadge(st) {
+  const map = {'not-started':'badgeNotStarted','in-progress':'badgeInProgress','completed':'badgeCompleted'};
+  return `<span class="badge ${st}">${t(map[st])}</span>`;
+}
+
+function updateCards() {
+  let done=0, prog=0, pend=0;
+  Object.values(state).forEach(m => {
+    const s = getStatus(m);
+    if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++;
+  });
+  document.getElementById('cnt-done').textContent = done;
+  document.getElementById('cnt-progress').textContent = prog;
+  document.getElementById('cnt-pending').textContent = pend;
+}
+
+function renderGantt() {
+  const tbody = document.getElementById('gantt-body');
+  tbody.innerHTML = '';
+  REGIONS.forEach(r => {
+    const tr = document.createElement('tr');
+    let cells = `<td style="font-weight:700;color:#1F3864;padding-left:12px">${r.name}</td>`;
+    cells += `<td style="text-align:center">${r.count}</td>`;
+    for (let m=0; m<9; m++) {
+      if (m >= r.start && m <= r.end) {
+        if (m === r.start) {
+          const span = r.end - r.start + 1;
+          cells += `<td colspan="${span}"><div class="gantt-bar">${r.name}</div></td>`;
+          m = r.end;
+        }
+      } else { cells += `<td></td>`; }
+    }
+    let done=0;
+    r.subs.forEach(s => { if(getStatus(state[`${r.name}|${s}`])==='completed') done++; });
+    const pct = Math.round(done/r.count*100);
+    cells += `<td style="text-align:center">
+      <div style="font-size:11px;color:#555;margin-bottom:3px">${done}/${r.count}</div>
+      <div class="prog-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
+    </td>`;
+    tr.innerHTML = cells;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderStepsLegend() {
+  const grid = document.getElementById('steps-legend-grid');
+  grid.innerHTML = '';
+  STEPS.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'step-pill';
+    div.title = lang==='en' ? s.descEN : s.descFR;
+    div.innerHTML = `<div class="snum">${s.num}</div><div><strong>${lang==='en'?s.labelEN:s.labelFR}</strong><br><span style="color:#555;font-size:10px">${lang==='en'?s.descEN:s.descFR}</span></div>`;
+    grid.appendChild(div);
+  });
+  const add = document.createElement('div');
+  add.className = 'step-pill add-step';
+  add.onclick = openModal;
+  add.innerHTML = `<div class="snum" style="background:#F4B942;color:#1F3864;font-size:14px;font-weight:900">+</div>&nbsp;<span>${t('addStepBtn')}</span>`;
+  grid.appendChild(add);
+}
+
+function renderDetailHeader() {
+  const tr = document.getElementById('detail-head');
+  tr.innerHTML = `
+    <th class="left">${t('thRegion')}</th>
+    <th class="left">${t('thSub')}</th>
+    <th>${t('thPeriod')}</th>
+    ${STEPS.map(s=>`<th title="${lang==='en'?s.descEN:s.descFR}">${lang==='en'?s.labelEN:s.labelFR}</th>`).join('')}
+    <th>${t('thProgress')}</th>
+    <th>${t('thStatus')}</th>
+  `;
+}
+
+function renderDetail() {
+  const filterRegion = document.getElementById('filter-region').value;
+  const filterSearch = document.getElementById('filter-search').value.toLowerCase();
+  const filterStatus = document.getElementById('filter-status').value;
+  const mf = t('monthsFull');
+  const tbody = document.getElementById('detail-body');
+  tbody.innerHTML = '';
+
+  REGIONS.forEach(r => {
+    if (filterRegion && filterRegion !== r.name) return;
+    r.subs.forEach(sub => {
+      if (filterSearch && !sub.toLowerCase().includes(filterSearch)) return;
+      const key = `${r.name}|${sub}`;
+      const stepMap = state[key];
+      const st = getStatus(stepMap);
+      if (filterStatus && filterStatus !== st) return;
+      const done = STEPS.filter(s => stepMap[s.key]).length;
+      const pct = Math.round(done/STEPS.length*100);
+      const period = r.start !== r.end ? `${mf[r.start]} – ${mf[r.end]}` : mf[r.start];
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="left"><span class="region-tag">${r.name}</span></td>
+        <td class="left" style="font-weight:600">${sub}</td>
+        <td style="color:#555;white-space:nowrap;font-size:11px">${period}</td>
+        ${STEPS.map(s=>`
+          <td class="step-check ${stepMap[s.key]?'done':'pending'}"
+              onclick="toggleStep('${key}','${s.key}')"
+              title="${stepMap[s.key]?'Done – click to undo':'Click to mark done'}">
+            ${stepMap[s.key]?'✅':'⬜'}
+          </td>`).join('')}
+        <td>
+          <div style="display:flex;align-items:center;gap:8px;justify-content:center">
+            <div class="prog-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
+            <span style="font-size:11px;color:#555">${pct}%</span>
+          </div>
+        </td>
+        <td>${statusBadge(st)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  });
+}
+
+function toggleStep(key, stepKey) {
+  state[key][stepKey] = !state[key][stepKey];
+  renderAll();
+}
+
+function renderAll() {
+  updateCards();
+  renderGantt();
+  renderStepsLegend();
+  renderDetailHeader();
+  renderDetail();
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['summary','detail'][i]===tab));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id===`tab-${tab}`));
+}
+
+function openModal() { document.getElementById('modal-overlay').classList.add('open'); }
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  ['modal-step-num','modal-step-label','modal-step-desc'].forEach(id => document.getElementById(id).value = '');
+}
+
+function addStep() {
+  const num   = document.getElementById('modal-step-num').value.trim();
+  const label = document.getElementById('modal-step-label').value.trim();
+  const desc  = document.getElementById('modal-step-desc').value.trim();
+  if (!label) { alert(t('alertLabel')); return; }
+  const key = `s_custom_${Date.now()}`;
+  const stepNum = num || (STEPS.length + 1);
+  STEPS.push({ num: stepNum, key, labelEN: label, labelFR: label, descEN: desc || label, descFR: desc || label });
+  Object.keys(state).forEach(k => state[k][key] = false);
+  closeModal();
+  renderAll();
+}
+
+function initFilters() {
+  const fr = document.getElementById('filter-region');
+  const curRegion = fr.value;
+  fr.innerHTML = `<option value="">${t('filterAllRegions')}</option>`;
+  REGIONS.forEach(r => { const o=document.createElement('option'); o.value=r.name; o.textContent=r.name; fr.appendChild(o); });
+  fr.value = curRegion;
+
+  const fs = document.getElementById('filter-status');
+  const curStatus = fs.value;
+  fs.innerHTML = `
+    <option value="">${t('filterAllStatus')}</option>
+    <option value="not-started">${t('filterNotStarted')}</option>
+    <option value="in-progress">${t('filterInProgress')}</option>
+    <option value="completed">${t('filterCompleted')}</option>
+  `;
+  fs.value = curStatus;
+}
+
+applyLang();
+initFilters();
+renderAll();
+</script>
+</body>
+</html>
