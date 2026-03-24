@@ -301,7 +301,7 @@ const T = {
     lockLabel:'View only', unlockLabel:'Editing unlocked',
     modalTitle:'Admin Access', modalDesc:'Enter your PIN to unlock editing.',
     modalCancel:'Cancel', modalConfirm:'Unlock',
-    pinWrong:'Incorrect PIN. Try again.', saving:'Saving…', saved:'✓ Saved',
+    pinWrong:'Incorrect PIN. Try again.', saving:'Saving…', saved:'✓ Saved (cross-device)', savedLocal:'✓ Saved (this device)',
     lockedTip:'Unlock editing to interact',
   },
   fr: {
@@ -321,7 +321,7 @@ const T = {
     lockLabel:'Lecture seule', unlockLabel:'Édition déverrouillée',
     modalTitle:'Accès administrateur', modalDesc:'Entrez votre PIN pour déverrouiller l\'édition.',
     modalCancel:'Annuler', modalConfirm:'Déverrouiller',
-    pinWrong:'PIN incorrect. Réessayez.', saving:'Enregistrement…', saved:'✓ Enregistré',
+    pinWrong:'PIN incorrect. Réessayez.', saving:'Enregistrement…', saved:'✓ Enregistré (tous appareils)', savedLocal:'✓ Enregistré (cet appareil)',
     lockedTip:'Déverrouiller pour interagir',
   }
 };
@@ -331,29 +331,49 @@ function t(k) { return T[lang][k] || k; }
 const STORAGE_KEY = 'izi_tracker_state_v1';
 let saveTimer = null;
 
-function loadFromStorage() {
+// Try window.storage (cross-device), fall back to localStorage
+async function loadFromStorage() {
+  try {
+    if (window.storage) {
+      const result = await window.storage.get(STORAGE_KEY, true);
+      if (result && result.value) {
+        applyStateFromJSON(result.value);
+        return;
+      }
+    }
+  } catch(e) { /* fall through */ }
+  // localStorage fallback
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const saved = JSON.parse(raw);
-      Object.keys(saved).forEach(k => {
-        if (state[k]) {
-          STEPS.forEach(s => {
-            if (saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key];
-          });
-        }
-      });
-    }
-  } catch(e) { /* first load */ }
+    if (raw) applyStateFromJSON(raw);
+  } catch(e) {}
 }
 
-function saveToStorage() {
+function applyStateFromJSON(json) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    showSaveIndicator(t('saved'));
-  } catch(e) {
-    showSaveIndicator('⚠ Save failed');
-  }
+    const saved = JSON.parse(json);
+    Object.keys(saved).forEach(k => {
+      if (state[k]) {
+        STEPS.forEach(s => {
+          if (saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key];
+        });
+      }
+    });
+  } catch(e) {}
+}
+
+async function saveToStorage() {
+  const json = JSON.stringify(state);
+  let savedCrossDevice = false;
+  try {
+    if (window.storage) {
+      const result = await window.storage.set(STORAGE_KEY, json, true);
+      if (result) savedCrossDevice = true;
+    }
+  } catch(e) {}
+  // Always also save locally as backup
+  try { localStorage.setItem(STORAGE_KEY, json); } catch(e) {}
+  showSaveIndicator(savedCrossDevice ? t('saved') : t('savedLocal'));
 }
 
 function scheduleSave() {
@@ -367,7 +387,7 @@ function showSaveIndicator(msg) {
   el.textContent = msg;
   el.classList.add('visible');
   clearTimeout(saveHideTimer);
-  if (msg === t('saved') || msg === 'Enregistré') {
+  if (msg.startsWith('✓')) {
     saveHideTimer = setTimeout(() => el.classList.remove('visible'), 2000);
   }
 }
@@ -625,8 +645,8 @@ function initFilters() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────
-function init() {
-  loadFromStorage();
+async function init() {
+  await loadFromStorage();
   applyLang();
   initFilters();
   renderAll();
