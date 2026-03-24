@@ -331,11 +331,11 @@ function t(k) { return T[lang][k] || k; }
 const STORAGE_KEY = 'izi_tracker_state_v1';
 let saveTimer = null;
 
-async function loadFromStorage() {
+function loadFromStorage() {
   try {
-    const result = await window.storage.get(STORAGE_KEY, true);
-    if (result && result.value) {
-      const saved = JSON.parse(result.value);
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const saved = JSON.parse(raw);
       Object.keys(saved).forEach(k => {
         if (state[k]) {
           STEPS.forEach(s => {
@@ -344,13 +344,12 @@ async function loadFromStorage() {
         }
       });
     }
-  } catch(e) { /* first load, no data yet */ }
+  } catch(e) { /* first load */ }
 }
 
-async function saveToStorage() {
-  showSaveIndicator(t('saving'));
+function saveToStorage() {
   try {
-    await window.storage.set(STORAGE_KEY, JSON.stringify(state), true);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     showSaveIndicator(t('saved'));
   } catch(e) {
     showSaveIndicator('⚠ Save failed');
@@ -626,8 +625,8 @@ function initFilters() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────
-async function init() {
-  await loadFromStorage();
+function init() {
+  loadFromStorage();
   applyLang();
   initFilters();
   renderAll();
