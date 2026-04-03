@@ -22,7 +22,6 @@
   .lang-btn.active { background: rgba(255,255,255,0.25); color: white; }
   .lang-btn:hover { color: white; }
 
-  /* LOCK INDICATOR */
   .lock-indicator {
     display: flex; align-items: center; gap: 7px;
     background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
@@ -101,7 +100,6 @@
   .tab-panel { display: none; }
   .tab-panel.active { display: block; }
 
-  /* SAVING INDICATOR */
   .save-indicator {
     position: fixed; bottom: 20px; right: 24px;
     background: #1F3864; color: white; padding: 8px 16px;
@@ -111,19 +109,13 @@
   }
   .save-indicator.visible { opacity: 1; }
 
-  /* PIN MODAL */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
   .modal { background: white; border-radius: 14px; padding: 32px; width: 360px; box-shadow: 0 8px 40px rgba(0,0,0,0.25); text-align: center; }
   .modal .lock-big { font-size: 40px; margin-bottom: 12px; }
   .modal h3 { font-size: 16px; color: #1F3864; margin-bottom: 6px; font-weight: 700; }
   .modal p { font-size: 12px; color: #888; margin-bottom: 20px; }
-  .pin-input {
-    width: 100%; border: 2px solid #ddd; border-radius: 8px;
-    padding: 12px 16px; font-size: 16px; text-align: center;
-    letter-spacing: 3px; margin-bottom: 8px; font-family: Arial, sans-serif;
-    transition: border-color 0.2s;
-  }
+  .pin-input { width: 100%; border: 2px solid #ddd; border-radius: 8px; padding: 12px 16px; font-size: 16px; text-align: center; letter-spacing: 3px; margin-bottom: 8px; font-family: Arial, sans-serif; transition: border-color 0.2s; }
   .pin-input:focus { outline: none; border-color: #2E5FA3; }
   .pin-input.error { border-color: #C00000; animation: shake 0.3s; }
   .pin-error { color: #C00000; font-size: 12px; height: 16px; margin-bottom: 12px; }
@@ -133,27 +125,33 @@
   .btn-primary:hover { background: #1F3864; }
   .btn-secondary { background: #f0f0f0; color: #666; }
 
-  @keyframes shake {
-    0%,100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
-  }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 
-  /* LOADING OVERLAY */
-  .loading-overlay {
-    position: fixed; inset: 0; background: #f0f4f8;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    z-index: 200; transition: opacity 0.4s;
-  }
+  .loading-overlay { position: fixed; inset: 0; background: #f0f4f8; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 200; transition: opacity 0.4s; }
   .loading-overlay.hidden { opacity: 0; pointer-events: none; }
-  .loading-spinner {
-    width: 36px; height: 36px; border: 3px solid #dde6f5;
-    border-top-color: #2E5FA3; border-radius: 50%;
-    animation: spin 0.8s linear infinite; margin-bottom: 14px;
-  }
+  .loading-spinner { width: 36px; height: 36px; border: 3px solid #dde6f5; border-top-color: #2E5FA3; border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 14px; }
   @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── COMMUNICATIONS TAB ── */
+  .comms-wrap { background: white; border-radius: 8px; padding: 24px 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 24px; }
+  .comms-wrap h2 { font-size: 14px; color: #1F3864; font-weight: 700; margin-bottom: 4px; }
+  .comms-wrap .comms-sub { font-size: 12px; color: #888; margin-bottom: 20px; }
+  .comms-section-title { font-size: 12px; font-weight: 700; color: #2E5FA3; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #e8eef8; }
+  .comms-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+  .comms-card { border: 1px solid #dde6f5; border-radius: 8px; overflow: hidden; }
+  .comms-card-header { background: #f0f4ff; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .comms-card-header .lang-badge { font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 12px; }
+  .comms-card-header .lang-badge.fr { background: #1F3864; color: white; }
+  .comms-card-header .lang-badge.en { background: #2E5FA3; color: white; }
+  .comms-card-header .channel-badge { font-size: 10px; color: #888; background: white; border: 1px solid #ddd; padding: 2px 8px; border-radius: 10px; }
+  .comms-card-body { padding: 14px; background: #fafbfe; font-size: 12px; color: #333; line-height: 1.7; white-space: pre-wrap; font-family: Arial, sans-serif; max-height: 220px; overflow-y: auto; border-top: 1px solid #eef0f3; }
+  .comms-card-footer { padding: 10px 14px; background: white; border-top: 1px solid #eef0f3; display: flex; justify-content: flex-end; }
+  .copy-btn { background: #2E5FA3; color: white; border: none; border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+  .copy-btn:hover { background: #1F3864; }
+  .copy-btn.copied { background: #70AD47; }
+  .vars-note { background: #fff8e6; border: 1px solid #f4d87a; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #7a5c00; margin-bottom: 20px; }
+  .vars-note strong { color: #5a4000; }
 </style>
-  <!-- Firebase compat (works on GitHub Pages) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
   <script>
@@ -165,32 +163,14 @@
       messagingSenderId: "265890994822",
       appId: "1:265890994822:web:903ffa84cfa1278dbb0f07"
     };
-
     try {
       const app = firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
       const DOC_REF = db.collection('tracker').doc('state');
-
-      window.firebaseLoad = async function() {
-        try {
-          const snap = await DOC_REF.get();
-          if (snap.exists) return snap.data();
-        } catch(e) { console.warn('Firebase load failed:', e); }
-        return null;
-      };
-
-      window.firebaseSave = async function(data) {
-        try {
-          await DOC_REF.set(data);
-          return true;
-        } catch(e) { console.warn('Firebase save failed:', e); return false; }
-      };
-
+      window.firebaseLoad = async function() { try { const snap = await DOC_REF.get(); if (snap.exists) return snap.data(); } catch(e) { console.warn('Firebase load failed:', e); } return null; };
+      window.firebaseSave = async function(data) { try { await DOC_REF.set(data); return true; } catch(e) { console.warn('Firebase save failed:', e); return false; } };
       window.firebaseReady = true;
-    } catch(e) {
-      console.warn('Firebase init failed:', e);
-      window.firebaseReady = false;
-    }
+    } catch(e) { console.warn('Firebase init failed:', e); window.firebaseReady = false; }
   </script>
 </head>
 <body>
@@ -221,6 +201,7 @@
 <div class="tabs">
   <div class="tab active" onclick="switchTab('summary')" id="tab-btn-summary">Overview</div>
   <div class="tab" onclick="switchTab('detail')" id="tab-btn-detail">Subsidiary Detail</div>
+  <div class="tab" onclick="switchTab('comms')" id="tab-btn-comms">Communications</div>
 </div>
 
 <div class="container">
@@ -246,7 +227,6 @@
         </div>
       </div>
     </div>
-
     <div id="gantt-tooltip" style="position:fixed;background:#fff;border:0.5px solid #ccc;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a1a1a;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:9999;min-width:180px;max-width:240px;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
       <div style="font-weight:500;margin-bottom:4px;font-size:13px" id="tt-name"></div>
       <div style="color:#888;margin-bottom:6px" id="tt-detail"></div>
@@ -275,11 +255,34 @@
     </div>
   </div>
 
+  <!-- ── COMMUNICATIONS TAB ── -->
+  <div class="tab-panel" id="tab-comms">
+    <div class="comms-wrap">
+      <h2 id="comms-title">Communication Templates</h2>
+      <p class="comms-sub" id="comms-sub">Ready-to-use templates for Step 4 (contractor communication) and Step 6 (project closure). Click "Copy" to copy any template to your clipboard.</p>
+
+      <div class="vars-note">
+        <strong>Variables:</strong> Replace <code>{{first_name}}</code>, <code>{{entity}}</code>, <code>{{new_elearnings}}</code>, <code>{{removed_resources}}</code>, <code>{{impacted_count}}</code>, <code>{{profiles_list}}</code> with the actual values for each recipient — or ask the IZI Safety tech team to fill them in automatically.
+      </div>
+
+      <!-- Initiation email -->
+      <div class="comms-section-title" id="comms-init-title">✉️ Project Initiation Email — Subsidiary Administrator (Step 1)</div>
+      <div class="comms-cards" id="comms-init-cards"></div>
+
+      <!-- In-app notifications -->
+      <div class="comms-section-title" id="comms-inapp-title">📱 In-App Notification — Individual Worker (Step 4 & 6)</div>
+      <div class="comms-cards" id="comms-inapp-cards"></div>
+
+      <!-- Company emails -->
+      <div class="comms-section-title" id="comms-email-title">📧 Company Email — Contractor Company Contact (Customer.io)</div>
+      <div class="comms-cards" id="comms-email-cards"></div>
+    </div>
+  </div>
+
 </div>
 
 <div class="save-indicator" id="save-indicator">✓ Saved</div>
 
-<!-- PIN MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <div class="lock-big">🔐</div>
@@ -295,7 +298,6 @@
 </div>
 
 <script>
-// ── REGIONS ──────────────────────────────────────────────────
 const REGIONS = [
   { name:"AFR/AFO",  count:8,  start:0, end:1, color:"#939DA8", subs:["Ghana","Togo","Guinée Conakry","Cameroun","Sénégal","Côte d'Ivoire","Gabon","Guinée Equatoriale"] },
   { name:"AFR/MOI",  count:8,  start:1, end:2, color:"#939DA8", subs:["Tunisie","Maurice","Maroc","Algérie","Egypte","Ethiopie","Madagascar","Mozambique"] },
@@ -308,80 +310,201 @@ const REGIONS = [
 ];
 
 const STEPS = [
-  { num:1, key:'s1', labelEN:'Step 1', labelFR:'Étape 1', descEN:'Initial communication to subsidiary',                        descFR:'Communication initiale à la filiale' },
-  { num:2, key:'s2', labelEN:'Step 2', labelFR:'Étape 2', descEN:'Gap analysis: harmonized vs operational matrix',              descFR:'Analyse comparative matrice harmonisée vs opérationnelle' },
-  { num:3, key:'s3', labelEN:'Step 3', labelFR:'Étape 3', descEN:'Review meeting with subsidiary administrators',                descFR:'Réunion de revue avec les administrateurs' },
-  { num:4, key:'s4', labelEN:'Step 4', labelFR:'Étape 4', descEN:'Communication to contractors (IZI Safety support informed)',  descFR:'Communication aux contractants (support IZI informé)' },
-  { num:5, key:'s5', labelEN:'Step 5', labelFR:'Étape 5', descEN:'Effective update of user profiles on the platform',           descFR:'Mise à jour effective des profils sur la plateforme' },
-  { num:6, key:'s6', labelEN:'Step 6', labelFR:'Étape 6', descEN:'Project closure communication to admins and contractors',     descFR:'Communication de clôture auprès des admins et contractants' },
-  { num:7, key:'s7', labelEN:'Step 7', labelFR:'Étape 7', descEN:'Post-deployment support and impact analysis',                 descFR:'Accompagnement post-déploiement et analyse d\'impact' },
+  { num:1, key:'s1', labelEN:'Step 1', labelFR:'Étape 1', descEN:'Initial communication to subsidiary', descFR:'Communication initiale à la filiale' },
+  { num:2, key:'s2', labelEN:'Step 2', labelFR:'Étape 2', descEN:'Gap analysis: harmonized vs operational matrix', descFR:'Analyse comparative matrice harmonisée vs opérationnelle' },
+  { num:3, key:'s3', labelEN:'Step 3', labelFR:'Étape 3', descEN:'Review meeting with subsidiary administrators', descFR:'Réunion de revue avec les administrateurs' },
+  { num:4, key:'s4', labelEN:'Step 4', labelFR:'Étape 4', descEN:'Communication to contractors (IZI Safety support informed)', descFR:'Communication aux contractants (support IZI informé)' },
+  { num:5, key:'s5', labelEN:'Step 5', labelFR:'Étape 5', descEN:'Effective update of user profiles on the platform', descFR:'Mise à jour effective des profils sur la plateforme' },
+  { num:6, key:'s6', labelEN:'Step 6', labelFR:'Étape 6', descEN:'Project closure communication to admins and contractors', descFR:'Communication de clôture auprès des admins et contractants' },
+  { num:7, key:'s7', labelEN:'Step 7', labelFR:'Étape 7', descEN:'Post-deployment support and impact analysis', descFR:'Accompagnement post-déploiement et analyse d\'impact' },
 ];
 
-// ── AUTH ─────────────────────────────────────────────────────
-// Hidden shortcut: Ctrl + Shift + A
-const PIN_HASH = '8f3d2b1a9e6c4f7d2a5b8e1d4c7f0a3b6e9d2c5f8a1b4e7d0c3f6a9b2e5d8c1'; // salted hash placeholder
 const CORRECT_PIN = 'Izisafety26$';
 let isUnlocked = false;
-let keyBuffer = [];
-
-// ── STATE ────────────────────────────────────────────────────
 const state = {};
 REGIONS.forEach(r => r.subs.forEach(s => {
   state[`${r.name}|${s}`] = {};
   STEPS.forEach(st => state[`${r.name}|${s}`][st.key] = false);
 }));
 
-// ── LANGUAGE ─────────────────────────────────────────────────
 let lang = 'en';
-const T = {
-  en: {
-    hTitle:'IZI Safety — User Profile Harmonization', hSub:'Planning Tracker | Schedule: 01/04/2026 – 31/12/2026', hMeta:'45 subsidiaries · 8 regions · 9 months',
-    tabOverview:'Overview', tabDetail:'Subsidiary Detail',
-    cardTotal:'Total Subsidiaries', cardDone:'Completed', cardProg:'In Progress', cardPend:'Not Started',
-    ganttTitle:'General Schedule – Gantt View by Zone',
-    ghRegion:'Region', ghSubs:'# Subs.', ghStatus:'Progress',
-    months:['Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'],
-    monthsFull:['April','May','June','July','August','September','October','November','December'],
-    detailTitle:'Detailed Tracking by Subsidiary',
-    legendTitle:'Tracked Steps',
-    filterAllRegions:'All zones', filterSearch:'Search subsidiary…',
-    filterAllStatus:'All statuses', filterNotStarted:'Not started', filterInProgress:'In progress', filterCompleted:'Completed',
-    thRegion:'Zone', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status',
-    badgeNotStarted:'Not started', badgeInProgress:'In progress', badgeCompleted:'Completed',
-    lockLabel:'View only', unlockLabel:'Editing unlocked',
-    modalTitle:'Admin Access', modalDesc:'Enter your PIN to unlock editing.',
-    modalCancel:'Cancel', modalConfirm:'Unlock',
-    pinWrong:'Incorrect PIN. Try again.', saving:'Saving…', saved:'✓ Saved', savedLocal:'✓ Saved locally',
-    lockedTip:'Unlock editing to interact',
+
+// ── COMMUNICATION TEMPLATES ───────────────────────────────────
+const TEMPLATES = {
+  initiation: {
+    fr: `Dans le cadre du déploiement du projet d'harmonisation des profils utilisateurs au sein de votre filiale, une matrice harmonisée a été élaborée par le siège en collaboration avec IZI Safety.
+
+Ce projet vise à établir un socle commun minimal d'exigences pour chaque profil utilisateur dans l'ensemble des filiales de la branche MS et à uniformiser les intitulés des profils.
+
+Voici les principales étapes qui vous concernent :
+
+1. Analyse des écarts entre la matrice harmonisée (HQ) et votre matrice opérationnelle, avec identification des impacts sur la conformité de vos utilisateurs. Cette analyse vous sera transmise par IZI Safety.
+2. Réunion de revue avec vos administrateurs pour confirmer les modifications à apporter.
+3. Communication auprès de vos contractants concernant les changements à venir.
+4. Mise à jour effective des profils sur la plateforme, suivie d'une communication de clôture et d'un bilan post-déploiement.
+
+L'ensemble de ces étapes est piloté par IZI Safety. Votre rôle principal sera de participer à la réunion de revue (étape 2) et de valider les modifications proposées.
+
+L'équipe IZI Safety, coordonnée par Ludovic et Ghita, reviendra vers vous prochainement pour planifier la réunion de revue. En attendant, nous restons disponibles pour toute question.
+
+Cordialement,`,
+    en: `As part of the deployment of the user profile harmonisation project within your subsidiary, a harmonised matrix has been developed by TotalEnergies Headquarters in collaboration with IZI Safety.
+
+This project aims to establish a common minimum set of requirements for each user profile across all MS branch subsidiaries, and to standardise profile titles throughout all entities.
+
+Here are the key steps that will involve your subsidiary:
+
+1. Gap analysis between the harmonised matrix (HQ) and your current operational matrix, identifying the impact on your users' compliance. This analysis will be shared with you by IZI Safety.
+2. Review meeting with your administrators to confirm the proposed changes.
+3. Communication to your contractors regarding the upcoming changes.
+4. Effective update of user profiles on the platform, followed by a project closure communication and post-deployment review.
+
+All steps are managed by IZI Safety. Your main role will be to participate in the review meeting (step 2) and validate the proposed changes.
+
+The IZI Safety team, coordinated by Ludovic and Ghita, will be in touch shortly to schedule the review meeting. In the meantime, please don't hesitate to reach out with any questions.
+
+Best regards,`
   },
-  fr: {
-    hTitle:'IZI Safety — Harmonisation des Profils Utilisateurs', hSub:'Planning Tracker | Calendrier : 01/04/2026 – 31/12/2026', hMeta:'45 filiales · 8 régions · 9 mois',
-    tabOverview:'Vue Générale', tabDetail:'Détail par Filiale',
-    cardTotal:'Total Filiales', cardDone:'Complétées', cardProg:'En cours', cardPend:'Non démarrées',
-    ganttTitle:'Planning Général – Vue Gantt par Zone',
-    ghRegion:'Entité', ghSubs:'# Fil.', ghStatus:'Avancement',
-    months:['Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'],
-    monthsFull:['Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
-    detailTitle:'Suivi Détaillé par Filiale',
-    legendTitle:'Étapes suivies',
-    filterAllRegions:'Toutes les zones', filterSearch:'Rechercher une filiale…',
-    filterAllStatus:'Tous les statuts', filterNotStarted:'Non démarré', filterInProgress:'En cours', filterCompleted:'Complété',
-    thRegion:'Zone', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut',
-    badgeNotStarted:'Non démarré', badgeInProgress:'En cours', badgeCompleted:'Complété',
-    lockLabel:'Lecture seule', unlockLabel:'Édition déverrouillée',
-    modalTitle:'Accès administrateur', modalDesc:'Entrez votre PIN pour déverrouiller l\'édition.',
-    modalCancel:'Annuler', modalConfirm:'Déverrouiller',
-    pinWrong:'PIN incorrect. Réessayez.', saving:'Enregistrement…', saved:'✓ Enregistré', savedLocal:'✓ Enregistré localement',
-    lockedTip:'Déverrouiller pour interagir',
+  inapp: {
+    fr: `Bonjour {{first_name}},
+
+Votre profil IZI Safety a été mis à jour dans le cadre du projet d'harmonisation des profils utilisateurs de TotalEnergies {{entity}}.
+
+Voici ce qui change pour vous :
+
+📘 Nouveaux e-learnings à compléter :
+• {{new_elearnings}}
+
+✅ Ressources retirées de votre profil :
+• {{removed_resources}}
+
+Merci de compléter les nouveaux modules dès que possible afin de maintenir votre conformité.
+
+Une question ? Contactez le support IZI Safety : support@izisafety.com
+
+L'équipe IZI Safety`,
+    en: `Hello {{first_name}},
+
+Your IZI Safety profile has been updated as part of TotalEnergies {{entity}}'s user profile harmonisation project.
+
+Here is what has changed for you:
+
+📘 New e-learnings to complete:
+• {{new_elearnings}}
+
+✅ Resources removed from your profile:
+• {{removed_resources}}
+
+Please complete the new modules as soon as possible to maintain your compliance status.
+
+Any questions? Contact IZI Safety support: support@izisafety.com
+
+The IZI Safety Team`
+  },
+  email: {
+    fr: `Objet : Mise à jour IZI Safety – Profils de vos collaborateurs {{entity}}
+
+Bonjour,
+
+Dans le cadre du projet d'harmonisation des profils utilisateurs IZI Safety piloté par TotalEnergies {{entity}}, nous vous informons que les profils de certains de vos collaborateurs ont été mis à jour sur la plateforme.
+
+Résumé des changements :
+• Nombre de collaborateurs impactés : {{impacted_count}}
+• Profils concernés : {{profiles_list}}
+
+Ces modifications s'inscrivent dans un effort de standardisation des exigences de sécurité à l'échelle de toutes les filiales TotalEnergies MS. Vos collaborateurs ont été notifiés individuellement via la plateforme IZI Safety et invités à compléter les nouveaux modules requis.
+
+Nous vous recommandons de vous assurer que vos collaborateurs prennent connaissance de ces mises à jour dans les meilleurs délais afin de maintenir leur conformité.
+
+Pour toute question : support@izisafety.com
+
+Cordialement,
+L'équipe IZI Safety`,
+    en: `Subject: IZI Safety update – Your employees' profiles {{entity}}
+
+Dear Sir/Madam,
+
+As part of the IZI Safety user profile harmonisation project led by TotalEnergies {{entity}}, we are writing to inform you that the profiles of some of your employees have been updated on the platform.
+
+Summary of changes:
+• Number of employees impacted: {{impacted_count}}
+• Profiles concerned: {{profiles_list}}
+
+These updates are part of a broader effort to standardise safety requirements across all TotalEnergies MS subsidiaries. Your employees have been individually notified through the IZI Safety platform and invited to complete the newly required modules.
+
+We recommend ensuring that your employees review these updates promptly in order to maintain their compliance status.
+
+Any questions? Contact us at: support@izisafety.com
+
+Best regards,
+The IZI Safety Team`
   }
+};
+
+function renderComms() {
+  const initCards = document.getElementById('comms-init-cards');
+  const inappCards = document.getElementById('comms-inapp-cards');
+  const emailCards = document.getElementById('comms-email-cards');
+
+  const sections = [
+    { el: initCards,  type: 'initiation', channel: lang === 'fr' ? 'Email – Étape 1' : 'Email – Step 1' },
+    { el: inappCards, type: 'inapp',      channel: lang === 'fr' ? 'Notification in-app' : 'In-app notification' },
+    { el: emailCards, type: 'email',      channel: lang === 'fr' ? 'Email Customer.io' : 'Customer.io email' },
+  ];
+
+  sections.forEach(({ el, type, channel }) => {
+    el.innerHTML = ['fr', 'en'].map(l => `
+      <div class="comms-card">
+        <div class="comms-card-header">
+          <span class="lang-badge ${l}">${l.toUpperCase()}</span>
+          <span class="channel-badge">${channel}</span>
+        </div>
+        <div class="comms-card-body" id="tpl-${type}-${l}">${TEMPLATES[type][l]}</div>
+        <div class="comms-card-footer">
+          <button class="copy-btn" id="copy-${type}-${l}" onclick="copyTemplate('${type}','${l}')">
+            ${lang === 'fr' ? 'Copier' : 'Copy'}
+          </button>
+        </div>
+      </div>
+    `).join('');
+  });
+
+  // Section titles
+  document.getElementById('comms-inapp-title').textContent = lang === 'fr'
+    ? '📱 Notification In-App — Collaborateur individuel (Étapes 4 & 6)'
+    : '📱 In-App Notification — Individual Worker (Steps 4 & 6)';
+  document.getElementById('comms-email-title').textContent = lang === 'fr'
+    ? '📧 Email Entreprise — Contact société contractante (Customer.io)'
+    : '📧 Company Email — Contractor Company Contact (Customer.io)';
+  document.getElementById('comms-title').textContent = lang === 'fr' ? 'Modèles de Communication' : 'Communication Templates';
+  document.getElementById('comms-sub').textContent = lang === 'fr'
+    ? 'Modèles prêts à l\'emploi pour les étapes 4 et 6. Cliquez sur "Copier" pour copier dans le presse-papier.'
+    : 'Ready-to-use templates for Step 4 and Step 6. Click "Copy" to copy any template to your clipboard.';
+}
+
+function copyTemplate(type, l) {
+  const text = TEMPLATES[type][l];
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(`copy-${type}-${l}`);
+    btn.textContent = lang === 'fr' ? '✓ Copié !' : '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = lang === 'fr' ? 'Copier' : 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ── LANGUAGE ─────────────────────────────────────────────────
+const T = {
+  en: { hTitle:'IZI Safety — User Profile Harmonization', hSub:'Planning Tracker | Schedule: 01/04/2026 – 31/12/2026', hMeta:'45 subsidiaries · 8 regions · 9 months', tabOverview:'Overview', tabDetail:'Subsidiary Detail', tabComms:'Communications', cardTotal:'Total Subsidiaries', cardDone:'Completed', cardProg:'In Progress', cardPend:'Not Started', ganttTitle:'General Schedule – Gantt View by Zone', months:['Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'], monthsFull:['April','May','June','July','August','September','October','November','December'], detailTitle:'Detailed Tracking by Subsidiary', legendTitle:'Tracked Steps', filterAllRegions:'All zones', filterSearch:'Search subsidiary…', filterAllStatus:'All statuses', filterNotStarted:'Not started', filterInProgress:'In progress', filterCompleted:'Completed', thRegion:'Zone', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status', badgeNotStarted:'Not started', badgeInProgress:'In progress', badgeCompleted:'Completed', lockLabel:'View only', unlockLabel:'Editing unlocked', modalTitle:'Admin Access', modalDesc:'Enter your PIN to unlock editing.', modalCancel:'Cancel', modalConfirm:'Unlock', pinWrong:'Incorrect PIN. Try again.', saving:'Saving…', saved:'✓ Saved', savedLocal:'✓ Saved locally', lockedTip:'Unlock editing to interact' },
+  fr: { hTitle:'IZI Safety — Harmonisation des Profils Utilisateurs', hSub:'Planning Tracker | Calendrier : 01/04/2026 – 31/12/2026', hMeta:'45 filiales · 8 régions · 9 mois', tabOverview:'Vue Générale', tabDetail:'Détail par Filiale', tabComms:'Communications', cardTotal:'Total Filiales', cardDone:'Complétées', cardProg:'En cours', cardPend:'Non démarrées', ganttTitle:'Planning Général – Vue Gantt par Zone', months:['Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.'], monthsFull:['Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'], detailTitle:'Suivi Détaillé par Filiale', legendTitle:'Étapes suivies', filterAllRegions:'Toutes les zones', filterSearch:'Rechercher une filiale…', filterAllStatus:'Tous les statuts', filterNotStarted:'Non démarré', filterInProgress:'En cours', filterCompleted:'Complété', thRegion:'Zone', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut', badgeNotStarted:'Non démarré', badgeInProgress:'En cours', badgeCompleted:'Complété', lockLabel:'Lecture seule', unlockLabel:'Édition déverrouillée', modalTitle:'Accès administrateur', modalDesc:'Entrez votre PIN pour déverrouiller l\'édition.', modalCancel:'Annuler', modalConfirm:'Déverrouiller', pinWrong:'PIN incorrect. Réessayez.', saving:'Enregistrement…', saved:'✓ Enregistré', savedLocal:'✓ Enregistré localement', lockedTip:'Déverrouiller pour interagir' }
 };
 function t(k) { return T[lang][k] || k; }
 
-// ── STORAGE (Firebase Firestore) ─────────────────────────────
 const STORAGE_KEY = 'izi_tracker_state_v1';
 let saveTimer = null;
 
-// Wait for Firebase module to be ready
 function waitForFirebase(timeout = 5000) {
   return new Promise((resolve) => {
     if (window.firebaseReady) { resolve(true); return; }
@@ -395,68 +518,36 @@ function waitForFirebase(timeout = 5000) {
 
 async function loadFromStorage() {
   const ready = await waitForFirebase();
-  if (ready && window.firebaseLoad) {
-    const data = await window.firebaseLoad();
-    if (data) { applyStateFromObj(data); return; }
-  }
-  // localStorage fallback
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) applyStateFromObj(JSON.parse(raw));
-  } catch(e) {}
+  if (ready && window.firebaseLoad) { const data = await window.firebaseLoad(); if (data) { applyStateFromObj(data); return; } }
+  try { const raw = localStorage.getItem(STORAGE_KEY); if (raw) applyStateFromObj(JSON.parse(raw)); } catch(e) {}
 }
 
 function applyStateFromObj(saved) {
-  try {
-    Object.keys(saved).forEach(k => {
-      if (state[k]) {
-        STEPS.forEach(s => {
-          if (saved[k] && saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key];
-        });
-      }
-    });
-  } catch(e) {}
+  try { Object.keys(saved).forEach(k => { if (state[k]) { STEPS.forEach(s => { if (saved[k] && saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key]; }); } }); } catch(e) {}
 }
 
 async function saveToStorage() {
-  // Flatten state to plain object for Firestore
   const data = {};
   Object.keys(state).forEach(k => { data[k] = Object.assign({}, state[k]); });
-
   let savedRemote = false;
   const ready = await waitForFirebase(3000);
-  if (ready && window.firebaseSave) {
-    savedRemote = await window.firebaseSave(data);
-  }
-  // Always backup locally
+  if (ready && window.firebaseSave) { savedRemote = await window.firebaseSave(data); }
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
   showSaveIndicator(savedRemote ? t('saved') : t('savedLocal'));
 }
 
-function scheduleSave() {
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(saveToStorage, 800);
-}
+function scheduleSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveToStorage, 800); }
 
 let saveHideTimer = null;
 function showSaveIndicator(msg) {
   const el = document.getElementById('save-indicator');
-  el.textContent = msg;
-  el.classList.add('visible');
+  el.textContent = msg; el.classList.add('visible');
   clearTimeout(saveHideTimer);
-  if (msg.startsWith('✓')) {
-    saveHideTimer = setTimeout(() => el.classList.remove('visible'), 2000);
-  }
+  if (msg.startsWith('✓')) { saveHideTimer = setTimeout(() => el.classList.remove('visible'), 2000); }
 }
 
-// ── PIN / UNLOCK ─────────────────────────────────────────────
 document.addEventListener('keydown', e => {
-  // Ctrl + Shift + A triggers PIN prompt
-  if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-    e.preventDefault();
-    if (!isUnlocked) openModal();
-    else lockSession();
-  }
+  if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); if (!isUnlocked) openModal(); else lockSession(); }
 });
 
 function openModal() {
@@ -465,57 +556,31 @@ function openModal() {
   document.getElementById('pin-error').textContent = '';
   document.getElementById('pin-input').classList.remove('error');
   setTimeout(() => document.getElementById('pin-input').focus(), 100);
-  // Apply current lang to modal
   document.getElementById('modal-title').textContent = t('modalTitle');
   document.getElementById('modal-desc').textContent = t('modalDesc');
   document.getElementById('modal-cancel').textContent = t('modalCancel');
   document.getElementById('modal-confirm').textContent = t('modalConfirm');
 }
 
-function closeModal() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 function submitPin() {
   const input = document.getElementById('pin-input').value;
-  if (input === CORRECT_PIN) {
-    isUnlocked = true;
-    closeModal();
-    updateLockUI();
-    renderDetail();
-  } else {
-    const inp = document.getElementById('pin-input');
-    inp.classList.add('error');
-    document.getElementById('pin-error').textContent = t('pinWrong');
-    inp.value = '';
-    setTimeout(() => inp.classList.remove('error'), 400);
-  }
+  if (input === CORRECT_PIN) { isUnlocked = true; closeModal(); updateLockUI(); renderDetail(); }
+  else { const inp = document.getElementById('pin-input'); inp.classList.add('error'); document.getElementById('pin-error').textContent = t('pinWrong'); inp.value = ''; setTimeout(() => inp.classList.remove('error'), 400); }
 }
 
-function lockSession() {
-  isUnlocked = false;
-  updateLockUI();
-  renderDetail();
-}
+function lockSession() { isUnlocked = false; updateLockUI(); renderDetail(); }
 
 function updateLockUI() {
-  const ind = document.getElementById('lock-indicator');
-  const lbl = document.getElementById('lock-label');
-  if (isUnlocked) {
-    ind.classList.add('unlocked');
-    lbl.textContent = t('unlockLabel');
-  } else {
-    ind.classList.remove('unlocked');
-    lbl.textContent = t('lockLabel');
-  }
+  const ind = document.getElementById('lock-indicator'); const lbl = document.getElementById('lock-label');
+  if (isUnlocked) { ind.classList.add('unlocked'); lbl.textContent = t('unlockLabel'); }
+  else { ind.classList.remove('unlocked'); lbl.textContent = t('lockLabel'); }
 }
 
-// ── RENDER ───────────────────────────────────────────────────
 function getStatus(stepMap) {
   const done = STEPS.filter(s => stepMap[s.key]).length;
-  if (done === 0) return 'not-started';
-  if (done === STEPS.length) return 'completed';
-  return 'in-progress';
+  if (done === 0) return 'not-started'; if (done === STEPS.length) return 'completed'; return 'in-progress';
 }
 
 function statusBadge(st) {
@@ -525,10 +590,7 @@ function statusBadge(st) {
 
 function updateCards() {
   let done=0, prog=0, pend=0;
-  Object.values(state).forEach(m => {
-    const s = getStatus(m);
-    if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++;
-  });
+  Object.values(state).forEach(m => { const s = getStatus(m); if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++; });
   document.getElementById('cnt-done').textContent = done;
   document.getElementById('cnt-progress').textContent = prog;
   document.getElementById('cnt-pending').textContent = pend;
@@ -546,267 +608,114 @@ const PHASES = [
 ];
 const TOTAL_MONTHS = 9;
 
-function getSubStatus(regionName, subName) {
-  const key = `${regionName}|${subName}`;
-  if (!state[key]) return 'not-started';
-  return getStatus(state[key]);
-}
+function getSubStatus(regionName, subName) { const key = `${regionName}|${subName}`; if (!state[key]) return 'not-started'; return getStatus(state[key]); }
 
 function getRegionBarColor(regionName, subs) {
   const statuses = subs.map(s => getSubStatus(regionName, s));
-  const done    = statuses.filter(s => s === 'completed').length;
-  const inProg  = statuses.filter(s => s === 'in-progress').length;
-  const total   = subs.length;
-  if (done === total)   return '#70AD47'; // all complete → green
-  if (done > 0 && inProg === 0) {
-    // some done, rest not started → blend grey into green proportionally
-    const pct = Math.round((done / total) * 100);
-    return `color-mix(in srgb, #70AD47 ${pct}%, #939DA8)`;
-  }
-  if (inProg > 0)       return '#F4B942'; // any in progress → amber
-  return '#939DA8';                        // nothing started → grey
+  const done = statuses.filter(s => s === 'completed').length;
+  const inProg = statuses.filter(s => s === 'in-progress').length;
+  const total = subs.length;
+  if (done === total) return '#70AD47';
+  if (done > 0 && inProg === 0) { const pct = Math.round((done / total) * 100); return `color-mix(in srgb, #70AD47 ${pct}%, #939DA8)`; }
+  if (inProg > 0) return '#F4B942';
+  return '#939DA8';
 }
 
 function renderGantt() {
-  // Month axis
   const monthRow = document.getElementById('gantt-month-row');
-  if (monthRow) {
-    const months = lang === 'fr'
-      ? ['Avril','Mai','Juin','Juillet','Août','Sept.','Oct.','Nov','Déc.']
-      : ['April','May','June','July','August','Sept.','Oct.','Nov','Dec.'];
-    monthRow.innerHTML = months.map(m => `<div class="month-cell">${m}</div>`).join('');
-  }
-
-  const body = document.getElementById('gantt-body');
-  body.innerHTML = '';
+  if (monthRow) { const months = t('months'); monthRow.innerHTML = months.map(m => `<div class="month-cell">${m}</div>`).join(''); }
+  const body = document.getElementById('gantt-body'); body.innerHTML = '';
   const tooltip = document.getElementById('gantt-tooltip');
-
   PHASES.forEach(p => {
-    const row = document.createElement('div');
-    row.className = 'phase-row';
-
-    const area = document.createElement('div');
-    area.className = 'bar-area';
-
-    // Grid lines
-    for (let i = 0; i <= TOTAL_MONTHS; i++) {
-      const gl = document.createElement('div');
-      gl.className = 'grid-line';
-      gl.style.left = (i / TOTAL_MONTHS * 100) + '%';
-      area.appendChild(gl);
-    }
-
-    // Get subs for this region
-    const region = REGIONS.find(r => r.name === p.region);
-    const subs = region ? region.subs : [];
-
-    const bar = document.createElement('div');
-    bar.className = 'bar';
-    bar.style.left  = (p.start / TOTAL_MONTHS * 100) + '%';
-    bar.style.width = (p.dur   / TOTAL_MONTHS * 100) + '%';
-    // Solid color based on overall region status
-    bar.style.background = subs.length > 0
-      ? getRegionBarColor(p.region, subs)
-      : p.color;
-
-    const lbl = document.createElement('span');
-    lbl.textContent = p.name;
-    lbl.style.textShadow = '0 1px 2px rgba(0,0,0,0.25)';
-    lbl.style.overflow = 'hidden';
-    lbl.style.textOverflow = 'clip';
-    lbl.style.whiteSpace = 'nowrap';
-    lbl.style.flex = '1';
-    lbl.style.minWidth = '0';
-    bar.style.overflow = 'hidden';
-
-    bar.appendChild(lbl);
-
-    // Weeks label removed from bar — shown only in tooltip on hover
-
-    area.appendChild(bar);
-    row.appendChild(area);
-    body.appendChild(row);
-
-    // Tooltip — show per-subsidiary status breakdown
-    const months = lang === 'fr'
-      ? ['Avril','Mai','Juin','Juillet','Août','Sept.','Oct.','Nov','Déc.']
-      : ['April','May','June','July','August','Sept.','Oct.','Nov','Dec.'];
-
+    const row = document.createElement('div'); row.className = 'phase-row';
+    const area = document.createElement('div'); area.className = 'bar-area';
+    for (let i = 0; i <= TOTAL_MONTHS; i++) { const gl = document.createElement('div'); gl.className = 'grid-line'; gl.style.left = (i / TOTAL_MONTHS * 100) + '%'; area.appendChild(gl); }
+    const region = REGIONS.find(r => r.name === p.region); const subs = region ? region.subs : [];
+    const bar = document.createElement('div'); bar.className = 'bar';
+    bar.style.left = (p.start / TOTAL_MONTHS * 100) + '%'; bar.style.width = (p.dur / TOTAL_MONTHS * 100) + '%';
+    bar.style.background = subs.length > 0 ? getRegionBarColor(p.region, subs) : p.color;
+    const lbl = document.createElement('span'); lbl.textContent = p.name; lbl.style.textShadow = '0 1px 2px rgba(0,0,0,0.25)'; lbl.style.overflow = 'hidden'; lbl.style.textOverflow = 'clip'; lbl.style.whiteSpace = 'nowrap'; lbl.style.flex = '1'; lbl.style.minWidth = '0'; bar.style.overflow = 'hidden';
+    bar.appendChild(lbl); area.appendChild(bar); row.appendChild(area); body.appendChild(row);
+    const months = t('monthsFull');
     row.addEventListener('mouseenter', () => {
-      const startM = months[Math.floor(p.start)];
-      const endM   = months[Math.min(Math.floor(p.start + p.dur), TOTAL_MONTHS - 1)];
-      const done = subs.filter(s => getSubStatus(p.region, s) === 'completed').length;
-      const inProg = subs.filter(s => getSubStatus(p.region, s) === 'in-progress').length;
-      const detail = lang === 'fr'
-        ? `${startM} → ${endM}  ·  ${p.weeks}w  ·  ${done}✓ ${inProg}⏳`
-        : `${startM} → ${endM}  ·  ${p.weeks}w  ·  ${done} done, ${inProg} in progress`;
-      document.getElementById('tt-name').textContent   = p.name;
-      document.getElementById('tt-detail').textContent = detail;
-      document.getElementById('tt-desc').textContent   = p.desc || '';
-      tooltip.style.opacity = '1';
+      const startM = months[Math.floor(p.start)]; const endM = months[Math.min(Math.floor(p.start + p.dur), TOTAL_MONTHS - 1)];
+      const done = subs.filter(s => getSubStatus(p.region, s) === 'completed').length; const inProg = subs.filter(s => getSubStatus(p.region, s) === 'in-progress').length;
+      const detail = lang === 'fr' ? `${startM} → ${endM}  ·  ${p.weeks}w  ·  ${done}✓ ${inProg}⏳` : `${startM} → ${endM}  ·  ${p.weeks}w  ·  ${done} done, ${inProg} in progress`;
+      document.getElementById('tt-name').textContent = p.name; document.getElementById('tt-detail').textContent = detail; document.getElementById('tt-desc').textContent = p.desc || ''; tooltip.style.opacity = '1';
     });
-    row.addEventListener('mousemove', e => {
-      tooltip.style.left = (e.clientX + 14) + 'px';
-      tooltip.style.top  = (e.clientY - 10) + 'px';
-    });
+    row.addEventListener('mousemove', e => { tooltip.style.left = (e.clientX + 14) + 'px'; tooltip.style.top = (e.clientY - 10) + 'px'; });
     row.addEventListener('mouseleave', () => { tooltip.style.opacity = '0'; });
   });
-
-  // Update footer labels
-  const fl = document.getElementById('gantt-footer-left');
-  const fr2 = document.getElementById('gantt-footer-right');
-  if (fl)  fl.textContent  = lang === 'fr' ? 'Avril 2026'    : 'April 2026';
+  const fl = document.getElementById('gantt-footer-left'); const fr2 = document.getElementById('gantt-footer-right');
+  if (fl) fl.textContent = lang === 'fr' ? 'Avril 2026' : 'April 2026';
   if (fr2) fr2.textContent = lang === 'fr' ? 'Décembre 2026' : 'December 2026';
 }
 
 function renderStepsLegend() {
-  const grid = document.getElementById('steps-legend-grid');
-  grid.innerHTML = '';
-  STEPS.forEach(s => {
-    const div = document.createElement('div');
-    div.className = 'step-pill';
-    div.title = lang==='en' ? s.descEN : s.descFR;
-    div.innerHTML = `<div class="snum">${s.num}</div><div><strong>${lang==='en'?s.labelEN:s.labelFR}</strong><br><span style="color:#555;font-size:10px">${lang==='en'?s.descEN:s.descFR}</span></div>`;
-    grid.appendChild(div);
-  });
+  const grid = document.getElementById('steps-legend-grid'); grid.innerHTML = '';
+  STEPS.forEach(s => { const div = document.createElement('div'); div.className = 'step-pill'; div.title = lang==='en' ? s.descEN : s.descFR; div.innerHTML = `<div class="snum">${s.num}</div><div><strong>${lang==='en'?s.labelEN:s.labelFR}</strong><br><span style="color:#555;font-size:10px">${lang==='en'?s.descEN:s.descFR}</span></div>`; grid.appendChild(div); });
 }
 
 function renderDetailHeader() {
   const tr = document.getElementById('detail-head');
-  tr.innerHTML = `
-    <th class="left">${t('thRegion')}</th>
-    <th class="left">${t('thSub')}</th>
-    <th>${t('thPeriod')}</th>
-    ${STEPS.map(s=>`<th title="${lang==='en'?s.descEN:s.descFR}">${lang==='en'?s.labelEN:s.labelFR}</th>`).join('')}
-    <th>${t('thProgress')}</th>
-    <th>${t('thStatus')}</th>
-  `;
+  tr.innerHTML = `<th class="left">${t('thRegion')}</th><th class="left">${t('thSub')}</th><th>${t('thPeriod')}</th>${STEPS.map(s=>`<th title="${lang==='en'?s.descEN:s.descFR}">${lang==='en'?s.labelEN:s.labelFR}</th>`).join('')}<th>${t('thProgress')}</th><th>${t('thStatus')}</th>`;
 }
 
 function renderDetail() {
   const filterRegion = document.getElementById('filter-region').value;
   const filterSearch = document.getElementById('filter-search').value.toLowerCase();
   const filterStatus = document.getElementById('filter-status').value;
-  const mf = t('monthsFull');
-  const tbody = document.getElementById('detail-body');
-  tbody.innerHTML = '';
-
+  const mf = t('monthsFull'); const tbody = document.getElementById('detail-body'); tbody.innerHTML = '';
   REGIONS.forEach(r => {
     if (filterRegion && filterRegion !== r.name) return;
     r.subs.forEach(sub => {
       if (filterSearch && !sub.toLowerCase().includes(filterSearch)) return;
-      const key = `${r.name}|${sub}`;
-      const stepMap = state[key];
-      const st = getStatus(stepMap);
+      const key = `${r.name}|${sub}`; const stepMap = state[key]; const st = getStatus(stepMap);
       if (filterStatus && filterStatus !== st) return;
-      const done = STEPS.filter(s => stepMap[s.key]).length;
-      const pct = Math.round(done/STEPS.length*100);
+      const done = STEPS.filter(s => stepMap[s.key]).length; const pct = Math.round(done/STEPS.length*100);
       const period = r.start !== r.end ? `${mf[r.start]} – ${mf[r.end]}` : mf[r.start];
-
       const tr = document.createElement('tr');
       const stepCells = STEPS.map(s => {
-        if (isUnlocked) {
-          return `<td class="step-check editable ${stepMap[s.key]?'done':''}"
-                    onclick="toggleStep('${key}','${s.key}')"
-                    title="${stepMap[s.key]?'Done – click to undo':'Click to mark done'}">
-                    ${stepMap[s.key]?'✅':'⬜'}
-                  </td>`;
-        } else {
-          return `<td class="step-check locked ${stepMap[s.key]?'done':''}"
-                    title="${t('lockedTip')}">
-                    ${stepMap[s.key]?'✅':'⬜'}
-                  </td>`;
-        }
+        if (isUnlocked) { return `<td class="step-check editable ${stepMap[s.key]?'done':''}" onclick="toggleStep('${key}','${s.key}')" title="${stepMap[s.key]?'Done – click to undo':'Click to mark done'}">${stepMap[s.key]?'✅':'⬜'}</td>`; }
+        else { return `<td class="step-check locked ${stepMap[s.key]?'done':''}" title="${t('lockedTip')}">${stepMap[s.key]?'✅':'⬜'}</td>`; }
       }).join('');
-
-      tr.innerHTML = `
-        <td class="left"><span class="region-tag">${r.name}</span></td>
-        <td class="left" style="font-weight:600">${sub}</td>
-        <td style="color:#555;white-space:nowrap;font-size:11px">${period}</td>
-        ${stepCells}
-        <td>
-          <div style="display:flex;align-items:center;gap:8px;justify-content:center">
-            <div class="prog-wrap"><div class="prog-bar" style="width:${pct}%"></div></div>
-            <span style="font-size:11px;color:#555">${pct}%</span>
-          </div>
-        </td>
-        <td>${statusBadge(st)}</td>
-      `;
+      tr.innerHTML = `<td class="left"><span class="region-tag">${r.name}</span></td><td class="left" style="font-weight:600">${sub}</td><td style="color:#555;white-space:nowrap;font-size:11px">${period}</td>${stepCells}<td><div style="display:flex;align-items:center;gap:8px;justify-content:center"><div class="prog-wrap"><div class="prog-bar" style="width:${pct}%"></div></div><span style="font-size:11px;color:#555">${pct}%</span></div></td><td>${statusBadge(st)}</td>`;
       tbody.appendChild(tr);
     });
   });
 }
 
-function toggleStep(key, stepKey) {
-  if (!isUnlocked) return;
-  state[key][stepKey] = !state[key][stepKey];
-  renderAll();
-  scheduleSave();
-}
+function toggleStep(key, stepKey) { if (!isUnlocked) return; state[key][stepKey] = !state[key][stepKey]; renderAll(); scheduleSave(); }
 
-function renderAll() {
-  updateCards();
-  renderGantt();
-  renderStepsLegend();
-  renderDetailHeader();
-  renderDetail();
-  updateLockUI();
-}
+function renderAll() { updateCards(); renderGantt(); renderStepsLegend(); renderDetailHeader(); renderDetail(); renderComms(); updateLockUI(); }
 
 function setLang(l) {
   lang = l;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.trim()===l.toUpperCase()));
-  applyLang();
-  initFilters();
-  renderAll();
+  applyLang(); initFilters(); renderAll();
 }
 
 function applyLang() {
-  const ids = {
-    'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta',
-    'tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail',
-    'card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend',
-    'gantt-title':'ganttTitle','gh-region':'ghRegion','gh-subs':'ghSubs','gh-status':'ghStatus',
-    'detail-title':'detailTitle','legend-title':'legendTitle',
-  };
+  const ids = { 'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta','tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail','tab-btn-comms':'tabComms','card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend','gantt-title':'ganttTitle','detail-title':'detailTitle','legend-title':'legendTitle' };
   Object.entries(ids).forEach(([id,k]) => { const el=document.getElementById(id); if(el) el.textContent=t(k); });
   document.getElementById('filter-search').placeholder = t('filterSearch');
-  // month labels now handled in renderGantt()
   updateLockUI();
 }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((tb,i) => tb.classList.toggle('active', ['summary','detail'][i]===tab));
+  document.querySelectorAll('.tab').forEach((tb,i) => tb.classList.toggle('active', ['summary','detail','comms'][i]===tab));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id===`tab-${tab}`));
 }
 
 function initFilters() {
-  const fr = document.getElementById('filter-region');
-  const curR = fr.value;
+  const fr = document.getElementById('filter-region'); const curR = fr.value;
   fr.innerHTML = `<option value="">${t('filterAllRegions')}</option>`;
-  REGIONS.forEach(r => { const o=document.createElement('option'); o.value=r.name; o.textContent=r.name; fr.appendChild(o); });
-  fr.value = curR;
-
-  const fs = document.getElementById('filter-status');
-  const curS = fs.value;
-  fs.innerHTML = `
-    <option value="">${t('filterAllStatus')}</option>
-    <option value="not-started">${t('filterNotStarted')}</option>
-    <option value="in-progress">${t('filterInProgress')}</option>
-    <option value="completed">${t('filterCompleted')}</option>
-  `;
-  fs.value = curS;
+  REGIONS.forEach(r => { const o=document.createElement('option'); o.value=r.name; o.textContent=r.name; fr.appendChild(o); }); fr.value = curR;
+  const fs = document.getElementById('filter-status'); const curS = fs.value;
+  fs.innerHTML = `<option value="">${t('filterAllStatus')}</option><option value="not-started">${t('filterNotStarted')}</option><option value="in-progress">${t('filterInProgress')}</option><option value="completed">${t('filterCompleted')}</option>`; fs.value = curS;
 }
 
-// ── INIT ─────────────────────────────────────────────────────
-async function init() {
-  await loadFromStorage();
-  applyLang();
-  initFilters();
-  renderAll();
-  document.getElementById('loading-overlay').classList.add('hidden');
-}
-
+async function init() { await loadFromStorage(); applyLang(); initFilters(); renderAll(); document.getElementById('loading-overlay').classList.add('hidden'); }
 init();
 </script>
 </body>
