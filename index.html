@@ -177,7 +177,110 @@
 
 <div class="loading-overlay" id="loading-overlay">
   <div class="loading-spinner"></div>
-  <div style="font-size:13px;color:#2E5FA3;font-weight:600">Loading tracker…</div>  <!-- ── WORKFLOW TAB ── -->
+  <div style="font-size:13px;color:#2E5FA3;font-weight:600">Loading tracker…</div>
+</div>
+
+<header>
+  <div>
+    <h1 id="h-title">IZI Safety — User Profile Harmonization</h1>
+    <span id="h-sub">Planning Tracker | Schedule: 01/04/2026 – 31/12/2026</span>
+  </div>
+  <div class="header-right">
+    <div class="lock-indicator" id="lock-indicator">
+      <span class="lock-icon">🔒</span>
+      <span id="lock-label">View only</span>
+    </div>
+    <div style="text-align:right;font-size:12px;opacity:0.8" id="h-meta">45 subsidiaries · 8 regions · 9 months</div>
+    <div class="lang-toggle">
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('summary')" id="tab-btn-summary">Overview</div>
+  <div class="tab" onclick="switchTab('detail')" id="tab-btn-detail">Subsidiary Detail</div>
+  <div class="tab" onclick="switchTab('comms')" id="tab-btn-comms">Communications</div>
+  <div class="tab" onclick="switchTab('workflow')" id="tab-btn-workflow">Workflow</div>
+</div>
+
+<div class="container">
+
+  <div class="tab-panel active" id="tab-summary">
+    <div class="cards">
+      <div class="card"><div class="label" id="card-total-lbl">Total Subsidiaries</div><div class="value">45</div></div>
+      <div class="card green"><div class="label" id="card-done-lbl">Completed</div><div class="value" id="cnt-done">0</div></div>
+      <div class="card orange"><div class="label" id="card-prog-lbl">In Progress</div><div class="value" id="cnt-progress">0</div></div>
+      <div class="card"><div class="label" id="card-pend-lbl">Not Started</div><div class="value" id="cnt-pending">45</div></div>
+    </div>
+    <div class="gantt-wrap">
+      <div class="header" style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px">
+        <span style="font-size:14px;font-weight:700;color:#1F3864" id="gantt-title">General Schedule – Gantt View by Subsidiary</span>
+        <span style="font-size:12px;color:#888">01/04/2026 — 31/12/2026</span>
+      </div>
+      <div class="chart" id="gantt-chart">
+        <div class="month-row" id="gantt-month-row"></div>
+        <div id="gantt-body"></div>
+        <div class="footer" style="display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:0.5px solid #ebebeb">
+          <span style="font-size:11px;color:#bbb" id="gantt-footer-left">April 2026</span>
+          <span style="font-size:11px;color:#bbb" id="gantt-footer-right">December 2026</span>
+        </div>
+      </div>
+    </div>
+    <div id="gantt-tooltip" style="position:fixed;background:#fff;border:0.5px solid #ccc;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a1a1a;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:9999;min-width:180px;max-width:240px;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
+      <div style="font-weight:500;margin-bottom:4px;font-size:13px" id="tt-name"></div>
+      <div style="color:#888;margin-bottom:6px" id="tt-detail"></div>
+      <div style="color:#444;font-size:12px;line-height:1.5;border-top:0.5px solid #ebebeb;padding-top:6px" id="tt-desc"></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-detail">
+    <div class="detail-wrap">
+      <h2 id="detail-title">Detailed Tracking by Subsidiary</h2>
+      <div class="steps-legend">
+        <div class="steps-legend-title" id="legend-title">Tracked Steps</div>
+        <div class="steps-grid" id="steps-legend-grid"></div>
+      </div>
+      <div class="filters">
+        <select id="filter-region" onchange="renderDetail()"></select>
+        <input type="text" id="filter-search" oninput="renderDetail()">
+        <select id="filter-status" onchange="renderDetail()"></select>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="detail-table">
+          <thead><tr id="detail-head"></tr></thead>
+          <tbody id="detail-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMMUNICATIONS TAB ── -->
+  <div class="tab-panel" id="tab-comms">
+    <div class="comms-wrap">
+      <h2 id="comms-title">Communication Templates</h2>
+      <p class="comms-sub" id="comms-sub">Ready-to-use templates for Step 4 (contractor communication) and Step 6 (project closure). Click "Copy" to copy any template to your clipboard.</p>
+
+      <div class="vars-note">
+        <strong>Variables:</strong> Replace <code>{{first_name}}</code>, <code>{{entity}}</code>, <code>{{new_elearnings}}</code>, <code>{{removed_resources}}</code>, <code>{{impacted_count}}</code>, <code>{{profiles_list}}</code> with the actual values for each recipient — or ask the IZI Safety tech team to fill them in automatically.
+      </div>
+
+      <!-- Initiation email -->
+      <div class="comms-section-title" id="comms-init-title">✉️ Project Initiation Email — Subsidiary Administrator (Step 1)</div>
+      <div class="comms-cards" id="comms-init-cards"></div>
+
+      <!-- In-app notifications -->
+      <div class="comms-section-title" id="comms-inapp-title">📱 In-App Notification — Individual Worker (Step 4 & 6)</div>
+      <div class="comms-cards" id="comms-inapp-cards"></div>
+
+      <!-- Company emails -->
+      <div class="comms-section-title" id="comms-email-title">📧 Company Email — Contractor Company Contact (Customer.io)</div>
+      <div class="comms-cards" id="comms-email-cards"></div>
+    </div>
+  </div>
+
+  <!-- ── WORKFLOW TAB (MOVED HERE) ── -->
   <div class="tab-panel" id="tab-workflow">
     <div class="comms-wrap">
       <h2 id="workflow-title">Project Workflow</h2>
@@ -285,108 +388,6 @@
 
 </div>
 
-<header>
-  <div>
-    <h1 id="h-title">IZI Safety — User Profile Harmonization</h1>
-    <span id="h-sub">Planning Tracker | Schedule: 01/04/2026 – 31/12/2026</span>
-  </div>
-  <div class="header-right">
-    <div class="lock-indicator" id="lock-indicator">
-      <span class="lock-icon">🔒</span>
-      <span id="lock-label">View only</span>
-    </div>
-    <div style="text-align:right;font-size:12px;opacity:0.8" id="h-meta">45 subsidiaries · 8 regions · 9 months</div>
-    <div class="lang-toggle">
-      <button class="lang-btn" onclick="setLang('fr')">FR</button>
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    </div>
-  </div>
-</header>
-
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('summary')" id="tab-btn-summary">Overview</div>
-  <div class="tab" onclick="switchTab('detail')" id="tab-btn-detail">Subsidiary Detail</div>
-  <div class="tab" onclick="switchTab('comms')" id="tab-btn-comms">Communications</div>
-  <div class="tab" onclick="switchTab('workflow')" id="tab-btn-workflow">Workflow</div>
-</div>
-
-<div class="container">
-
-  <div class="tab-panel active" id="tab-summary">
-    <div class="cards">
-      <div class="card"><div class="label" id="card-total-lbl">Total Subsidiaries</div><div class="value">45</div></div>
-      <div class="card green"><div class="label" id="card-done-lbl">Completed</div><div class="value" id="cnt-done">0</div></div>
-      <div class="card orange"><div class="label" id="card-prog-lbl">In Progress</div><div class="value" id="cnt-progress">0</div></div>
-      <div class="card"><div class="label" id="card-pend-lbl">Not Started</div><div class="value" id="cnt-pending">45</div></div>
-    </div>
-    <div class="gantt-wrap">
-      <div class="header" style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:20px">
-        <span style="font-size:14px;font-weight:700;color:#1F3864" id="gantt-title">General Schedule – Gantt View by Subsidiary</span>
-        <span style="font-size:12px;color:#888">01/04/2026 — 31/12/2026</span>
-      </div>
-      <div class="chart" id="gantt-chart">
-        <div class="month-row" id="gantt-month-row"></div>
-        <div id="gantt-body"></div>
-        <div class="footer" style="display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:0.5px solid #ebebeb">
-          <span style="font-size:11px;color:#bbb" id="gantt-footer-left">April 2026</span>
-          <span style="font-size:11px;color:#bbb" id="gantt-footer-right">December 2026</span>
-        </div>
-      </div>
-    </div>
-    <div id="gantt-tooltip" style="position:fixed;background:#fff;border:0.5px solid #ccc;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a1a1a;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:9999;min-width:180px;max-width:240px;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
-      <div style="font-weight:500;margin-bottom:4px;font-size:13px" id="tt-name"></div>
-      <div style="color:#888;margin-bottom:6px" id="tt-detail"></div>
-      <div style="color:#444;font-size:12px;line-height:1.5;border-top:0.5px solid #ebebeb;padding-top:6px" id="tt-desc"></div>
-    </div>
-  </div>
-
-  <div class="tab-panel" id="tab-detail">
-    <div class="detail-wrap">
-      <h2 id="detail-title">Detailed Tracking by Subsidiary</h2>
-      <div class="steps-legend">
-        <div class="steps-legend-title" id="legend-title">Tracked Steps</div>
-        <div class="steps-grid" id="steps-legend-grid"></div>
-      </div>
-      <div class="filters">
-        <select id="filter-region" onchange="renderDetail()"></select>
-        <input type="text" id="filter-search" oninput="renderDetail()">
-        <select id="filter-status" onchange="renderDetail()"></select>
-      </div>
-      <div style="overflow-x:auto">
-        <table class="detail-table">
-          <thead><tr id="detail-head"></tr></thead>
-          <tbody id="detail-body"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── COMMUNICATIONS TAB ── -->
-  <div class="tab-panel" id="tab-comms">
-    <div class="comms-wrap">
-      <h2 id="comms-title">Communication Templates</h2>
-      <p class="comms-sub" id="comms-sub">Ready-to-use templates for Step 4 (contractor communication) and Step 6 (project closure). Click "Copy" to copy any template to your clipboard.</p>
-
-      <div class="vars-note">
-        <strong>Variables:</strong> Replace <code>{{first_name}}</code>, <code>{{entity}}</code>, <code>{{new_elearnings}}</code>, <code>{{removed_resources}}</code>, <code>{{impacted_count}}</code>, <code>{{profiles_list}}</code> with the actual values for each recipient — or ask the IZI Safety tech team to fill them in automatically.
-      </div>
-
-      <!-- Initiation email -->
-      <div class="comms-section-title" id="comms-init-title">✉️ Project Initiation Email — Subsidiary Administrator (Step 1)</div>
-      <div class="comms-cards" id="comms-init-cards"></div>
-
-      <!-- In-app notifications -->
-      <div class="comms-section-title" id="comms-inapp-title">📱 In-App Notification — Individual Worker (Step 4 & 6)</div>
-      <div class="comms-cards" id="comms-inapp-cards"></div>
-
-      <!-- Company emails -->
-      <div class="comms-section-title" id="comms-email-title">📧 Company Email — Contractor Company Contact (Customer.io)</div>
-      <div class="comms-cards" id="comms-email-cards"></div>
-    </div>
-  </div>
-
-</div>
-
 <div class="save-indicator" id="save-indicator">✓ Saved</div>
 
 <div class="modal-overlay" id="modal-overlay">
@@ -404,7 +405,7 @@
 </div>
 
 <script>
-const REGIONS = [
+const REGIONS =[
   { name:"AFR/AFO",  count:8,  start:0, end:1, color:"#939DA8", subs:["Ghana","Togo","Guinée Conakry","Cameroun","Sénégal","Côte d'Ivoire","Gabon","Guinée Equatoriale"] },
   { name:"AFR/MOI",  count:8,  start:1, end:2, color:"#939DA8", subs:["Tunisie","Maurice","Maroc","Algérie","Egypte","Ethiopie","Madagascar","Mozambique"] },
   { name:"AFR/NG",   count:1,  start:2, end:2, color:"#939DA8", subs:["Nigéria"] },
@@ -415,7 +416,7 @@ const REGIONS = [
   { name:"LUB",      count:6,  start:7, end:8, color:"#939DA8", subs:["Argentine","Brésil","Chili","Mexique","TEAFS","USA"] },
 ];
 
-const STEPS = [
+const STEPS =[
   { num:1, key:'s1', labelEN:'Step 1', labelFR:'Étape 1', descEN:'Initial communication to subsidiary', descFR:'Communication initiale à la filiale' },
   { num:2, key:'s2', labelEN:'Step 2', labelFR:'Étape 2', descEN:'Gap analysis: harmonized vs operational matrix', descFR:'Analyse comparative matrice harmonisée vs opérationnelle' },
   { num:3, key:'s3', labelEN:'Step 3', labelFR:'Étape 3', descEN:'Review meeting with subsidiary administrators', descFR:'Réunion de revue avec les administrateurs' },
@@ -552,7 +553,7 @@ function renderComms() {
   const inappCards = document.getElementById('comms-inapp-cards');
   const emailCards = document.getElementById('comms-email-cards');
 
-  const sections = [
+  const sections =[
     { el: initCards,  type: 'initiation', channel: lang === 'fr' ? 'Email – Étape 1' : 'Email – Step 1' },
     { el: inappCards, type: 'inapp',      channel: lang === 'fr' ? 'Notification in-app' : 'In-app notification' },
     { el: emailCards, type: 'email',      channel: lang === 'fr' ? 'Email Customer.io' : 'Customer.io email' },
@@ -702,7 +703,7 @@ function updateCards() {
   document.getElementById('cnt-pending').textContent = pend;
 }
 
-const PHASES = [
+const PHASES =[
   { name:'AFR/AFO (8)',  start:0,    dur:1.5,  weeks:5,    color:'#939DA8', region:'AFR/AFO',  desc:"Ghana, Togo, Guinée Conakry, Cameroun, Sénégal, Côte d'ivoire, Gabon, Guinée Equatoriale" },
   { name:'AFR/MOI (8)',  start:1.45, dur:1.5,  weeks:5,    color:'#939DA8', region:'AFR/MOI',  desc:'Tunisie, Maurice, Maroc, Algérie, Egypte, Ethiopie, Madagascar, Mozambique' },
   { name:'AFR/NG (1)',   start:2.80, dur:0.62, weeks:0.62, color:'#939DA8', region:'AFR/NG',   desc:'Nigéria' },
@@ -736,7 +737,7 @@ function renderGantt() {
     const row = document.createElement('div'); row.className = 'phase-row';
     const area = document.createElement('div'); area.className = 'bar-area';
     for (let i = 0; i <= TOTAL_MONTHS; i++) { const gl = document.createElement('div'); gl.className = 'grid-line'; gl.style.left = (i / TOTAL_MONTHS * 100) + '%'; area.appendChild(gl); }
-    const region = REGIONS.find(r => r.name === p.region); const subs = region ? region.subs : [];
+    const region = REGIONS.find(r => r.name === p.region); const subs = region ? region.subs :[];
     const bar = document.createElement('div'); bar.className = 'bar';
     bar.style.left = (p.start / TOTAL_MONTHS * 100) + '%'; bar.style.width = (p.dur / TOTAL_MONTHS * 100) + '%';
     bar.style.background = subs.length > 0 ? getRegionBarColor(p.region, subs) : p.color;
@@ -809,10 +810,7 @@ function applyLang() {
 }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach(tb => {
-    const id = tb.id.replace('tab-btn-','');
-    tb.classList.toggle('active', id === tab);
-  });
+  document.querySelectorAll('.tab').forEach((tb,i) => tb.classList.toggle('active', ['summary','detail','comms','workflow'][i]===tab));
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id===`tab-${tab}`));
 }
 
