@@ -809,7 +809,10 @@ function applyLang() {
 }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((tb,i) => tb.classList.toggle('active', ['summary','detail','comms','workflow'][i]===tab));
+  document.querySelectorAll('.tab').forEach(tb => {
+    const id = tb.id.replace('tab-btn-','');
+    tb.classList.toggle('active', id === tab);
+  });
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id===`tab-${tab}`));
 }
 
