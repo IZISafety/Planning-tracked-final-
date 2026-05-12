@@ -757,16 +757,117 @@ function updateClearBtn() {
 
 var dragSrcKey = null;
 
-function attachDragHandlers(tbody) {
+function renderDetail() {
+  var filterRegion = document.getElementById('filter-region').value;
+  var filterSearch = document.getElementById('filter-search').value.toLowerCase();
+  var filterStatus = document.getElementById('filter-status').value;
+  var mf = t('monthsFull');
+  var tbody = document.getElementById('detail-body');
+  tbody.innerHTML = '';
+
+  REGIONS.forEach(function(r) {
+    if (filterRegion && filterRegion !== r.name) return;
+    var orderedSubs = subOrder[r.name] || r.subs;
+    orderedSubs.forEach(function(sub) {
+      if (filterSearch && !sub.toLowerCase().includes(filterSearch)) return;
+      var key = r.name + '|' + sub;
+      var stepMap = state[key];
+      var st = getStatus(stepMap);
+      if (filterStatus && filterStatus !== st) return;
+      var done = STEPS.filter(function(s) { return stepMap[s.key]; }).length;
+      var pct = Math.round(done / STEPS.length * 100);
+      var period = r.start !== r.end ? (mf[r.start] + ' – ' + mf[r.end]) : mf[r.start];
+
+      var tr = document.createElement('tr');
+      tr.dataset.key = key;
+      tr.setAttribute('draggable', isUnlocked ? 'true' : 'false');
+
+      // Drag handle
+      var handleTd = document.createElement('td');
+      handleTd.style.cssText = 'padding:4px 4px 4px 8px';
+      var handle = document.createElement('span');
+      handle.className = 'drag-handle' + (isUnlocked ? '' : ' locked');
+      handle.title = isUnlocked ? 'Drag to reorder' : t('lockedTip');
+      handle.textContent = '⣿';
+      handleTd.appendChild(handle);
+      tr.appendChild(handleTd);
+
+      // Zone tag
+      var zoneTd = document.createElement('td');
+      zoneTd.className = 'left';
+      zoneTd.innerHTML = '<span class="region-tag">' + r.name + '</span>';
+      tr.appendChild(zoneTd);
+
+      // Subsidiary name
+      var subTd = document.createElement('td');
+      subTd.className = 'left';
+      subTd.style.fontWeight = '600';
+      subTd.textContent = sub;
+      tr.appendChild(subTd);
+
+      // Period
+      var periodTd = document.createElement('td');
+      periodTd.style.cssText = 'color:#555;white-space:nowrap;font-size:11px';
+      periodTd.textContent = period;
+      tr.appendChild(periodTd);
+
+      // Step checkboxes — using DOM, no innerHTML, no onclick strings
+      STEPS.forEach(function(s) {
+        var td = document.createElement('td');
+        td.className = 'step-check ' + (isUnlocked ? 'editable' : 'locked') + (stepMap[s.key] ? ' done' : '');
+        td.title = isUnlocked ? (stepMap[s.key] ? 'Done – click to undo' : 'Click to mark done') : t('lockedTip');
+        td.textContent = stepMap[s.key] ? '✅' : '⬜';
+        if (isUnlocked) {
+          (function(k, sk) {
+            td.addEventListener('click', function() { toggleStep(k, sk); });
+          }(key, s.key));
+        }
+        tr.appendChild(td);
+      });
+
+      // Progress bar
+      var progTd = document.createElement('td');
+      progTd.innerHTML = '<div style="display:flex;align-items:center;gap:8px;justify-content:center">'
+        + '<div class="prog-wrap"><div class="prog-bar" style="width:' + pct + '%"></div></div>'
+        + '<span style="font-size:11px;color:#555">' + pct + '%</span></div>';
+      tr.appendChild(progTd);
+
+      // Status badge
+      var statusTd = document.createElement('td');
+      statusTd.innerHTML = statusBadge(st);
+      tr.appendChild(statusTd);
+
+      tbody.appendChild(tr);
+    });
+  });
+
+  // Drag handlers
   var dragOverRow = null;
   tbody.querySelectorAll('tr[data-key]').forEach(function(row) {
-    row.setAttribute('draggable', isUnlocked ? 'true' : 'false');
-    row.addEventListener('dragstart', function(e) { dragSrcKey = row.dataset.key; row.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
-    row.addEventListener('dragend', function() { row.classList.remove('dragging'); if (dragOverRow) { dragOverRow.classList.remove('drag-over'); dragOverRow = null; } });
-    row.addEventListener('dragover', function(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (dragOverRow && dragOverRow !== row) dragOverRow.classList.remove('drag-over'); dragOverRow = row; row.classList.add('drag-over'); });
-    row.addEventListener('dragleave', function() { row.classList.remove('drag-over'); if (dragOverRow === row) dragOverRow = null; });
+    row.addEventListener('dragstart', function(e) {
+      dragSrcKey = row.dataset.key;
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    row.addEventListener('dragend', function() {
+      row.classList.remove('dragging');
+      if (dragOverRow) { dragOverRow.classList.remove('drag-over'); dragOverRow = null; }
+    });
+    row.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (dragOverRow && dragOverRow !== row) dragOverRow.classList.remove('drag-over');
+      dragOverRow = row;
+      row.classList.add('drag-over');
+    });
+    row.addEventListener('dragleave', function() {
+      row.classList.remove('drag-over');
+      if (dragOverRow === row) dragOverRow = null;
+    });
     row.addEventListener('drop', function(e) {
-      e.preventDefault(); row.classList.remove('drag-over'); dragOverRow = null;
+      e.preventDefault();
+      row.classList.remove('drag-over');
+      dragOverRow = null;
       if (!isUnlocked) return;
       if (!dragSrcKey || dragSrcKey === row.dataset.key) return;
       var srcParts = dragSrcKey.split('|'); var srcRegion = srcParts[0]; var srcSub = srcParts.slice(1).join('|');
@@ -775,44 +876,11 @@ function attachDragHandlers(tbody) {
       var order = subOrder[srcRegion];
       var srcIdx = order.indexOf(srcSub); var dstIdx = order.indexOf(dstSub);
       if (srcIdx === -1 || dstIdx === -1) return;
-      order.splice(srcIdx, 1); order.splice(dstIdx, 0, srcSub);
+      order.splice(srcIdx, 1);
+      order.splice(dstIdx, 0, srcSub);
       renderDetail();
     });
   });
-}
-
-function renderDetail() {
-  var filterRegion = document.getElementById('filter-region').value;
-  var filterSearch = document.getElementById('filter-search').value.toLowerCase();
-  var filterStatus = document.getElementById('filter-status').value;
-  var mf = t('monthsFull');
-  var tbody = document.getElementById('detail-body'); tbody.innerHTML = '';
-  REGIONS.forEach(function(r) {
-    if (filterRegion && filterRegion !== r.name) return;
-    var orderedSubs = subOrder[r.name] || r.subs;
-    orderedSubs.forEach(function(sub) {
-      if (filterSearch && !sub.toLowerCase().includes(filterSearch)) return;
-      var key = r.name + '|' + sub; var stepMap = state[key]; var st = getStatus(stepMap);
-      if (filterStatus && filterStatus !== st) return;
-      var done = STEPS.filter(function(s) { return stepMap[s.key]; }).length;
-      var pct = Math.round(done/STEPS.length*100);
-      var period = r.start !== r.end ? (mf[r.start] + ' – ' + mf[r.end]) : mf[r.start];
-      var tr = document.createElement('tr'); tr.dataset.key = key;
-      var stepCells = STEPS.map(function(s) {
-        if (isUnlocked) { return '<td class="step-check editable ' + (stepMap[s.key]?'done':'') + '" onclick="toggleStep(\'' + key + '\',\'' + s.key + '\')" title="' + (stepMap[s.key]?'Done – click to undo':'Click to mark done') + '">' + (stepMap[s.key]?'✅':'⬜') + '</td>'; }
-        else { return '<td class="step-check locked ' + (stepMap[s.key]?'done':'') + '" title="' + t('lockedTip') + '">' + (stepMap[s.key]?'✅':'⬜') + '</td>'; }
-      }).join('');
-      tr.innerHTML = '<td style="padding:4px 4px 4px 8px"><span class="drag-handle' + (isUnlocked ? '' : ' locked') + '" title="' + (isUnlocked ? 'Drag to reorder' : t('lockedTip')) + '">⠿</span></td>'
-        + '<td class="left"><span class="region-tag">' + r.name + '</span></td>'
-        + '<td class="left" style="font-weight:600">' + sub + '</td>'
-        + '<td style="color:#555;white-space:nowrap;font-size:11px">' + period + '</td>'
-        + stepCells
-        + '<td><div style="display:flex;align-items:center;gap:8px;justify-content:center"><div class="prog-wrap"><div class="prog-bar" style="width:' + pct + '%"></div></div><span style="font-size:11px;color:#555">' + pct + '%</span></div></td>'
-        + '<td>' + statusBadge(st) + '</td>';
-      tbody.appendChild(tr);
-    });
-  });
-  attachDragHandlers(tbody);
 }
 
 function toggleStep(key, stepKey) { if (!isUnlocked) return; state[key][stepKey] = !state[key][stepKey]; renderAll(); scheduleSave(); }
