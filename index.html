@@ -435,6 +435,27 @@ const REGIONS = [
   { name:"LUB",      count:5, start:8, end:9, color:"#939DA8", subs:["Argentine","Brésil","Chili","Mexique","USA"] },
 ];
 
+// Gap analysis URLs — add URL as each page becomes ready
+const GAP_ANALYSIS_URLS = {
+  "AFR/AFO|Côte d'Ivoire": "https://izisafety.github.io/Gap-Analysis-IvoryCoast/",
+  // Add others below as they become ready:
+  // "AFR/AFO|Cameroun":           "https://izisafety.github.io/Gap-Analysis-Cameroon/",
+  // "AFR/AFO|Ghana":               "https://izisafety.github.io/Gap-Analysis-Ghana/",
+  // "AFR/AFO|Sénégal":             "https://izisafety.github.io/Gap-Analysis-Senegal/",
+  // "AFR/AFO|Togo":                "https://izisafety.github.io/Gap-Analysis-Togo/",
+  // "AFR/AFO|Guinée Conakry":      "https://izisafety.github.io/Gap-Analysis-Guinea/",
+  // "AFR/AFO|Gabon":               "https://izisafety.github.io/Gap-Analysis-Gabon/",
+  // "AFR/AFO|Guinée Equatoriale":  "https://izisafety.github.io/Gap-Analysis-EquatorialGuinea/",
+  // "AFR/MOI|Tunisie":             "https://izisafety.github.io/Gap-Analysis-Tunisia/",
+  // "AFR/MOI|Maurice":             "https://izisafety.github.io/Gap-Analysis-Mauritius/",
+  // "AFR/MOI|Maroc":               "https://izisafety.github.io/Gap-Analysis-Morocco/",
+  // "AFR/MOI|Algérie":             "https://izisafety.github.io/Gap-Analysis-Algeria/",
+  // "AFR/MOI|Egypte":              "https://izisafety.github.io/Gap-Analysis-Egypt/",
+  // "AFR/MOI|Ethiopie":            "https://izisafety.github.io/Gap-Analysis-Ethiopia/",
+  // "AFR/MOI|Madagascar":          "https://izisafety.github.io/Gap-Analysis-Madagascar/",
+  // "AFR/MOI|Mozambique":          "https://izisafety.github.io/Gap-Analysis-Mozambique/",
+};
+
 const STEPS = [
   { num:1, key:'s1', labelEN:'Step 1', labelFR:'Étape 1', descEN:'Initial communication to subsidiary', descFR:'Communication initiale à la filiale' },
   { num:2, key:'s2', labelEN:'Step 2', labelFR:'Étape 2', descEN:'Gap analysis: harmonized vs operational matrix', descFR:'Analyse comparative matrice harmonisée vs opérationnelle' },
@@ -798,11 +819,25 @@ function renderDetail() {
       zoneTd.innerHTML = '<span class="region-tag">' + r.name + '</span>';
       tr.appendChild(zoneTd);
 
-      // Subsidiary name
+      // Subsidiary name — link to gap analysis if available
       var subTd = document.createElement('td');
       subTd.className = 'left';
       subTd.style.fontWeight = '600';
-      subTd.textContent = sub;
+      var gapUrl = GAP_ANALYSIS_URLS[key];
+      if (gapUrl) {
+        var link = document.createElement('a');
+        link.href = gapUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = sub;
+        link.title = lang === 'fr' ? 'Voir l\'analyse des écarts' : 'View gap analysis';
+        link.style.cssText = 'color:#2E5FA3;text-decoration:none;border-bottom:1px dashed #2E5FA3;';
+        link.addEventListener('mouseenter', function() { this.style.color='#1F3864'; this.style.borderBottomStyle='solid'; });
+        link.addEventListener('mouseleave', function() { this.style.color='#2E5FA3'; this.style.borderBottomStyle='dashed'; });
+        subTd.appendChild(link);
+      } else {
+        subTd.textContent = sub;
+      }
       tr.appendChild(subTd);
 
       // Period
