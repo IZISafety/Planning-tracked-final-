@@ -264,6 +264,9 @@
         </div>
       </div>
     </div>
+    <div id="gantt-click-hint" style="font-size:11px;color:#bbb;text-align:center;margin-top:2px;padding-bottom:2px">
+      👆 Click a zone to filter the Subsidiary Detail tab
+    </div>
     <div id="gantt-tooltip" style="position:fixed;background:#fff;border:0.5px solid #ccc;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a1a1a;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:9999;min-width:180px;max-width:240px;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
       <div style="font-weight:500;margin-bottom:4px;font-size:13px" id="tt-name"></div>
       <div style="color:#888;margin-bottom:6px" id="tt-detail"></div>
@@ -299,7 +302,6 @@
     <div class="comms-wrap">
       <h2 id="comms-title">Communication Templates</h2>
       <p class="comms-sub" id="comms-sub">Ready-to-use templates for Step 4 (contractor communication) and Step 6 (project closure). Click "Copy" to copy any template to your clipboard.</p>
-      <div class="vars-note">
       <div class="comms-section-title" id="comms-init-title">✉️ Project Initiation Email — Subsidiary Administrator (Step 1)</div>
       <div class="comms-cards" id="comms-init-cards"></div>
       <div class="comms-section-title" id="comms-inapp-title">📱 In-App Notification — Individual Worker (Step 4 & 6)</div>
@@ -436,9 +438,7 @@ const REGIONS = [
 // Gap analysis URLs — add URL as each page becomes ready
 const GAP_ANALYSIS_URLS = {
   "AFR/AFO|Côte d'Ivoire": "https://izisafety.github.io/Gap-Analysis-IvoryCoast/",
-  "AFR/AFO|Cameroun": 'https://izisafety.github.io/Gap-analysis-Cameroon/',
-  // Add others below as they become ready:
-  // "AFR/AFO|Cameroun":           "https://izisafety.github.io/Gap-analysis-Cameroon/",
+  "AFR/AFO|Cameroun": "https://izisafety.github.io/Gap-analysis-Cameroon/",
   // "AFR/AFO|Ghana":               "https://izisafety.github.io/Gap-Analysis-Ghana/",
   // "AFR/AFO|Sénégal":             "https://izisafety.github.io/Gap-Analysis-Senegal/",
   // "AFR/AFO|Togo":                "https://izisafety.github.io/Gap-Analysis-Togo/",
@@ -740,6 +740,31 @@ function renderGantt() {
     });
     row.addEventListener('mousemove', function(e) { tooltip.style.left = (e.clientX + 14) + 'px'; tooltip.style.top = (e.clientY - 10) + 'px'; });
     row.addEventListener('mouseleave', function() { tooltip.style.opacity = '0'; });
+
+    // Click → switch to detail tab with zone pre-filtered
+    (function(region) {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', function() {
+        var sel = document.getElementById('filter-region');
+        if (sel) { sel.value = region; }
+        document.getElementById('filter-search').value = '';
+        document.getElementById('filter-status').value = '';
+        updateClearBtn();
+        renderDetail();
+        document.querySelectorAll('.tab').forEach(function(tb, i) {
+          tb.classList.toggle('active', ['summary','detail','comms','workflow'][i] === 'detail');
+        });
+        document.querySelectorAll('.tab-panel').forEach(function(p) {
+          p.classList.toggle('active', p.id === 'tab-detail');
+        });
+        var toggle = document.querySelector('.lang-toggle');
+        if (toggle) toggle.style.display = 'flex';
+        setTimeout(function() {
+          var wrap = document.querySelector('.detail-wrap');
+          if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      });
+    }(p.region));
   });
   var fl = document.getElementById('gantt-footer-left'); var fr2 = document.getElementById('gantt-footer-right');
   if (fl) fl.textContent = lang === 'fr' ? 'Avril 2026' : 'April 2026';
@@ -936,6 +961,10 @@ function applyLang() {
   };
   Object.entries(ids).forEach(function(e) { var el=document.getElementById(e[0]); if(el) el.textContent=t(e[1]); });
   document.getElementById('filter-search').placeholder = t('filterSearch');
+  var hint = document.getElementById('gantt-click-hint');
+  if (hint) hint.textContent = lang === 'fr'
+    ? '👆 Cliquez sur une zone pour filtrer le Détail par Filiale'
+    : '👆 Click a zone to filter the Subsidiary Detail tab';
   var clLbl = document.getElementById('clear-filters-label');
   if (clLbl) clLbl.textContent = t('clearFilters');
   updateLockUI();
