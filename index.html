@@ -74,7 +74,6 @@
     font-size: 12px; font-weight: 500; color: #fff;
     overflow: hidden; transition: all 0.2s ease;
   }
-  .bar .weeks { margin-left: auto; padding-left: 10px; font-size: 11px; font-weight: 400; opacity: 0.75; }
   .grid-line { position: absolute; top: 0; bottom: 0; width: 0.5px; background: #ebebeb; pointer-events: none; }
 
   .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
@@ -184,8 +183,31 @@
   .copy-btn { background: #2E5FA3; color: white; border: none; border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
   .copy-btn:hover { background: #1F3864; }
   .copy-btn.copied { background: #70AD47; }
-  .vars-note { background: #fff8e6; border: 1px solid #f4d87a; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #7a5c00; margin-bottom: 20px; }
-  .vars-note strong { color: #5a4000; }
+
+  /* ── COMMENTS ── */
+  .comment-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: transparent; border: 1px solid #dde6f5; border-radius: 6px;
+    padding: 3px 8px; font-size: 11px; cursor: pointer;
+    color: #888; transition: all 0.15s; white-space: nowrap; font-family: Arial, sans-serif;
+  }
+  .comment-btn:hover { background: #f0f4ff; border-color: #2E5FA3; color: #2E5FA3; }
+  .comment-btn.has-comment { background: #f0f4ff; border-color: #2E5FA3; color: #2E5FA3; font-weight: 500; }
+  .comment-row td { padding: 0 !important; border-bottom: 1px solid #eef0f3 !important; background: #f8faff !important; }
+  .comment-box { display: flex; gap: 8px; align-items: flex-start; padding: 10px 16px 10px 40px; border-top: 1px dashed #c8d8f0; }
+  .comment-textarea {
+    flex: 1; border: 1.5px solid #dde6f5; border-radius: 7px;
+    padding: 8px 10px; font-size: 12px; font-family: Arial, sans-serif;
+    resize: vertical; min-height: 56px; outline: none;
+    transition: border-color 0.2s; background: white;
+  }
+  .comment-textarea:focus { border-color: #2E5FA3; }
+  .comment-save-btn {
+    background: #2E5FA3; color: white; border: none; border-radius: 6px;
+    padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; transition: background 0.2s; font-family: Arial, sans-serif;
+  }
+  .comment-save-btn:hover { background: #1F3864; }
 </style>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -317,16 +339,12 @@
       <p class="comms-sub" id="workflow-sub">End-to-end view of the harmonisation project — from initiation to post-deployment.</p>
       <div class="comms-section-title">Global project workflow — 7 steps</div>
       <div style="overflow-x:auto;margin-bottom:28px">
-        <svg width="100%" viewBox="0 0 680 820" xmlns="http://www.w3.org/2000/svg">
+        <svg width="100%" viewBox="0 0 680 820" style="max-width:520px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">
           <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-          <rect x="40" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="60" y="31">TotalEnergies HQ</text>
-          <rect x="200" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
-          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="220" y="31">IZI Safety</text>
-          <rect x="310" y="20" width="14" height="14" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
-          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="330" y="31">Subsidiary admin</text>
-          <rect x="460" y="20" width="14" height="14" rx="3" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="480" y="31">Contractor company</text>
+          <rect x="40" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="60" y="31">TotalEnergies HQ</text>
+          <rect x="200" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="220" y="31">IZI Safety</text>
+          <rect x="310" y="20" width="14" height="14" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="330" y="31">Subsidiary admin</text>
+          <rect x="460" y="20" width="14" height="14" rx="3" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="480" y="31">Contractor company</text>
           <rect x="200" y="60" width="280" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#0C447C" font-family="Arial,sans-serif" x="340" y="83" text-anchor="middle">Step 1 — Project initiation</text>
           <text font-size="12" fill="#185FA5" font-family="Arial,sans-serif" x="340" y="101" text-anchor="middle">HQ sends initiation email to subsidiary</text>
@@ -367,7 +385,7 @@
       </div>
       <div class="comms-section-title">Customer.io automation flow — detail</div>
       <div style="overflow-x:auto">
-        <svg width="100%" viewBox="0 0 680 640" xmlns="http://www.w3.org/2000/svg">
+        <svg width="100%" viewBox="0 0 680 640" style="max-width:520px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">
           <defs><marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
           <rect x="200" y="30" width="280" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#085041" font-family="Arial,sans-serif" x="340" y="53" text-anchor="middle">Trigger: profile_updated</text>
@@ -435,25 +453,10 @@ const REGIONS = [
   { name:"LUB",      count:5, start:8, end:9, color:"#939DA8", subs:["Argentine","Brésil","Chili","Mexique","USA"] },
 ];
 
-// Gap analysis URLs — add URL as each page becomes ready
 const GAP_ANALYSIS_URLS = {
   "AFR/AFO|Côte d'Ivoire": "https://izisafety.github.io/Gap-Analysis-IvoryCoast/",
   "AFR/AFO|Cameroun": "https://izisafety.github.io/Gap-analysis-Cameroon/",
   "EOMC": "https://izisafety.github.io/Gap-Analysis-Reunion/",
-  // "AFR/AFO|Ghana":               https://izisafety.github.io/Gap-Analysis-Reunion/",
-  // "AFR/AFO|Sénégal":             "https://izisafety.github.io/Gap-Analysis-Senegal/",
-  // "AFR/AFO|Togo":                "https://izisafety.github.io/Gap-Analysis-Togo/",
-  // "AFR/AFO|Guinée Conakry":      "https://izisafety.github.io/Gap-Analysis-Guinea/",
-  // "AFR/AFO|Gabon":               "https://izisafety.github.io/Gap-Analysis-Gabon/",
-  // "AFR/AFO|Guinée Equatoriale":  "https://izisafety.github.io/Gap-Analysis-EquatorialGuinea/",
-  // "AFR/MOI|Tunisie":             "https://izisafety.github.io/Gap-Analysis-Tunisia/",
-  // "AFR/MOI|Maurice":             "https://izisafety.github.io/Gap-Analysis-Mauritius/",
-  // "AFR/MOI|Maroc":               "https://izisafety.github.io/Gap-Analysis-Morocco/",
-  // "AFR/MOI|Algérie":             "https://izisafety.github.io/Gap-Analysis-Algeria/",
-  // "AFR/MOI|Egypte":              "https://izisafety.github.io/Gap-Analysis-Egypt/",
-  // "AFR/MOI|Ethiopie":            "https://izisafety.github.io/Gap-Analysis-Ethiopia/",
-  // "AFR/MOI|Madagascar":          "https://izisafety.github.io/Gap-Analysis-Madagascar/",
-  // "AFR/MOI|Mozambique":          "https://izisafety.github.io/Gap-Analysis-Mozambique/",
 };
 
 const STEPS = [
@@ -465,34 +468,34 @@ const STEPS = [
   { num:6, key:'s6', labelEN:'Step 6', labelFR:'Étape 6', descEN:'Project closure communication to admins and contractors', descFR:'Communication de clôture auprès des admins et contractants' },
 ];
 
-// Day-based fractions (total timeline = 279 days, Apr 28 → Jan 31)
-// Month boundaries: Apr(3d)=0.0108, May=0.1219, Jun=0.2294, Jul=0.3405,
-//   Aug=0.4516, Sep=0.5591, Oct=0.6703, Nov=0.7778, Dec=0.8889, Jan=1.0
 const MONTH_BREAKS = [0, 0.0108, 0.1219, 0.2294, 0.3405, 0.4516, 0.5591, 0.6703, 0.7778, 0.8889, 1.0];
 const PHASES = [
-  { name:'AFR/AFO (8)',  start:0.0000, dur:0.1613, weeks:5,    color:'#939DA8', region:'AFR/AFO',  desc:"Ghana, Togo, Guinée Conakry, Cameroun, Sénégal, Côte d'ivoire, Gabon, Guinée Equatoriale" },
-  { name:'AFR/MOI (8)',  start:0.1541, dur:0.1613, weeks:5,    color:'#939DA8', region:'AFR/MOI',  desc:'Tunisie, Maurice, Maroc, Algérie, Egypte, Ethiopie, Madagascar, Mozambique' },
-  { name:'AFR/NG (1)',   start:0.2975, dur:0.0681, weeks:3,    color:'#939DA8', region:'AFR/NG',   desc:'Nigéria' },
-  { name:'AFR/ACE (8)',  start:0.3441, dur:0.1613, weeks:5,    color:'#939DA8', region:'AFR/ACE',  desc:'Malawi, Zambie, RDC, Congo, Ouganda, Kenya, Tanzanie, Zimbabwe' },
-  { name:'AFR/ASNE (2)', start:0.5054, dur:0.0968, weeks:4,    color:'#939DA8', region:'AFR/ASNE', desc:'Afrique du sud, Namibie' },
-  { name:'APMO (5)',     start:0.6093, dur:0.1039, weeks:4,    color:'#939DA8', region:'APMO',     desc:'Cambodge, Fidji, Inde, Jordanie, Liban' },
-  { name:'EOMC (7)',     start:0.7025, dur:0.1470, weeks:5,    color:'#939DA8', region:'EOMC',     desc:'Antilles Guyane, Rep Dominicaine, Polynésie, Jamaïque, Mayotte, Porto Rico, Réunion' },
-  { name:'LUB (5)',      start:0.8315, dur:0.1254, weeks:5,    color:'#939DA8', region:'LUB',      desc:'Argentine, Brésil, Chili, Mexique, États-Unis' },
+  { name:'AFR/AFO (8)',  start:0.0000, dur:0.1613, weeks:5, color:'#939DA8', region:'AFR/AFO',  desc:"Ghana, Togo, Guinée Conakry, Cameroun, Sénégal, Côte d'ivoire, Gabon, Guinée Equatoriale" },
+  { name:'AFR/MOI (8)',  start:0.1541, dur:0.1613, weeks:5, color:'#939DA8', region:'AFR/MOI',  desc:'Tunisie, Maurice, Maroc, Algérie, Egypte, Ethiopie, Madagascar, Mozambique' },
+  { name:'AFR/NG (1)',   start:0.2975, dur:0.0681, weeks:3, color:'#939DA8', region:'AFR/NG',   desc:'Nigéria' },
+  { name:'AFR/ACE (8)',  start:0.3441, dur:0.1613, weeks:5, color:'#939DA8', region:'AFR/ACE',  desc:'Malawi, Zambie, RDC, Congo, Ouganda, Kenya, Tanzanie, Zimbabwe' },
+  { name:'AFR/ASNE (2)', start:0.5054, dur:0.0968, weeks:4, color:'#939DA8', region:'AFR/ASNE', desc:'Afrique du sud, Namibie' },
+  { name:'APMO (5)',     start:0.6093, dur:0.1039, weeks:4, color:'#939DA8', region:'APMO',     desc:'Cambodge, Fidji, Inde, Jordanie, Liban' },
+  { name:'EOMC (7)',     start:0.7025, dur:0.1470, weeks:5, color:'#939DA8', region:'EOMC',     desc:'Antilles Guyane, Rep Dominicaine, Polynésie, Jamaïque, Mayotte, Porto Rico, Réunion' },
+  { name:'LUB (5)',      start:0.8315, dur:0.1254, weeks:5, color:'#939DA8', region:'LUB',      desc:'Argentine, Brésil, Chili, Mexique, États-Unis' },
 ];
 const TOTAL_MONTHS = 1;
 
 const CORRECT_PIN = 'Izisafety26$';
-let isUnlocked = false;
+var isUnlocked = false;
 const state = {};
-REGIONS.forEach(r => r.subs.forEach(s => {
+REGIONS.forEach(function(r) { r.subs.forEach(function(s) {
   state[r.name + '|' + s] = {};
-  STEPS.forEach(st => { state[r.name + '|' + s][st.key] = false; });
-}));
+  STEPS.forEach(function(st) { state[r.name + '|' + s][st.key] = false; });
+}); });
 
 const subOrder = {};
-REGIONS.forEach(r => { subOrder[r.name] = r.subs.slice(); });
+REGIONS.forEach(function(r) { subOrder[r.name] = r.subs.slice(); });
 
-let lang = 'en';
+// Comments store — key: "REGION|Sub", value: string
+var comments = {};
+
+var lang = 'en';
 
 const TEMPLATES = {
   initiation: {
@@ -519,15 +522,10 @@ function renderComms() {
     var el = s.el, type = s.type, channel = s.channel;
     el.innerHTML = ['fr', 'en'].map(function(l) {
       return '<div class="comms-card">'
-        + '<div class="comms-card-header">'
-        + '<span class="lang-badge ' + l + '">' + l.toUpperCase() + '</span>'
-        + '<span class="channel-badge">' + channel + '</span>'
-        + '</div>'
+        + '<div class="comms-card-header"><span class="lang-badge ' + l + '">' + l.toUpperCase() + '</span><span class="channel-badge">' + channel + '</span></div>'
         + '<div class="comms-card-body" id="tpl-' + type + '-' + l + '">' + TEMPLATES[type][l] + '</div>'
-        + '<div class="comms-card-footer">'
-        + '<button class="copy-btn" id="copy-' + type + '-' + l + '" onclick="copyTemplate(\'' + type + '\',\'' + l + '\')">'
-        + (lang === 'fr' ? 'Copier' : 'Copy')
-        + '</button></div></div>';
+        + '<div class="comms-card-footer"><button class="copy-btn" id="copy-' + type + '-' + l + '" onclick="copyTemplate(\'' + type + '\',\'' + l + '\')">' + (lang === 'fr' ? 'Copier' : 'Copy') + '</button></div>'
+        + '</div>';
     }).join('');
   });
   document.getElementById('comms-inapp-title').textContent = lang === 'fr' ? '📱 Notification In-App — Collaborateur individuel (Étapes 4 & 6)' : '📱 In-App Notification — Individual Worker (Steps 4 & 6)';
@@ -537,15 +535,11 @@ function renderComms() {
 }
 
 function copyTemplate(type, l) {
-  var text = TEMPLATES[type][l];
-  navigator.clipboard.writeText(text).then(function() {
+  navigator.clipboard.writeText(TEMPLATES[type][l]).then(function() {
     var btn = document.getElementById('copy-' + type + '-' + l);
     btn.textContent = lang === 'fr' ? '✓ Copié !' : '✓ Copied!';
     btn.classList.add('copied');
-    setTimeout(function() {
-      btn.textContent = lang === 'fr' ? 'Copier' : 'Copy';
-      btn.classList.remove('copied');
-    }, 2000);
+    setTimeout(function() { btn.textContent = lang === 'fr' ? 'Copier' : 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
 }
 
@@ -560,13 +554,14 @@ const T = {
     detailTitle:'Detailed Tracking by Subsidiary', legendTitle:'Tracked Steps',
     filterAllZones:'All zones', filterSearch:'Search subsidiary…', filterAllStatus:'All statuses',
     filterNotStarted:'Not started', filterInProgress:'In progress', filterCompleted:'Completed',
-    thZone:'Zone', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status',
+    thZone:'Zone', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status', thNotes:'Notes',
     badgeNotStarted:'Not started', badgeInProgress:'In progress', badgeCompleted:'Completed',
     lockLabel:'View only', unlockLabel:'Editing unlocked',
     modalTitle:'Admin Access', modalDesc:'Enter your PIN to unlock editing.',
     modalCancel:'Cancel', modalConfirm:'Unlock', pinWrong:'Incorrect PIN. Try again.',
     saving:'Saving…', saved:'✓ Saved', savedLocal:'✓ Saved locally', lockedTip:'Unlock editing to interact',
-    clearFilters:'Clear filters'
+    clearFilters:'Clear filters', addNote:'+ Note', saveNote:'Save', noNote:'No note',
+    notePlaceholder:'Add a note about this subsidiary…'
   },
   fr: {
     hTitle:'IZI Safety — Harmonisation des Profils Utilisateurs', hSub:'Planning Tracker | Calendrier : 28/04/2026 – 31/01/2027', hMeta:'45 filiales · 8 zones · 9 mois',
@@ -578,19 +573,21 @@ const T = {
     detailTitle:'Suivi Détaillé par Filiale', legendTitle:'Étapes suivies',
     filterAllZones:'Toutes les zones', filterSearch:'Rechercher une filiale…', filterAllStatus:'Tous les statuts',
     filterNotStarted:'Non démarré', filterInProgress:'En cours', filterCompleted:'Complété',
-    thZone:'Zone', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut',
+    thZone:'Zone', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut', thNotes:'Notes',
     badgeNotStarted:'Non démarré', badgeInProgress:'En cours', badgeCompleted:'Complété',
     lockLabel:'Lecture seule', unlockLabel:'Édition déverrouillée',
     modalTitle:'Accès administrateur', modalDesc:"Entrez votre PIN pour déverrouiller l'édition.",
     modalCancel:'Annuler', modalConfirm:'Déverrouiller', pinWrong:'PIN incorrect. Réessayez.',
     saving:'Enregistrement…', saved:'✓ Enregistré', savedLocal:'✓ Enregistré localement',
-    lockedTip:'Déverrouiller pour interagir', clearFilters:'Effacer les filtres'
+    lockedTip:'Déverrouiller pour interagir', clearFilters:'Effacer les filtres',
+    addNote:'+ Note', saveNote:'Enregistrer', noNote:'Aucune note',
+    notePlaceholder:'Ajouter une note sur cette filiale…'
   }
 };
 function t(k) { return T[lang][k] || k; }
 
 const STORAGE_KEY = 'izi_tracker_state_v1';
-let saveTimer = null;
+var saveTimer = null;
 
 function waitForFirebase(timeout) {
   timeout = timeout || 5000;
@@ -611,12 +608,18 @@ async function loadFromStorage() {
 }
 
 function applyStateFromObj(saved) {
-  try { Object.keys(saved).forEach(function(k) { if (state[k]) { STEPS.forEach(function(s) { if (saved[k] && saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key]; }); } }); } catch(e) {}
+  try {
+    Object.keys(saved).forEach(function(k) {
+      if (k === '__comments__') { Object.assign(comments, saved[k]); return; }
+      if (state[k]) { STEPS.forEach(function(s) { if (saved[k] && saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key]; }); }
+    });
+  } catch(e) {}
 }
 
 async function saveToStorage() {
   var data = {};
   Object.keys(state).forEach(function(k) { data[k] = Object.assign({}, state[k]); });
+  data['__comments__'] = Object.assign({}, comments);
   var savedRemote = false;
   var ready = await waitForFirebase(3000);
   if (ready && window.firebaseSave) { savedRemote = await window.firebaseSave(data); }
@@ -649,7 +652,6 @@ function openModal() {
   document.getElementById('modal-cancel').textContent = t('modalCancel');
   document.getElementById('modal-confirm').textContent = t('modalConfirm');
 }
-
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 function submitPin() {
@@ -657,13 +659,10 @@ function submitPin() {
   if (input === CORRECT_PIN) { isUnlocked = true; closeModal(); updateLockUI(); renderDetail(); }
   else { var inp = document.getElementById('pin-input'); inp.classList.add('error'); document.getElementById('pin-error').textContent = t('pinWrong'); inp.value = ''; setTimeout(function() { inp.classList.remove('error'); }, 400); }
 }
-
 function lockSession() { isUnlocked = false; updateLockUI(); renderDetail(); }
 
 function updateLockUI() {
-  var ind = document.getElementById('lock-indicator');
-  var lbl = document.getElementById('lock-label');
-  var tip = document.getElementById('lock-tip');
+  var ind = document.getElementById('lock-indicator'), lbl = document.getElementById('lock-label'), tip = document.getElementById('lock-tip');
   if (isUnlocked) {
     ind.classList.add('unlocked'); lbl.textContent = t('unlockLabel');
     if (tip) tip.textContent = lang === 'fr' ? 'Appuyer sur Ctrl+Shift+A pour verrouiller' : 'Press Ctrl+Shift+A to lock editing';
@@ -677,43 +676,32 @@ function getStatus(stepMap) {
   var done = STEPS.filter(function(s) { return stepMap[s.key]; }).length;
   if (done === 0) return 'not-started'; if (done === STEPS.length) return 'completed'; return 'in-progress';
 }
-
 function statusBadge(st) {
   var map = {'not-started':'badgeNotStarted','in-progress':'badgeInProgress','completed':'badgeCompleted'};
   return '<span class="badge ' + st + '">' + t(map[st]) + '</span>';
 }
-
 function updateCards() {
   var done=0, prog=0, pend=0;
-  Object.values(state).forEach(function(m) { var s = getStatus(m); if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++; });
+  Object.values(state).forEach(function(m) { var s=getStatus(m); if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++; });
   document.getElementById('cnt-done').textContent = done;
   document.getElementById('cnt-progress').textContent = prog;
   document.getElementById('cnt-pending').textContent = pend;
 }
-
-function getSubStatus(regionName, subName) { var key = regionName + '|' + subName; if (!state[key]) return 'not-started'; return getStatus(state[key]); }
-
-function getRegionBarColor(regionName, subs) {
-  var statuses = subs.map(function(s) { return getSubStatus(regionName, s); });
-  var done = statuses.filter(function(s) { return s === 'completed'; }).length;
-  var inProg = statuses.filter(function(s) { return s === 'in-progress'; }).length;
-  var total = subs.length;
-  if (done === total) return '#70AD47';
-  if (done > 0 && inProg === 0) { var pct = Math.round((done / total) * 100); return 'color-mix(in srgb, #70AD47 ' + pct + '%, #939DA8)'; }
-  if (inProg > 0) return '#F4B942';
+function getSubStatus(rn, sn) { var k=rn+'|'+sn; return !state[k]?'not-started':getStatus(state[k]); }
+function getRegionBarColor(rn, subs) {
+  var st=subs.map(function(s){return getSubStatus(rn,s);}), done=st.filter(function(s){return s==='completed';}).length, ip=st.filter(function(s){return s==='in-progress';}).length, tot=subs.length;
+  if(done===tot) return '#70AD47';
+  if(done>0&&ip===0) return 'color-mix(in srgb, #70AD47 '+Math.round(done/tot*100)+'%, #939DA8)';
+  if(ip>0) return '#F4B942';
   return '#939DA8';
 }
 
 function renderGantt() {
   var monthRow = document.getElementById('gantt-month-row');
   if (monthRow) {
-    var months = t('months');
-    // Proportional widths based on actual days: Apr=3, May-Dec=30/31, Jan=31 of 279 total
-    var dayWidths = [3,31,30,31,31,30,31,30,31,31];
-    var totalDays = 279;
-    monthRow.innerHTML = months.map(function(m, i) {
-      var pct = (dayWidths[i] / totalDays * 100).toFixed(3);
-      return '<div class="month-cell" style="flex:none;width:' + pct + '%">' + m + '</div>';
+    var months = t('months'), dayWidths = [3,31,30,31,31,30,31,30,31,31], totalDays = 279;
+    monthRow.innerHTML = months.map(function(m,i) {
+      return '<div class="month-cell" style="flex:none;width:' + (dayWidths[i]/totalDays*100).toFixed(3) + '%">' + m + '</div>';
     }).join('');
   }
   var body = document.getElementById('gantt-body'); body.innerHTML = '';
@@ -721,272 +709,238 @@ function renderGantt() {
   PHASES.forEach(function(p) {
     var row = document.createElement('div'); row.className = 'phase-row';
     var area = document.createElement('div'); area.className = 'bar-area';
-    var breaks = (typeof MONTH_BREAKS !== 'undefined') ? MONTH_BREAKS : [];
-    breaks.forEach(function(b) { var gl = document.createElement('div'); gl.className = 'grid-line'; gl.style.left = (b * 100) + '%'; area.appendChild(gl); });
-    var region = REGIONS.find(function(r) { return r.name === p.region; });
-    var subs = region ? region.subs : [];
-    var bar = document.createElement('div'); bar.className = 'bar';
-    bar.style.left = (p.start / TOTAL_MONTHS * 100) + '%'; bar.style.width = (p.dur / TOTAL_MONTHS * 100) + '%';
-    bar.style.background = subs.length > 0 ? getRegionBarColor(p.region, subs) : p.color;
-    var lbl = document.createElement('span'); lbl.textContent = p.name;
-    lbl.style.textShadow = '0 1px 2px rgba(0,0,0,0.25)'; lbl.style.overflow = 'hidden'; lbl.style.textOverflow = 'clip'; lbl.style.whiteSpace = 'nowrap'; lbl.style.flex = '1'; lbl.style.minWidth = '0'; bar.style.overflow = 'hidden';
-    bar.appendChild(lbl); area.appendChild(bar); row.appendChild(area); body.appendChild(row);
-    var mf = t('monthsFull');
+    MONTH_BREAKS.forEach(function(b) { var gl=document.createElement('div'); gl.className='grid-line'; gl.style.left=(b*100)+'%'; area.appendChild(gl); });
+    var region = REGIONS.find(function(r){return r.name===p.region;}), subs=region?region.subs:[];
+    var bar = document.createElement('div'); bar.className='bar';
+    bar.style.left=(p.start*100)+'%'; bar.style.width=(p.dur*100)+'%';
+    bar.style.background=subs.length>0?getRegionBarColor(p.region,subs):p.color;
+    var lbl=document.createElement('span'); lbl.textContent=p.name;
+    lbl.style.cssText='text-shadow:0 1px 2px rgba(0,0,0,0.25);overflow:hidden;text-overflow:clip;white-space:nowrap;flex:1;min-width:0';
+    bar.style.overflow='hidden'; bar.appendChild(lbl); area.appendChild(bar); row.appendChild(area); body.appendChild(row);
+    var mf=t('monthsFull');
     row.addEventListener('mouseenter', function() {
-      var startM = mf[Math.floor(p.start)]; var endM = mf[Math.min(Math.floor(p.start + p.dur), TOTAL_MONTHS - 1)];
-      var d = subs.filter(function(s) { return getSubStatus(p.region, s) === 'completed'; }).length;
-      var ip = subs.filter(function(s) { return getSubStatus(p.region, s) === 'in-progress'; }).length;
-      var detail = lang === 'fr' ? (startM + ' → ' + endM + '  ·  ' + p.weeks + 'w  ·  ' + d + '✓ ' + ip + '⏳') : (startM + ' → ' + endM + '  ·  ' + p.weeks + 'w  ·  ' + d + ' done, ' + ip + ' in progress');
-      document.getElementById('tt-name').textContent = p.name; document.getElementById('tt-detail').textContent = detail; document.getElementById('tt-desc').textContent = p.desc || ''; tooltip.style.opacity = '1';
+      var sm=mf[Math.floor(p.start)], em=mf[Math.min(Math.floor(p.start+p.dur),TOTAL_MONTHS-1)];
+      var d=subs.filter(function(s){return getSubStatus(p.region,s)==='completed';}).length;
+      var ip=subs.filter(function(s){return getSubStatus(p.region,s)==='in-progress';}).length;
+      document.getElementById('tt-name').textContent=p.name;
+      document.getElementById('tt-detail').textContent=lang==='fr'?(sm+' → '+em+'  ·  '+p.weeks+'w  ·  '+d+'✓ '+ip+'⏳'):(sm+' → '+em+'  ·  '+p.weeks+'w  ·  '+d+' done, '+ip+' in progress');
+      document.getElementById('tt-desc').textContent=p.desc||''; tooltip.style.opacity='1';
     });
-    row.addEventListener('mousemove', function(e) { tooltip.style.left = (e.clientX + 14) + 'px'; tooltip.style.top = (e.clientY - 10) + 'px'; });
-    row.addEventListener('mouseleave', function() { tooltip.style.opacity = '0'; });
-
-    // Click → switch to detail tab with zone pre-filtered
+    row.addEventListener('mousemove', function(e){tooltip.style.left=(e.clientX+14)+'px';tooltip.style.top=(e.clientY-10)+'px';});
+    row.addEventListener('mouseleave', function(){tooltip.style.opacity='0';});
     (function(region) {
-      row.style.cursor = 'pointer';
+      row.style.cursor='pointer';
       row.addEventListener('click', function() {
-        var sel = document.getElementById('filter-region');
-        if (sel) { sel.value = region; }
-        document.getElementById('filter-search').value = '';
-        document.getElementById('filter-status').value = '';
-        updateClearBtn();
-        renderDetail();
-        document.querySelectorAll('.tab').forEach(function(tb, i) {
-          tb.classList.toggle('active', ['summary','detail','comms','workflow'][i] === 'detail');
-        });
-        document.querySelectorAll('.tab-panel').forEach(function(p) {
-          p.classList.toggle('active', p.id === 'tab-detail');
-        });
-        var toggle = document.querySelector('.lang-toggle');
-        if (toggle) toggle.style.display = 'flex';
-        setTimeout(function() {
-          var wrap = document.querySelector('.detail-wrap');
-          if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
+        var sel=document.getElementById('filter-region'); if(sel) sel.value=region;
+        document.getElementById('filter-search').value='';
+        document.getElementById('filter-status').value='';
+        updateClearBtn(); renderDetail();
+        document.querySelectorAll('.tab').forEach(function(tb,i){tb.classList.toggle('active',['summary','detail','comms','workflow'][i]==='detail');});
+        document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.toggle('active',p.id==='tab-detail');});
+        var toggle=document.querySelector('.lang-toggle'); if(toggle) toggle.style.display='flex';
+        setTimeout(function(){var w=document.querySelector('.detail-wrap');if(w)w.scrollIntoView({behavior:'smooth',block:'start'});},100);
       });
     }(p.region));
   });
-  var fl = document.getElementById('gantt-footer-left'); var fr2 = document.getElementById('gantt-footer-right');
-  if (fl) fl.textContent = lang === 'fr' ? 'Avril 2026' : 'April 2026';
-  if (fr2) fr2.textContent = lang === 'fr' ? 'Janvier 2027' : 'January 2027';
+  var fl=document.getElementById('gantt-footer-left'), fr2=document.getElementById('gantt-footer-right');
+  if(fl) fl.textContent=lang==='fr'?'Avril 2026':'April 2026';
+  if(fr2) fr2.textContent=lang==='fr'?'Janvier 2027':'January 2027';
 }
 
 function renderStepsLegend() {
-  var grid = document.getElementById('steps-legend-grid'); grid.innerHTML = '';
+  var grid=document.getElementById('steps-legend-grid'); grid.innerHTML='';
   STEPS.forEach(function(s) {
-    var div = document.createElement('div'); div.className = 'step-pill';
-    div.title = lang==='en' ? s.descEN : s.descFR;
-    div.innerHTML = '<div class="snum">' + s.num + '</div><div><strong>' + (lang==='en'?s.labelEN:s.labelFR) + '</strong><br><span style="color:#555;font-size:10px">' + (lang==='en'?s.descEN:s.descFR) + '</span></div>';
+    var div=document.createElement('div'); div.className='step-pill'; div.title=lang==='en'?s.descEN:s.descFR;
+    div.innerHTML='<div class="snum">'+s.num+'</div><div><strong>'+(lang==='en'?s.labelEN:s.labelFR)+'</strong><br><span style="color:#555;font-size:10px">'+(lang==='en'?s.descEN:s.descFR)+'</span></div>';
     grid.appendChild(div);
   });
 }
 
 function renderDetailHeader() {
-  var tr = document.getElementById('detail-head');
-  tr.innerHTML = '<th class="left" style="width:28px"></th><th class="left">' + t('thZone') + '</th><th class="left">' + t('thSub') + '</th><th>' + t('thPeriod') + '</th>'
-    + STEPS.map(function(s) { return '<th title="' + (lang==='en'?s.descEN:s.descFR) + '">' + (lang==='en'?s.labelEN:s.labelFR) + '</th>'; }).join('')
-    + '<th>' + t('thProgress') + '</th><th>' + t('thStatus') + '</th>';
+  var tr=document.getElementById('detail-head');
+  tr.innerHTML='<th class="left" style="width:28px"></th><th class="left">'+t('thZone')+'</th><th class="left">'+t('thSub')+'</th><th>'+t('thPeriod')+'</th>'
+    +STEPS.map(function(s){return '<th title="'+(lang==='en'?s.descEN:s.descFR)+'">'+(lang==='en'?s.labelEN:s.labelFR)+'</th>';}).join('')
+    +'<th>'+t('thProgress')+'</th><th>'+t('thStatus')+'</th><th>'+t('thNotes')+'</th>';
 }
 
 function clearFilters() {
-  document.getElementById('filter-region').value = '';
-  document.getElementById('filter-search').value = '';
-  document.getElementById('filter-status').value = '';
+  document.getElementById('filter-region').value='';
+  document.getElementById('filter-search').value='';
+  document.getElementById('filter-status').value='';
   updateClearBtn(); renderDetail();
 }
-
 function updateClearBtn() {
-  var hasFilter = document.getElementById('filter-region').value || document.getElementById('filter-search').value || document.getElementById('filter-status').value;
-  document.getElementById('clear-filters-btn').classList.toggle('visible', !!hasFilter);
+  var has=document.getElementById('filter-region').value||document.getElementById('filter-search').value||document.getElementById('filter-status').value;
+  document.getElementById('clear-filters-btn').classList.toggle('visible',!!has);
 }
 
-var dragSrcKey = null;
+var dragSrcKey=null;
 
 function renderDetail() {
-  var filterRegion = document.getElementById('filter-region').value;
-  var filterSearch = document.getElementById('filter-search').value.toLowerCase();
-  var filterStatus = document.getElementById('filter-status').value;
-  var mf = t('monthsFull');
-  var tbody = document.getElementById('detail-body');
-  tbody.innerHTML = '';
+  var filterRegion=document.getElementById('filter-region').value;
+  var filterSearch=document.getElementById('filter-search').value.toLowerCase();
+  var filterStatus=document.getElementById('filter-status').value;
+  var mf=t('monthsFull'), tbody=document.getElementById('detail-body');
+  tbody.innerHTML='';
 
   REGIONS.forEach(function(r) {
-    if (filterRegion && filterRegion !== r.name) return;
-    var orderedSubs = subOrder[r.name] || r.subs;
+    if(filterRegion&&filterRegion!==r.name) return;
+    var orderedSubs=subOrder[r.name]||r.subs;
     orderedSubs.forEach(function(sub) {
-      if (filterSearch && !sub.toLowerCase().includes(filterSearch)) return;
-      var key = r.name + '|' + sub;
-      var stepMap = state[key];
-      var st = getStatus(stepMap);
-      if (filterStatus && filterStatus !== st) return;
-      var done = STEPS.filter(function(s) { return stepMap[s.key]; }).length;
-      var pct = Math.round(done / STEPS.length * 100);
-      var period = r.start !== r.end ? (mf[r.start] + ' – ' + mf[r.end]) : mf[r.start];
+      if(filterSearch&&!sub.toLowerCase().includes(filterSearch)) return;
+      var key=r.name+'|'+sub, stepMap=state[key], st=getStatus(stepMap);
+      if(filterStatus&&filterStatus!==st) return;
+      var done=STEPS.filter(function(s){return stepMap[s.key];}).length;
+      var pct=Math.round(done/STEPS.length*100);
+      var period=r.start!==r.end?(mf[r.start]+' – '+mf[r.end]):mf[r.start];
 
-      var tr = document.createElement('tr');
-      tr.dataset.key = key;
-      tr.setAttribute('draggable', isUnlocked ? 'true' : 'false');
+      var tr=document.createElement('tr');
+      tr.dataset.key=key;
+      tr.setAttribute('draggable',isUnlocked?'true':'false');
 
       // Drag handle
-      var handleTd = document.createElement('td');
-      handleTd.style.cssText = 'padding:4px 4px 4px 8px';
-      var handle = document.createElement('span');
-      handle.className = 'drag-handle' + (isUnlocked ? '' : ' locked');
-      handle.title = isUnlocked ? 'Drag to reorder' : t('lockedTip');
-      handle.textContent = '⣿';
-      handleTd.appendChild(handle);
-      tr.appendChild(handleTd);
+      var handleTd=document.createElement('td'); handleTd.style.cssText='padding:4px 4px 4px 8px';
+      var handle=document.createElement('span'); handle.className='drag-handle'+(isUnlocked?'':' locked');
+      handle.title=isUnlocked?'Drag to reorder':t('lockedTip'); handle.textContent='⣿';
+      handleTd.appendChild(handle); tr.appendChild(handleTd);
 
-      // Zone tag
-      var zoneTd = document.createElement('td');
-      zoneTd.className = 'left';
-      zoneTd.innerHTML = '<span class="region-tag">' + r.name + '</span>';
-      tr.appendChild(zoneTd);
+      // Zone
+      var zoneTd=document.createElement('td'); zoneTd.className='left';
+      zoneTd.innerHTML='<span class="region-tag">'+r.name+'</span>'; tr.appendChild(zoneTd);
 
-      // Subsidiary name — link to gap analysis if available
-      var subTd = document.createElement('td');
-      subTd.className = 'left';
-      subTd.style.fontWeight = '600';
-      var gapUrl = GAP_ANALYSIS_URLS[key];
-      if (gapUrl) {
-        var link = document.createElement('a');
-        link.href = gapUrl;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.textContent = sub;
-        link.title = lang === 'fr' ? 'Voir l\'analyse des écarts' : 'View gap analysis';
-        link.style.cssText = 'color:#2E5FA3;text-decoration:none;border-bottom:1px dashed #2E5FA3;';
-        link.addEventListener('mouseenter', function() { this.style.color='#1F3864'; this.style.borderBottomStyle='solid'; });
-        link.addEventListener('mouseleave', function() { this.style.color='#2E5FA3'; this.style.borderBottomStyle='dashed'; });
+      // Subsidiary — link if gap analysis exists
+      var subTd=document.createElement('td'); subTd.className='left'; subTd.style.fontWeight='600';
+      var gapUrl=GAP_ANALYSIS_URLS[key];
+      if(gapUrl) {
+        var link=document.createElement('a'); link.href=gapUrl; link.target='_blank'; link.rel='noopener noreferrer';
+        link.textContent=sub; link.title=lang==='fr'?'Voir l\'analyse des écarts':'View gap analysis';
+        link.style.cssText='color:#2E5FA3;text-decoration:none;border-bottom:1px dashed #2E5FA3;';
+        link.addEventListener('mouseenter',function(){this.style.color='#1F3864';this.style.borderBottomStyle='solid';});
+        link.addEventListener('mouseleave',function(){this.style.color='#2E5FA3';this.style.borderBottomStyle='dashed';});
         subTd.appendChild(link);
-      } else {
-        subTd.textContent = sub;
-      }
+      } else { subTd.textContent=sub; }
       tr.appendChild(subTd);
 
       // Period
-      var periodTd = document.createElement('td');
-      periodTd.style.cssText = 'color:#555;white-space:nowrap;font-size:11px';
-      periodTd.textContent = period;
-      tr.appendChild(periodTd);
+      var periodTd=document.createElement('td'); periodTd.style.cssText='color:#555;white-space:nowrap;font-size:11px';
+      periodTd.textContent=period; tr.appendChild(periodTd);
 
-      // Step checkboxes — using DOM, no innerHTML, no onclick strings
+      // Steps
       STEPS.forEach(function(s) {
-        var td = document.createElement('td');
-        td.className = 'step-check ' + (isUnlocked ? 'editable' : 'locked') + (stepMap[s.key] ? ' done' : '');
-        td.title = isUnlocked ? (stepMap[s.key] ? 'Done – click to undo' : 'Click to mark done') : t('lockedTip');
-        td.textContent = stepMap[s.key] ? '✅' : '⬜';
-        if (isUnlocked) {
-          (function(k, sk) {
-            td.addEventListener('click', function() { toggleStep(k, sk); });
-          }(key, s.key));
-        }
+        var td=document.createElement('td');
+        td.className='step-check '+(isUnlocked?'editable':'locked')+(stepMap[s.key]?' done':'');
+        td.title=isUnlocked?(stepMap[s.key]?'Done – click to undo':'Click to mark done'):t('lockedTip');
+        td.textContent=stepMap[s.key]?'✅':'⬜';
+        if(isUnlocked) { (function(k,sk){td.addEventListener('click',function(){toggleStep(k,sk);});}(key,s.key)); }
         tr.appendChild(td);
       });
 
-      // Progress bar
-      var progTd = document.createElement('td');
-      progTd.innerHTML = '<div style="display:flex;align-items:center;gap:8px;justify-content:center">'
-        + '<div class="prog-wrap"><div class="prog-bar" style="width:' + pct + '%"></div></div>'
-        + '<span style="font-size:11px;color:#555">' + pct + '%</span></div>';
+      // Progress
+      var progTd=document.createElement('td');
+      progTd.innerHTML='<div style="display:flex;align-items:center;gap:8px;justify-content:center"><div class="prog-wrap"><div class="prog-bar" style="width:'+pct+'%"></div></div><span style="font-size:11px;color:#555">'+pct+'%</span></div>';
       tr.appendChild(progTd);
 
-      // Status badge
-      var statusTd = document.createElement('td');
-      statusTd.innerHTML = statusBadge(st);
-      tr.appendChild(statusTd);
+      // Status
+      var statusTd=document.createElement('td'); statusTd.innerHTML=statusBadge(st); tr.appendChild(statusTd);
+
+      // ── NOTES COLUMN ──
+      var noteTd=document.createElement('td'); noteTd.style.cssText='white-space:nowrap;';
+      var existingComment=comments[key]||'';
+      var noteBtn=document.createElement('button');
+      noteBtn.className='comment-btn'+(existingComment?' has-comment':'');
+      noteBtn.textContent=existingComment?('💬 '+existingComment.slice(0,22)+(existingComment.length>22?'…':'')):t('addNote');
+      noteBtn.title=existingComment||(lang==='fr'?'Ajouter une note':'Add a note');
+      noteTd.appendChild(noteBtn); tr.appendChild(noteTd);
+
+      // Note expansion row
+      var noteRow=document.createElement('tr'); noteRow.className='comment-row'; noteRow.style.display='none';
+      var noteRowTd=document.createElement('td'); noteRowTd.colSpan=11+STEPS.length;
+      var noteBox=document.createElement('div'); noteBox.className='comment-box';
+      if(isUnlocked) {
+        var ta=document.createElement('textarea'); ta.className='comment-textarea';
+        ta.placeholder=t('notePlaceholder'); ta.value=existingComment;
+        var saveBtn=document.createElement('button'); saveBtn.className='comment-save-btn'; saveBtn.textContent=t('saveNote');
+        (function(k,btn,textarea,nb){
+          saveBtn.addEventListener('click',function(){
+            comments[k]=textarea.value.trim(); scheduleSave();
+            nb.textContent=comments[k]?('💬 '+comments[k].slice(0,22)+(comments[k].length>22?'…':'')):t('addNote');
+            nb.className='comment-btn'+(comments[k]?' has-comment':'');
+            nb.title=comments[k]||(lang==='fr'?'Ajouter une note':'Add a note');
+            noteRow.style.display='none';
+          });
+        }(key,saveBtn,ta,noteBtn));
+        noteBox.appendChild(ta); noteBox.appendChild(saveBtn);
+      } else {
+        var preview=document.createElement('div'); preview.style.cssText='font-size:12px;color:#555;font-style:italic;padding:4px 0';
+        preview.textContent=existingComment||t('noNote'); noteBox.appendChild(preview);
+      }
+      noteRowTd.appendChild(noteBox); noteRow.appendChild(noteRowTd);
+
+      // Toggle note row on button click
+      (function(nr,nb){nb.addEventListener('click',function(){nr.style.display=nr.style.display!=='none'?'none':'table-row';});}(noteRow,noteBtn));
 
       tbody.appendChild(tr);
+      tbody.appendChild(noteRow);
     });
   });
 
   // Drag handlers
-  var dragOverRow = null;
+  var dragOverRow=null;
   tbody.querySelectorAll('tr[data-key]').forEach(function(row) {
-    row.addEventListener('dragstart', function(e) {
-      dragSrcKey = row.dataset.key;
-      row.classList.add('dragging');
-      e.dataTransfer.effectAllowed = 'move';
-    });
-    row.addEventListener('dragend', function() {
-      row.classList.remove('dragging');
-      if (dragOverRow) { dragOverRow.classList.remove('drag-over'); dragOverRow = null; }
-    });
-    row.addEventListener('dragover', function(e) {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = 'move';
-      if (dragOverRow && dragOverRow !== row) dragOverRow.classList.remove('drag-over');
-      dragOverRow = row;
-      row.classList.add('drag-over');
-    });
-    row.addEventListener('dragleave', function() {
-      row.classList.remove('drag-over');
-      if (dragOverRow === row) dragOverRow = null;
-    });
-    row.addEventListener('drop', function(e) {
-      e.preventDefault();
-      row.classList.remove('drag-over');
-      dragOverRow = null;
-      if (!isUnlocked) return;
-      if (!dragSrcKey || dragSrcKey === row.dataset.key) return;
-      var srcParts = dragSrcKey.split('|'); var srcRegion = srcParts[0]; var srcSub = srcParts.slice(1).join('|');
-      var dstParts = row.dataset.key.split('|'); var dstRegion = dstParts[0]; var dstSub = dstParts.slice(1).join('|');
-      if (srcRegion !== dstRegion) return;
-      var order = subOrder[srcRegion];
-      var srcIdx = order.indexOf(srcSub); var dstIdx = order.indexOf(dstSub);
-      if (srcIdx === -1 || dstIdx === -1) return;
-      order.splice(srcIdx, 1);
-      order.splice(dstIdx, 0, srcSub);
-      renderDetail();
+    row.addEventListener('dragstart',function(e){dragSrcKey=row.dataset.key;row.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+    row.addEventListener('dragend',function(){row.classList.remove('dragging');if(dragOverRow){dragOverRow.classList.remove('drag-over');dragOverRow=null;}});
+    row.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';if(dragOverRow&&dragOverRow!==row)dragOverRow.classList.remove('drag-over');dragOverRow=row;row.classList.add('drag-over');});
+    row.addEventListener('dragleave',function(){row.classList.remove('drag-over');if(dragOverRow===row)dragOverRow=null;});
+    row.addEventListener('drop',function(e){
+      e.preventDefault();row.classList.remove('drag-over');dragOverRow=null;
+      if(!isUnlocked||!dragSrcKey||dragSrcKey===row.dataset.key) return;
+      var sp=dragSrcKey.split('|'),sr=sp[0],ss=sp.slice(1).join('|');
+      var dp=row.dataset.key.split('|'),dr=dp[0],ds=dp.slice(1).join('|');
+      if(sr!==dr) return;
+      var order=subOrder[sr],si=order.indexOf(ss),di=order.indexOf(ds);
+      if(si===-1||di===-1) return;
+      order.splice(si,1);order.splice(di,0,ss);renderDetail();
     });
   });
 }
 
-function toggleStep(key, stepKey) { if (!isUnlocked) return; state[key][stepKey] = !state[key][stepKey]; renderAll(); scheduleSave(); }
+function toggleStep(key,stepKey){if(!isUnlocked)return;state[key][stepKey]=!state[key][stepKey];renderAll();scheduleSave();}
 
-function renderAll() { updateCards(); renderGantt(); renderStepsLegend(); renderDetailHeader(); renderDetail(); renderComms(); updateLockUI(); }
+function renderAll(){updateCards();renderGantt();renderStepsLegend();renderDetailHeader();renderDetail();renderComms();updateLockUI();}
 
 function setLang(l) {
-  lang = l;
-  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.textContent.trim()===l.toUpperCase()); });
-  applyLang(); initFilters(); renderAll();
+  lang=l;
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.textContent.trim()===l.toUpperCase());});
+  applyLang();initFilters();renderAll();
 }
 
 function applyLang() {
-  var ids = {
-    'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta',
-    'tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail','tab-btn-comms':'tabComms','tab-btn-workflow':'tabWorkflow',
-    'card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend',
-    'gantt-title':'ganttTitle','detail-title':'detailTitle','legend-title':'legendTitle'
-  };
-  Object.entries(ids).forEach(function(e) { var el=document.getElementById(e[0]); if(el) el.textContent=t(e[1]); });
-  document.getElementById('filter-search').placeholder = t('filterSearch');
-  var hint = document.getElementById('gantt-click-hint');
-  if (hint) hint.textContent = lang === 'fr'
-    ? '👆 Cliquez sur une zone pour filtrer le Détail par Filiale'
-    : '👆 Click a zone to filter the Subsidiary Detail tab';
-  var clLbl = document.getElementById('clear-filters-label');
-  if (clLbl) clLbl.textContent = t('clearFilters');
+  var ids={'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta','tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail','tab-btn-comms':'tabComms','tab-btn-workflow':'tabWorkflow','card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend','gantt-title':'ganttTitle','detail-title':'detailTitle','legend-title':'legendTitle'};
+  Object.entries(ids).forEach(function(e){var el=document.getElementById(e[0]);if(el)el.textContent=t(e[1]);});
+  document.getElementById('filter-search').placeholder=t('filterSearch');
+  var hint=document.getElementById('gantt-click-hint');
+  if(hint) hint.textContent=lang==='fr'?'👆 Cliquez sur une zone pour filtrer le Détail par Filiale':'👆 Click a zone to filter the Subsidiary Detail tab';
+  var clLbl=document.getElementById('clear-filters-label'); if(clLbl) clLbl.textContent=t('clearFilters');
   updateLockUI();
 }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach(function(tb,i) { tb.classList.toggle('active', ['summary','detail','comms','workflow'][i]===tab); });
-  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.toggle('active', p.id==='tab-'+tab); });
-  var toggle = document.querySelector('.lang-toggle');
-  if (toggle) toggle.style.display = (tab === 'comms' || tab === 'workflow') ? 'none' : 'flex';
+  document.querySelectorAll('.tab').forEach(function(tb,i){tb.classList.toggle('active',['summary','detail','comms','workflow'][i]===tab);});
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.toggle('active',p.id==='tab-'+tab);});
+  var toggle=document.querySelector('.lang-toggle');
+  if(toggle) toggle.style.display=(tab==='comms'||tab==='workflow')?'none':'flex';
 }
 
 function initFilters() {
-  var fr = document.getElementById('filter-region'); var curR = fr.value;
-  fr.innerHTML = '<option value="">' + t('filterAllZones') + '</option>';
-  REGIONS.forEach(function(r) { var o=document.createElement('option'); o.value=r.name; o.textContent=r.name; fr.appendChild(o); }); fr.value = curR;
-  var fs = document.getElementById('filter-status'); var curS = fs.value;
-  fs.innerHTML = '<option value="">' + t('filterAllStatus') + '</option><option value="not-started">' + t('filterNotStarted') + '</option><option value="in-progress">' + t('filterInProgress') + '</option><option value="completed">' + t('filterCompleted') + '</option>'; fs.value = curS;
+  var fr=document.getElementById('filter-region'),curR=fr.value;
+  fr.innerHTML='<option value="">'+t('filterAllZones')+'</option>';
+  REGIONS.forEach(function(r){var o=document.createElement('option');o.value=r.name;o.textContent=r.name;fr.appendChild(o);}); fr.value=curR;
+  var fs=document.getElementById('filter-status'),curS=fs.value;
+  fs.innerHTML='<option value="">'+t('filterAllStatus')+'</option><option value="not-started">'+t('filterNotStarted')+'</option><option value="in-progress">'+t('filterInProgress')+'</option><option value="completed">'+t('filterCompleted')+'</option>';
+  fs.value=curS;
 }
 
-async function init() { await loadFromStorage(); applyLang(); initFilters(); renderAll(); document.getElementById('loading-overlay').classList.add('hidden'); }
+async function init(){await loadFromStorage();applyLang();initFilters();renderAll();document.getElementById('loading-overlay').classList.add('hidden');}
 init();
 </script>
 </body>
