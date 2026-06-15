@@ -75,6 +75,7 @@
     font-size: 12px; font-weight: 500; color: #fff;
     overflow: hidden; transition: all 0.2s ease;
   }
+  .bar .weeks { margin-left: auto; padding-left: 10px; font-size: 11px; font-weight: 400; opacity: 0.75; }
   .grid-line { position: absolute; top: 0; bottom: 0; width: 0.5px; background: #ebebeb; pointer-events: none; }
 
   .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
@@ -184,108 +185,8 @@
   .copy-btn { background: #2E5FA3; color: white; border: none; border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
   .copy-btn:hover { background: #1F3864; }
   .copy-btn.copied { background: #70AD47; }
-
-  /* ── EXCEL-STYLE COLUMN FILTERS ── */
-  .col-filter-btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 14px; height: 14px; margin-left: 5px; cursor: pointer;
-    background: rgba(255,255,255,0.2); border-radius: 3px; font-size: 9px;
-    vertical-align: middle; transition: background 0.15s; border: none; color: white;
-    flex-shrink: 0;
-  }
-  .col-filter-btn:hover { background: rgba(255,255,255,0.4); }
-  .col-filter-btn.active { background: #F4B942; color: #1F3864; }
-  .col-filter-popup {
-    display: none; position: fixed; z-index: 500;
-    background: white; border: 1px solid #c8d8f0; border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15); padding: 8px 0; min-width: 180px;
-    font-size: 12px; color: #1a1a2e;
-  }
-  .col-filter-popup.open { display: block; }
-  .col-filter-popup-title { padding: 6px 14px 8px; font-weight: 600; font-size: 11px;
-    color: #2E5FA3; text-transform: uppercase; letter-spacing: 0.04em;
-    border-bottom: 1px solid #eef0f3; margin-bottom: 4px; }
-  .col-filter-option { display: flex; align-items: center; gap: 8px;
-    padding: 6px 14px; cursor: pointer; transition: background 0.1s; }
-  .col-filter-option:hover { background: #f0f4ff; }
-  .col-filter-option input[type=checkbox] { cursor: pointer; width: 13px; height: 13px; }
-  .col-filter-popup-footer { padding: 8px 14px 2px; border-top: 1px solid #eef0f3; margin-top: 4px;
-    display: flex; gap: 6px; }
-  .col-filter-apply { flex: 1; background: #2E5FA3; color: white; border: none; border-radius: 5px;
-    padding: 5px 0; font-size: 11px; font-weight: 600; cursor: pointer; }
-  .col-filter-apply:hover { background: #1F3864; }
-  .col-filter-reset { flex: 1; background: #f0f0f0; color: #666; border: none; border-radius: 5px;
-    padding: 5px 0; font-size: 11px; font-weight: 600; cursor: pointer; }
-  .col-filter-reset:hover { background: #e0e0e0; }
-  .detail-table th { position: relative; }
-
-  /* ── COMMENTS ── */
-  .comment-btn {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: transparent; border: 1px solid #dde6f5; border-radius: 6px;
-    padding: 3px 8px; font-size: 11px; cursor: pointer;
-    color: #888; transition: all 0.15s; white-space: nowrap; font-family: Arial, sans-serif;
-  }
-  .comment-btn:hover { background: #f0f4ff; border-color: #2E5FA3; color: #2E5FA3; }
-  .comment-btn.has-comment { background: #f0f4ff; border-color: #2E5FA3; color: #2E5FA3; font-weight: 500; }
-  .comment-row td { padding: 0 !important; border-bottom: 1px solid #eef0f3 !important; background: #f8faff !important; }
-  .comment-box { display: flex; gap: 8px; align-items: flex-start; padding: 10px 16px 10px 40px; border-top: 1px dashed #c8d8f0; }
-  .comment-textarea {
-    flex: 1; border: 1.5px solid #dde6f5; border-radius: 7px;
-    padding: 8px 10px; font-size: 12px; font-family: Arial, sans-serif;
-    resize: vertical; min-height: 56px; outline: none;
-    transition: border-color 0.2s; background: white;
-  }
-  .comment-textarea:focus { border-color: #2E5FA3; }
-  .comment-save-btn {
-    background: #2E5FA3; color: white; border: none; border-radius: 6px;
-    padding: 7px 14px; font-size: 12px; font-weight: 600; cursor: pointer;
-    white-space: nowrap; transition: background 0.2s; font-family: Arial, sans-serif;
-  }
-  .comment-save-btn:hover { background: #1F3864; }
-
-  /* ── NOTES TAB ── */
-  .notes-section { margin-bottom: 28px; }
-  .notes-section-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px; background: #f0f4ff; border: 1px solid #c8d8f0;
-    border-radius: 8px 8px 0 0; cursor: pointer; user-select: none;
-  }
-  .notes-section-header h3 { font-size: 13px; font-weight: 600; color: #1F3864; margin: 0; }
-  .notes-section-header .section-toggle { font-size: 12px; color: #888; }
-  .notes-section-body { border: 1px solid #c8d8f0; border-top: none; border-radius: 0 0 8px 8px; padding: 16px; background: white; }
-  .notes-section-body.collapsed { display: none; }
-
-  .note-item { border: 1px solid #eef0f3; border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; background: #fafbfe; position: relative; }
-  .note-item:last-child { margin-bottom: 0; }
-  .note-item-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-  .note-priority { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; }
-  .note-priority.high { background: #FDDCDC; color: #A12B2B; }
-  .note-priority.medium { background: #FEF3C7; color: #92400E; }
-  .note-priority.low { background: #B7E1CD; color: #1a6b4a; }
-  .note-priority.resolved { background: #DCFCE7; color: #166534; }
-  .note-title { font-size: 13px; font-weight: 600; color: #1F3864; flex: 1; }
-  .note-date { font-size: 11px; color: #aaa; }
-  .note-body { font-size: 12px; color: #555; line-height: 1.6; white-space: pre-wrap; }
-  .note-zone { display: inline-block; background: #e8eef8; color: #2E5FA3; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; margin-right: 6px; }
-  .note-delete-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; cursor: pointer; color: #ccc; font-size: 14px; padding: 2px 6px; border-radius: 4px; }
-  .note-delete-btn:hover { background: #fff0f0; color: #c00; }
-
-  .add-note-form { border: 1.5px dashed #c8d8f0; border-radius: 8px; padding: 16px; margin-top: 8px; background: #f8faff; }
-  .add-note-form input, .add-note-form textarea, .add-note-form select {
-    width: 100%; border: 1.5px solid #dde6f5; border-radius: 7px; padding: 8px 10px;
-    font-size: 12px; font-family: Arial, sans-serif; outline: none; margin-bottom: 8px;
-    background: white; transition: border-color 0.2s; box-sizing: border-box;
-  }
-  .add-note-form input:focus, .add-note-form textarea:focus, .add-note-form select:focus { border-color: #2E5FA3; }
-  .add-note-form textarea { min-height: 80px; resize: vertical; }
-  .add-note-row { display: flex; gap: 8px; }
-  .add-note-row input, .add-note-row select { margin-bottom: 8px; }
-  .add-note-submit { background: #2E5FA3; color: white; border: none; border-radius: 7px; padding: 8px 18px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: Arial, sans-serif; }
-  .add-note-submit:hover { background: #1F3864; }
-  .add-note-cancel { background: #f0f0f0; color: #666; border: none; border-radius: 7px; padding: 8px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: Arial, sans-serif; }
-  .add-note-toggle { background: transparent; border: 1.5px dashed #2E5FA3; color: #2E5FA3; border-radius: 7px; padding: 6px 14px; font-size: 12px; cursor: pointer; font-family: Arial, sans-serif; margin-top: 8px; }
-  .add-note-toggle:hover { background: #f0f4ff; }
+  .vars-note { background: #fff8e6; border: 1px solid #f4d87a; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: #7a5c00; margin-bottom: 20px; }
+  .vars-note strong { color: #5a4000; }
 </style>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
@@ -339,7 +240,6 @@
   <div class="tab" onclick="switchTab('detail')" id="tab-btn-detail">Subsidiary Detail</div>
   <div class="tab" onclick="switchTab('comms')" id="tab-btn-comms">Communications</div>
   <div class="tab" onclick="switchTab('workflow')" id="tab-btn-workflow">Workflow</div>
-  <div class="tab" onclick="switchTab('notes')" id="tab-btn-notes">Notes</div>
 </div>
 
 <div class="container">
@@ -367,20 +267,6 @@
     </div>
     <div id="gantt-click-hint" style="font-size:11px;color:#bbb;text-align:center;margin-top:2px;padding-bottom:2px">
       👆 Click a zone to filter the Subsidiary Detail tab
-    </div>
-
-    <!-- REAL GANTT -->
-    <div class="gantt-wrap" style="margin-top:16px">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
-        <span style="font-size:14px;font-weight:700;color:#1F3864" id="real-gantt-title">Actual Progress – Real Gantt</span>
-        <span style="font-size:11px;color:#bbb" id="real-gantt-start">Start: 15/05/2026</span>
-      </div>
-      <div class="month-row" id="real-gantt-month-row"></div>
-      <div id="real-gantt-body"></div>
-      <div style="display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:0.5px solid #ebebeb">
-        <span style="font-size:11px;color:#bbb" id="real-gantt-footer-left">May 2026</span>
-        <span style="font-size:11px;color:#bbb" id="real-gantt-footer-right">January 2027</span>
-      </div>
     </div>
     <div id="gantt-tooltip" style="position:fixed;background:#fff;border:0.5px solid #ccc;border-radius:8px;padding:10px 14px;font-size:12px;color:#1a1a1a;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:9999;min-width:180px;max-width:240px;box-shadow:0 4px 12px rgba(0,0,0,0.08)">
       <div style="font-weight:500;margin-bottom:4px;font-size:13px" id="tt-name"></div>
@@ -423,8 +309,6 @@
       <div class="comms-cards" id="comms-inapp-cards"></div>
       <div class="comms-section-title" id="comms-email-title">📧 Company Email — Contractor Company Contact (Customer.io)</div>
       <div class="comms-cards" id="comms-email-cards"></div>
-      <div class="comms-section-title" id="comms-closure-title">✅ Project Closure Email — Subsidiary Administrator (Step 6)</div>
-      <div class="comms-cards" id="comms-closure-cards"></div>
     </div>
   </div>
 
@@ -434,12 +318,16 @@
       <p class="comms-sub" id="workflow-sub">End-to-end view of the harmonisation project — from initiation to post-deployment.</p>
       <div class="comms-section-title">Global project workflow — 7 steps</div>
       <div style="overflow-x:auto;margin-bottom:28px">
-        <svg width="100%" viewBox="0 0 680 820" style="max-width:520px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">
+        <svg width="100%" viewBox="0 0 680 820" xmlns="http://www.w3.org/2000/svg">
           <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-          <rect x="40" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="60" y="31">TotalEnergies HQ</text>
-          <rect x="200" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="220" y="31">IZI Safety</text>
-          <rect x="310" y="20" width="14" height="14" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="330" y="31">Subsidiary admin</text>
-          <rect x="460" y="20" width="14" height="14" rx="3" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/><text font-size="12" fill="#555" font-family="Arial,sans-serif" x="480" y="31">Contractor company</text>
+          <rect x="40" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="60" y="31">TotalEnergies HQ</text>
+          <rect x="200" y="20" width="14" height="14" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="220" y="31">IZI Safety</text>
+          <rect x="310" y="20" width="14" height="14" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="330" y="31">Subsidiary admin</text>
+          <rect x="460" y="20" width="14" height="14" rx="3" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+          <text font-size="12" fill="#555" font-family="Arial,sans-serif" x="480" y="31">Contractor company</text>
           <rect x="200" y="60" width="280" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#0C447C" font-family="Arial,sans-serif" x="340" y="83" text-anchor="middle">Step 1 — Project initiation</text>
           <text font-size="12" fill="#185FA5" font-family="Arial,sans-serif" x="340" y="101" text-anchor="middle">HQ sends initiation email to subsidiary</text>
@@ -480,7 +368,7 @@
       </div>
       <div class="comms-section-title">Customer.io automation flow — detail</div>
       <div style="overflow-x:auto">
-        <svg width="100%" viewBox="0 0 680 640" style="max-width:520px;display:block;margin:0 auto" xmlns="http://www.w3.org/2000/svg">
+        <svg width="100%" viewBox="0 0 680 640" xmlns="http://www.w3.org/2000/svg">
           <defs><marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
           <rect x="200" y="30" width="280" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
           <text font-size="14" font-weight="500" fill="#085041" font-family="Arial,sans-serif" x="340" y="53" text-anchor="middle">Trigger: profile_updated</text>
@@ -518,19 +406,6 @@
     </div>
   </div>
 
-
-  <!-- ── NOTES TAB ── -->
-  <div class="tab-panel" id="tab-notes">
-    <div class="comms-wrap">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-        <h2 id="notes-title">Friction Points &amp; Bottlenecks</h2>
-        <span style="font-size:11px;color:#aaa" id="notes-lock-hint">Unlock editing to add notes</span>
-      </div>
-      <p class="comms-sub" id="notes-sub">Project friction log — updated as the deployment progresses.</p>
-      <div id="notes-body"></div>
-    </div>
-  </div>
-
 </div>
 
 <div class="save-indicator" id="save-indicator">✓ Saved</div>
@@ -561,10 +436,25 @@ const REGIONS = [
   { name:"LUB",      count:5, start:8, end:9, color:"#939DA8", subs:["Argentine","Brésil","Chili","Mexique","USA"] },
 ];
 
+// Gap analysis URLs — add URL as each page becomes ready
 const GAP_ANALYSIS_URLS = {
   "AFR/AFO|Côte d'Ivoire": "https://izisafety.github.io/Gap-Analysis-IvoryCoast/",
   "AFR/AFO|Cameroun": "https://izisafety.github.io/Gap-analysis-Cameroon/",
   "EOMC": "https://izisafety.github.io/Gap-Analysis-Reunion/",
+  // "AFR/AFO|Ghana":               https://izisafety.github.io/Gap-Analysis-Reunion/",
+  // "AFR/AFO|Sénégal":             "https://izisafety.github.io/Gap-Analysis-Senegal/",
+  // "AFR/AFO|Togo":                "https://izisafety.github.io/Gap-Analysis-Togo/",
+  // "AFR/AFO|Guinée Conakry":      "https://izisafety.github.io/Gap-Analysis-Guinea/",
+  // "AFR/AFO|Gabon":               "https://izisafety.github.io/Gap-Analysis-Gabon/",
+  // "AFR/AFO|Guinée Equatoriale":  "https://izisafety.github.io/Gap-Analysis-EquatorialGuinea/",
+  // "AFR/MOI|Tunisie":             "https://izisafety.github.io/Gap-Analysis-Tunisia/",
+  // "AFR/MOI|Maurice":             "https://izisafety.github.io/Gap-Analysis-Mauritius/",
+  // "AFR/MOI|Maroc":               "https://izisafety.github.io/Gap-Analysis-Morocco/",
+  // "AFR/MOI|Algérie":             "https://izisafety.github.io/Gap-Analysis-Algeria/",
+  // "AFR/MOI|Egypte":              "https://izisafety.github.io/Gap-Analysis-Egypt/",
+  // "AFR/MOI|Ethiopie":            "https://izisafety.github.io/Gap-Analysis-Ethiopia/",
+  // "AFR/MOI|Madagascar":          "https://izisafety.github.io/Gap-Analysis-Madagascar/",
+  // "AFR/MOI|Mozambique":          "https://izisafety.github.io/Gap-Analysis-Mozambique/",
 };
 
 const STEPS = [
@@ -576,67 +466,34 @@ const STEPS = [
   { num:6, key:'s6', labelEN:'Step 6', labelFR:'Étape 6', descEN:'Project closure communication to admins and contractors', descFR:'Communication de clôture auprès des admins et contractants' },
 ];
 
+// Day-based fractions (total timeline = 279 days, Apr 28 → Jan 31)
+// Month boundaries: Apr(3d)=0.0108, May=0.1219, Jun=0.2294, Jul=0.3405,
+//   Aug=0.4516, Sep=0.5591, Oct=0.6703, Nov=0.7778, Dec=0.8889, Jan=1.0
 const MONTH_BREAKS = [0, 0.0108, 0.1219, 0.2294, 0.3405, 0.4516, 0.5591, 0.6703, 0.7778, 0.8889, 1.0];
 const PHASES = [
-  { name:'AFR/AFO (8)',  start:0.0000, dur:0.1613, weeks:5, color:'#939DA8', region:'AFR/AFO',  desc:"Ghana, Togo, Guinée Conakry, Cameroun, Sénégal, Côte d'ivoire, Gabon, Guinée Equatoriale" },
-  { name:'AFR/MOI (8)',  start:0.1541, dur:0.1613, weeks:5, color:'#939DA8', region:'AFR/MOI',  desc:'Tunisie, Maurice, Maroc, Algérie, Egypte, Ethiopie, Madagascar, Mozambique' },
-  { name:'AFR/NG (1)',   start:0.2975, dur:0.0681, weeks:3, color:'#939DA8', region:'AFR/NG',   desc:'Nigéria' },
-  { name:'AFR/ACE (8)',  start:0.3441, dur:0.1613, weeks:5, color:'#939DA8', region:'AFR/ACE',  desc:'Malawi, Zambie, RDC, Congo, Ouganda, Kenya, Tanzanie, Zimbabwe' },
-  { name:'AFR/ASNE (2)', start:0.5054, dur:0.0968, weeks:4, color:'#939DA8', region:'AFR/ASNE', desc:'Afrique du sud, Namibie' },
-  { name:'APMO (5)',     start:0.6093, dur:0.1039, weeks:4, color:'#939DA8', region:'APMO',     desc:'Cambodge, Fidji, Inde, Jordanie, Liban' },
-  { name:'EOMC (7)',     start:0.7025, dur:0.1470, weeks:5, color:'#939DA8', region:'EOMC',     desc:'Antilles Guyane, Rep Dominicaine, Polynésie, Jamaïque, Mayotte, Porto Rico, Réunion' },
-  { name:'LUB (5)',      start:0.8315, dur:0.1254, weeks:5, color:'#939DA8', region:'LUB',      desc:'Argentine, Brésil, Chili, Mexique, États-Unis' },
+  { name:'AFR/AFO (8)',  start:0.0000, dur:0.1613, weeks:5,    color:'#939DA8', region:'AFR/AFO',  desc:"Ghana, Togo, Guinée Conakry, Cameroun, Sénégal, Côte d'ivoire, Gabon, Guinée Equatoriale" },
+  { name:'AFR/MOI (8)',  start:0.1541, dur:0.1613, weeks:5,    color:'#939DA8', region:'AFR/MOI',  desc:'Tunisie, Maurice, Maroc, Algérie, Egypte, Ethiopie, Madagascar, Mozambique' },
+  { name:'AFR/NG (1)',   start:0.2975, dur:0.0681, weeks:3,    color:'#939DA8', region:'AFR/NG',   desc:'Nigéria' },
+  { name:'AFR/ACE (8)',  start:0.3441, dur:0.1613, weeks:5,    color:'#939DA8', region:'AFR/ACE',  desc:'Malawi, Zambie, RDC, Congo, Ouganda, Kenya, Tanzanie, Zimbabwe' },
+  { name:'AFR/ASNE (2)', start:0.5054, dur:0.0968, weeks:4,    color:'#939DA8', region:'AFR/ASNE', desc:'Afrique du sud, Namibie' },
+  { name:'APMO (5)',     start:0.6093, dur:0.1039, weeks:4,    color:'#939DA8', region:'APMO',     desc:'Cambodge, Fidji, Inde, Jordanie, Liban' },
+  { name:'EOMC (7)',     start:0.7025, dur:0.1470, weeks:5,    color:'#939DA8', region:'EOMC',     desc:'Antilles Guyane, Rep Dominicaine, Polynésie, Jamaïque, Mayotte, Porto Rico, Réunion' },
+  { name:'LUB (5)',      start:0.8315, dur:0.1254, weeks:5,    color:'#939DA8', region:'LUB',      desc:'Argentine, Brésil, Chili, Mexique, États-Unis' },
 ];
 const TOTAL_MONTHS = 1;
 
 const CORRECT_PIN = 'Izisafety26$';
-var isUnlocked = false;
+let isUnlocked = false;
 const state = {};
-REGIONS.forEach(function(r) { r.subs.forEach(function(s) {
+REGIONS.forEach(r => r.subs.forEach(s => {
   state[r.name + '|' + s] = {};
-  STEPS.forEach(function(st) { state[r.name + '|' + s][st.key] = false; });
-}); });
+  STEPS.forEach(st => { state[r.name + '|' + s][st.key] = false; });
+}));
 
 const subOrder = {};
-REGIONS.forEach(function(r) { subOrder[r.name] = r.subs.slice(); });
+REGIONS.forEach(r => { subOrder[r.name] = r.subs.slice(); });
 
-// Comments store — key: "REGION|Sub", value: string
-var comments = {};
-
-// Notes store: array of sections, each with items
-var notesData = {
-  sections: [
-    {
-      id: 'achievements', 
-      titleEN: '1. What Has Been Achieved', titleFR: '1. Ce Qui a Été Accompli',
-      collapsed: false, items: ["The project is moving forward. Ivory coast is the first fully completed subsidiary and serves as our validated reference for the AFR/AFO wave. Five additional subsidiaries are currently active : Cameroun, Ghana, Guinée Équatoriale (AFR/AFO), Réunion and Antilles Guyane (EOMC) : all engaged in the process. Two zones are progressing simultaneously, reflecting the ambition and momentum of the rollout.
-"The methodology is proven: the comparative analysis, contractor communication and platform update steps are all working as designed. What takes time are the steps that depend on external availability and technical constraints : detailed below.
-]
-    },
-    {
-      id: 'friction',
-      titleEN: '2. Friction Points', titleFR: '2. Points de Friction',
-      collapsed: false, items: []
-    },
-    {
-      id: 'factors',
-      titleEN: '3. Factors Affecting the Timeline', titleFR: '3. Facteurs Impactant le Planning',
-      collapsed: false, items: []
-    },
-    {
-      id: 'actions',
-      titleEN: '4. Action Plan', titleFR: '4. Plan d’Action',
-      collapsed: false, items: []
-    },
-    {
-      id: 'nextsteps',
-      titleEN: '5. Next Steps', titleFR: '5. Prochaines Étapes',
-      collapsed: false, items: []
-    }
-  ]
-};
-
-var lang = 'en';
+let lang = 'en';
 
 const TEMPLATES = {
   initiation: {
@@ -647,10 +504,6 @@ const TEMPLATES = {
     fr: "Bonjour {{first_name}},\n\nVotre profil IZI Safety a été mis à jour dans le cadre du projet d'harmonisation des profils utilisateurs de TotalEnergies {{entity}}.\n\nVoici ce qui change pour vous :\n\n📘 Nouveaux e-learnings à compléter :\n• {{new_elearnings}}\n\n✅ Ressources retirées de votre profil :\n• {{removed_resources}}\n\nMerci de compléter les nouveaux modules dès que possible afin de maintenir votre conformité.\n\nUne question ? Contactez le support IZI Safety : support@izisafety.com\n\nL'équipe IZI Safety",
     en: "Hello {{first_name}},\n\nYour IZI Safety profile has been updated as part of TotalEnergies {{entity}}'s user profile harmonisation project.\n\nHere is what has changed for you:\n\n📘 New e-learnings to complete:\n• {{new_elearnings}}\n\n✅ Resources removed from your profile:\n• {{removed_resources}}\n\nPlease complete the new modules as soon as possible to maintain your compliance status.\n\nAny questions? Contact IZI Safety support: support@izisafety.com\n\nThe IZI Safety Team"
   },
-  closure: {
-    fr: "Bonjour a vous,\n\nJ'espere que vous allez bien.\n\nJe reviens vers vous pour vous informer que l'harmonisation des profils utilisateurs sur le perimetre de votre filiale est finalisee. Pour plus d'informations sur l'analyse d'impact, veuillez visiter cette page : {{gap_analysis_url}}\n\nLes referents des entreprises contractantes concernees ont ete informes par email des modifications apportees a leurs profils, et invites a veiller a ce que leurs employes prennent connaissance des nouvelles ressources requises afin de maintenir leur conformite.\n\nJe reste bien entendu disponible pour tout point complementaire, et nous suivrons ensemble la progression de la mise en conformite dans les prochaines semaines.\n\nUn grand merci pour votre disponibilite et votre engagement tout au long de ce deploiement, votre reactivite a beaucoup facilite le travail.\n\nBien cordialement,",
-    en: "Dear all,\n\nI hope this message finds you well.\n\nI am writing to inform you that the user profile harmonisation for your subsidiary is now complete. For more information on the impact analysis, please visit this page: {{gap_analysis_url}}\n\nThe contacts of the relevant contractor companies have been notified by email of the changes made to their profiles, and invited to ensure that their employees review the newly required resources in order to maintain their compliance.\n\nI remain of course available for any further discussion, and we will monitor the compliance progress together over the coming weeks.\n\nA big thank you for your availability and commitment throughout this deployment — your responsiveness made the work much easier.\n\nBest regards,"
-  },
   email: {
     fr: "Objet : Mise à jour des profils utilisateurs dans IZI Safety {{entity}}\n\nBonjour,\n\nDans le cadre du projet d'harmonisation des profils \"Utilisateurs\" piloté par TotalEnergies {{entity}}, nous vous informons que certains d'entre eux ont été mis à jour sur la plateforme.\n\nCes modifications s'inscrivent dans un effort de standardisation des exigences de sécurité à l'échelle de toutes les filiales TotalEnergies. Votre personnel est invité à compléter les nouveaux modules et/ou transmettre les documents requis.\n\nNous vous recommandons de vous assurer qu'ils prennent connaissance de ces mises à jour dans les meilleurs délais afin de maintenir leur conformité.\n\nPour toute question : support@izi.net\n\nCordialement,\nL'équipe IZI Safety",
     en: "Subject: User profile harmonization in IZI Safety - {{entity}}\n\nHello,\n\nAs part of the \"User\" profile harmonization project led by TotalEnergies {{entity}}, we inform you that some of them have been updated on the platform.\n\nThese changes are part of an effort to standardize security requirements across all TotalEnergies subsidiaries. Your staff are invited to complete the new modules and/or submit the required documents.\n\nWe recommend that you ensure they are aware of these updates as soon as possible to maintain their compliance.\n\nAny questions? Contact support at: support@izi.net\n\nBest regards,\nThe IZI Safety Team"
@@ -659,41 +512,48 @@ const TEMPLATES = {
 
 function renderComms() {
   var sections = [
-    { el: document.getElementById('comms-init-cards'),    type: 'initiation', channel: lang === 'fr' ? 'Email – Étape 1' : 'Email – Step 1' },
-    { el: document.getElementById('comms-inapp-cards'),   type: 'inapp',      channel: lang === 'fr' ? 'Notification in-app' : 'In-app notification' },
-    { el: document.getElementById('comms-email-cards'),   type: 'email',      channel: lang === 'fr' ? 'Email Customer.io' : 'Customer.io email' },
-    { el: document.getElementById('comms-closure-cards'), type: 'closure',    channel: lang === 'fr' ? 'Email – Étape 6' : 'Email – Step 6' },
+    { el: document.getElementById('comms-init-cards'),  type: 'initiation', channel: lang === 'fr' ? 'Email – Étape 1' : 'Email – Step 1' },
+    { el: document.getElementById('comms-inapp-cards'), type: 'inapp',      channel: lang === 'fr' ? 'Notification in-app' : 'In-app notification' },
+    { el: document.getElementById('comms-email-cards'), type: 'email',      channel: lang === 'fr' ? 'Email Customer.io' : 'Customer.io email' },
   ];
   sections.forEach(function(s) {
     var el = s.el, type = s.type, channel = s.channel;
     el.innerHTML = ['fr', 'en'].map(function(l) {
       return '<div class="comms-card">'
-        + '<div class="comms-card-header"><span class="lang-badge ' + l + '">' + l.toUpperCase() + '</span><span class="channel-badge">' + channel + '</span></div>'
+        + '<div class="comms-card-header">'
+        + '<span class="lang-badge ' + l + '">' + l.toUpperCase() + '</span>'
+        + '<span class="channel-badge">' + channel + '</span>'
+        + '</div>'
         + '<div class="comms-card-body" id="tpl-' + type + '-' + l + '">' + TEMPLATES[type][l] + '</div>'
-        + '<div class="comms-card-footer"><button class="copy-btn" id="copy-' + type + '-' + l + '" onclick="copyTemplate(\'' + type + '\',\'' + l + '\')">' + (lang === 'fr' ? 'Copier' : 'Copy') + '</button></div>'
-        + '</div>';
+        + '<div class="comms-card-footer">'
+        + '<button class="copy-btn" id="copy-' + type + '-' + l + '" onclick="copyTemplate(\'' + type + '\',\'' + l + '\')">'
+        + (lang === 'fr' ? 'Copier' : 'Copy')
+        + '</button></div></div>';
     }).join('');
   });
   document.getElementById('comms-inapp-title').textContent = lang === 'fr' ? '📱 Notification In-App — Collaborateur individuel (Étapes 4 & 6)' : '📱 In-App Notification — Individual Worker (Steps 4 & 6)';
   document.getElementById('comms-email-title').textContent = lang === 'fr' ? '📧 Email Entreprise — Contact société contractante (Customer.io)' : '📧 Company Email — Contractor Company Contact (Customer.io)';
-  document.getElementById('comms-closure-title').textContent = lang === 'fr' ? '✅ Email de Clôture — Administrateur de filiale (Étape 6)' : '✅ Project Closure Email — Subsidiary Administrator (Step 6)';
   document.getElementById('comms-title').textContent = lang === 'fr' ? 'Modèles de Communication' : 'Communication Templates';
   document.getElementById('comms-sub').textContent = lang === 'fr' ? "Modèles prêts à l'emploi pour les étapes 4 et 6. Cliquez sur \"Copier\" pour copier dans le presse-papier." : 'Ready-to-use templates for Step 4 and Step 6. Click "Copy" to copy any template to your clipboard.';
 }
 
 function copyTemplate(type, l) {
-  navigator.clipboard.writeText(TEMPLATES[type][l]).then(function() {
+  var text = TEMPLATES[type][l];
+  navigator.clipboard.writeText(text).then(function() {
     var btn = document.getElementById('copy-' + type + '-' + l);
     btn.textContent = lang === 'fr' ? '✓ Copié !' : '✓ Copied!';
     btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = lang === 'fr' ? 'Copier' : 'Copy'; btn.classList.remove('copied'); }, 2000);
+    setTimeout(function() {
+      btn.textContent = lang === 'fr' ? 'Copier' : 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
   });
 }
 
 const T = {
   en: {
     hTitle:'IZI Safety — User Profile Harmonization', hSub:'Planning Tracker | Schedule: 28/04/2026 – 31/01/2027', hMeta:'45 subsidiaries · 8 zones · 9 months',
-    tabOverview:'Overview', tabDetail:'Subsidiary Detail', tabComms:'Communications', tabWorkflow:'Workflow', tabNotes:'Notes',
+    tabOverview:'Overview', tabDetail:'Subsidiary Detail', tabComms:'Communications', tabWorkflow:'Workflow',
     cardTotal:'Total Subsidiaries', cardDone:'Completed', cardProg:'In Progress', cardPend:'Not Started',
     ganttTitle:'General Schedule – Gantt View by Zone',
     months:['Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.','Jan.'],
@@ -701,18 +561,17 @@ const T = {
     detailTitle:'Detailed Tracking by Subsidiary', legendTitle:'Tracked Steps',
     filterAllZones:'All zones', filterSearch:'Search subsidiary…', filterAllStatus:'All statuses',
     filterNotStarted:'Not started', filterInProgress:'In progress', filterCompleted:'Completed',
-    thZone:'Zone', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status', thNotes:'Notes',
+    thZone:'Zone', thSub:'Subsidiary', thPeriod:'Period', thProgress:'Progress', thStatus:'Status',
     badgeNotStarted:'Not started', badgeInProgress:'In progress', badgeCompleted:'Completed',
     lockLabel:'View only', unlockLabel:'Editing unlocked',
     modalTitle:'Admin Access', modalDesc:'Enter your PIN to unlock editing.',
     modalCancel:'Cancel', modalConfirm:'Unlock', pinWrong:'Incorrect PIN. Try again.',
     saving:'Saving…', saved:'✓ Saved', savedLocal:'✓ Saved locally', lockedTip:'Unlock editing to interact',
-    clearFilters:'Clear filters', addNote:'+ Note', saveNote:'Save', noNote:'No note',
-    notePlaceholder:'Add a note about this subsidiary…'
+    clearFilters:'Clear filters'
   },
   fr: {
     hTitle:'IZI Safety — Harmonisation des Profils Utilisateurs', hSub:'Planning Tracker | Calendrier : 28/04/2026 – 31/01/2027', hMeta:'45 filiales · 8 zones · 9 mois',
-    tabOverview:'Vue Générale', tabDetail:'Détail par Filiale', tabComms:'Communications', tabWorkflow:'Flux', tabNotes:'Notes',
+    tabOverview:'Vue Générale', tabDetail:'Détail par Filiale', tabComms:'Communications', tabWorkflow:'Flux',
     cardTotal:'Total Filiales', cardDone:'Complétées', cardProg:'En cours', cardPend:'Non démarrées',
     ganttTitle:'Planning Général – Vue Gantt par Zone',
     months:['Avr.','Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.','Jan.'],
@@ -720,21 +579,19 @@ const T = {
     detailTitle:'Suivi Détaillé par Filiale', legendTitle:'Étapes suivies',
     filterAllZones:'Toutes les zones', filterSearch:'Rechercher une filiale…', filterAllStatus:'Tous les statuts',
     filterNotStarted:'Non démarré', filterInProgress:'En cours', filterCompleted:'Complété',
-    thZone:'Zone', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut', thNotes:'Notes',
+    thZone:'Zone', thSub:'Filiale', thPeriod:'Période', thProgress:'Progression', thStatus:'Statut',
     badgeNotStarted:'Non démarré', badgeInProgress:'En cours', badgeCompleted:'Complété',
     lockLabel:'Lecture seule', unlockLabel:'Édition déverrouillée',
     modalTitle:'Accès administrateur', modalDesc:"Entrez votre PIN pour déverrouiller l'édition.",
     modalCancel:'Annuler', modalConfirm:'Déverrouiller', pinWrong:'PIN incorrect. Réessayez.',
     saving:'Enregistrement…', saved:'✓ Enregistré', savedLocal:'✓ Enregistré localement',
-    lockedTip:'Déverrouiller pour interagir', clearFilters:'Effacer les filtres',
-    addNote:'+ Note', saveNote:'Enregistrer', noNote:'Aucune note',
-    notePlaceholder:'Ajouter une note sur cette filiale…'
+    lockedTip:'Déverrouiller pour interagir', clearFilters:'Effacer les filtres'
   }
 };
 function t(k) { return T[lang][k] || k; }
 
 const STORAGE_KEY = 'izi_tracker_state_v1';
-var saveTimer = null;
+let saveTimer = null;
 
 function waitForFirebase(timeout) {
   timeout = timeout || 5000;
@@ -755,28 +612,12 @@ async function loadFromStorage() {
 }
 
 function applyStateFromObj(saved) {
-  try {
-    Object.keys(saved).forEach(function(k) {
-      if (k === '__comments__') { Object.assign(comments, saved[k]); return; }
-      if (k === '__notes__') {
-        if (saved[k] && saved[k].sections) {
-          saved[k].sections.forEach(function(savedSec) {
-            var sec = notesData.sections.find(function(s) { return s.id === savedSec.id; });
-            if(sec) { sec.items = savedSec.items || []; sec.collapsed = savedSec.collapsed || false; }
-          });
-        }
-        return;
-      }
-      if (state[k]) { STEPS.forEach(function(s) { if (saved[k] && saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key]; }); }
-    });
-  } catch(e) {}
+  try { Object.keys(saved).forEach(function(k) { if (state[k]) { STEPS.forEach(function(s) { if (saved[k] && saved[k][s.key] !== undefined) state[k][s.key] = saved[k][s.key]; }); } }); } catch(e) {}
 }
 
 async function saveToStorage() {
   var data = {};
   Object.keys(state).forEach(function(k) { data[k] = Object.assign({}, state[k]); });
-  data['__comments__'] = Object.assign({}, comments);
-  data['__notes__'] = { sections: notesData.sections.map(function(s) { return { id:s.id, items:s.items.slice(), collapsed:s.collapsed }; }) };
   var savedRemote = false;
   var ready = await waitForFirebase(3000);
   if (ready && window.firebaseSave) { savedRemote = await window.firebaseSave(data); }
@@ -809,6 +650,7 @@ function openModal() {
   document.getElementById('modal-cancel').textContent = t('modalCancel');
   document.getElementById('modal-confirm').textContent = t('modalConfirm');
 }
+
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
 
 function submitPin() {
@@ -816,10 +658,13 @@ function submitPin() {
   if (input === CORRECT_PIN) { isUnlocked = true; closeModal(); updateLockUI(); renderDetail(); }
   else { var inp = document.getElementById('pin-input'); inp.classList.add('error'); document.getElementById('pin-error').textContent = t('pinWrong'); inp.value = ''; setTimeout(function() { inp.classList.remove('error'); }, 400); }
 }
+
 function lockSession() { isUnlocked = false; updateLockUI(); renderDetail(); }
 
 function updateLockUI() {
-  var ind = document.getElementById('lock-indicator'), lbl = document.getElementById('lock-label'), tip = document.getElementById('lock-tip');
+  var ind = document.getElementById('lock-indicator');
+  var lbl = document.getElementById('lock-label');
+  var tip = document.getElementById('lock-tip');
   if (isUnlocked) {
     ind.classList.add('unlocked'); lbl.textContent = t('unlockLabel');
     if (tip) tip.textContent = lang === 'fr' ? 'Appuyer sur Ctrl+Shift+A pour verrouiller' : 'Press Ctrl+Shift+A to lock editing';
@@ -833,32 +678,43 @@ function getStatus(stepMap) {
   var done = STEPS.filter(function(s) { return stepMap[s.key]; }).length;
   if (done === 0) return 'not-started'; if (done === STEPS.length) return 'completed'; return 'in-progress';
 }
+
 function statusBadge(st) {
   var map = {'not-started':'badgeNotStarted','in-progress':'badgeInProgress','completed':'badgeCompleted'};
   return '<span class="badge ' + st + '">' + t(map[st]) + '</span>';
 }
+
 function updateCards() {
   var done=0, prog=0, pend=0;
-  Object.values(state).forEach(function(m) { var s=getStatus(m); if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++; });
+  Object.values(state).forEach(function(m) { var s = getStatus(m); if(s==='completed') done++; else if(s==='in-progress') prog++; else pend++; });
   document.getElementById('cnt-done').textContent = done;
   document.getElementById('cnt-progress').textContent = prog;
   document.getElementById('cnt-pending').textContent = pend;
 }
-function getSubStatus(rn, sn) { var k=rn+'|'+sn; return !state[k]?'not-started':getStatus(state[k]); }
-function getRegionBarColor(rn, subs) {
-  var st=subs.map(function(s){return getSubStatus(rn,s);}), done=st.filter(function(s){return s==='completed';}).length, ip=st.filter(function(s){return s==='in-progress';}).length, tot=subs.length;
-  if(done===tot) return '#70AD47';
-  if(done>0&&ip===0) return 'color-mix(in srgb, #70AD47 '+Math.round(done/tot*100)+'%, #939DA8)';
-  if(ip>0) return '#F4B942';
+
+function getSubStatus(regionName, subName) { var key = regionName + '|' + subName; if (!state[key]) return 'not-started'; return getStatus(state[key]); }
+
+function getRegionBarColor(regionName, subs) {
+  var statuses = subs.map(function(s) { return getSubStatus(regionName, s); });
+  var done = statuses.filter(function(s) { return s === 'completed'; }).length;
+  var inProg = statuses.filter(function(s) { return s === 'in-progress'; }).length;
+  var total = subs.length;
+  if (done === total) return '#70AD47';
+  if (done > 0 && inProg === 0) { var pct = Math.round((done / total) * 100); return 'color-mix(in srgb, #70AD47 ' + pct + '%, #939DA8)'; }
+  if (inProg > 0) return '#F4B942';
   return '#939DA8';
 }
 
 function renderGantt() {
   var monthRow = document.getElementById('gantt-month-row');
   if (monthRow) {
-    var months = t('months'), dayWidths = [3,31,30,31,31,30,31,30,31,31], totalDays = 279;
-    monthRow.innerHTML = months.map(function(m,i) {
-      return '<div class="month-cell" style="flex:none;width:' + (dayWidths[i]/totalDays*100).toFixed(3) + '%">' + m + '</div>';
+    var months = t('months');
+    // Proportional widths based on actual days: Apr=3, May-Dec=30/31, Jan=31 of 279 total
+    var dayWidths = [3,31,30,31,31,30,31,30,31,31];
+    var totalDays = 279;
+    monthRow.innerHTML = months.map(function(m, i) {
+      var pct = (dayWidths[i] / totalDays * 100).toFixed(3);
+      return '<div class="month-cell" style="flex:none;width:' + pct + '%">' + m + '</div>';
     }).join('');
   }
   var body = document.getElementById('gantt-body'); body.innerHTML = '';
@@ -866,719 +722,272 @@ function renderGantt() {
   PHASES.forEach(function(p) {
     var row = document.createElement('div'); row.className = 'phase-row';
     var area = document.createElement('div'); area.className = 'bar-area';
-    MONTH_BREAKS.forEach(function(b) { var gl=document.createElement('div'); gl.className='grid-line'; gl.style.left=(b*100)+'%'; area.appendChild(gl); });
-    var region = REGIONS.find(function(r){return r.name===p.region;}), subs=region?region.subs:[];
-    var bar = document.createElement('div'); bar.className='bar';
-    bar.style.left=(p.start*100)+'%'; bar.style.width=(p.dur*100)+'%';
-    bar.style.background=subs.length>0?getRegionBarColor(p.region,subs):p.color;
-    var lbl=document.createElement('span'); lbl.textContent=p.name;
-    lbl.style.cssText='text-shadow:0 1px 2px rgba(0,0,0,0.25);overflow:hidden;text-overflow:clip;white-space:nowrap;flex:1;min-width:0';
-    bar.style.overflow='hidden'; bar.appendChild(lbl); area.appendChild(bar); row.appendChild(area); body.appendChild(row);
-    var mf=t('monthsFull');
+    var breaks = (typeof MONTH_BREAKS !== 'undefined') ? MONTH_BREAKS : [];
+    breaks.forEach(function(b) { var gl = document.createElement('div'); gl.className = 'grid-line'; gl.style.left = (b * 100) + '%'; area.appendChild(gl); });
+    var region = REGIONS.find(function(r) { return r.name === p.region; });
+    var subs = region ? region.subs : [];
+    var bar = document.createElement('div'); bar.className = 'bar';
+    bar.style.left = (p.start / TOTAL_MONTHS * 100) + '%'; bar.style.width = (p.dur / TOTAL_MONTHS * 100) + '%';
+    bar.style.background = subs.length > 0 ? getRegionBarColor(p.region, subs) : p.color;
+    var lbl = document.createElement('span'); lbl.textContent = p.name;
+    lbl.style.textShadow = '0 1px 2px rgba(0,0,0,0.25)'; lbl.style.overflow = 'hidden'; lbl.style.textOverflow = 'clip'; lbl.style.whiteSpace = 'nowrap'; lbl.style.flex = '1'; lbl.style.minWidth = '0'; bar.style.overflow = 'hidden';
+    bar.appendChild(lbl); area.appendChild(bar); row.appendChild(area); body.appendChild(row);
+    var mf = t('monthsFull');
     row.addEventListener('mouseenter', function() {
-      var sm=mf[Math.floor(p.start)], em=mf[Math.min(Math.floor(p.start+p.dur),TOTAL_MONTHS-1)];
-      var d=subs.filter(function(s){return getSubStatus(p.region,s)==='completed';}).length;
-      var ip=subs.filter(function(s){return getSubStatus(p.region,s)==='in-progress';}).length;
-      document.getElementById('tt-name').textContent=p.name;
-      document.getElementById('tt-detail').textContent=lang==='fr'?(sm+' → '+em+'  ·  '+p.weeks+'w  ·  '+d+'✓ '+ip+'⏳'):(sm+' → '+em+'  ·  '+p.weeks+'w  ·  '+d+' done, '+ip+' in progress');
-      document.getElementById('tt-desc').textContent=p.desc||''; tooltip.style.opacity='1';
+      var startM = mf[Math.floor(p.start)]; var endM = mf[Math.min(Math.floor(p.start + p.dur), TOTAL_MONTHS - 1)];
+      var d = subs.filter(function(s) { return getSubStatus(p.region, s) === 'completed'; }).length;
+      var ip = subs.filter(function(s) { return getSubStatus(p.region, s) === 'in-progress'; }).length;
+      var detail = lang === 'fr' ? (startM + ' → ' + endM + '  ·  ' + p.weeks + 'w  ·  ' + d + '✓ ' + ip + '⏳') : (startM + ' → ' + endM + '  ·  ' + p.weeks + 'w  ·  ' + d + ' done, ' + ip + ' in progress');
+      document.getElementById('tt-name').textContent = p.name; document.getElementById('tt-detail').textContent = detail; document.getElementById('tt-desc').textContent = p.desc || ''; tooltip.style.opacity = '1';
     });
-    row.addEventListener('mousemove', function(e){tooltip.style.left=(e.clientX+14)+'px';tooltip.style.top=(e.clientY-10)+'px';});
-    row.addEventListener('mouseleave', function(){tooltip.style.opacity='0';});
+    row.addEventListener('mousemove', function(e) { tooltip.style.left = (e.clientX + 14) + 'px'; tooltip.style.top = (e.clientY - 10) + 'px'; });
+    row.addEventListener('mouseleave', function() { tooltip.style.opacity = '0'; });
+
+    // Click → switch to detail tab with zone pre-filtered
     (function(region) {
-      row.style.cursor='pointer';
+      row.style.cursor = 'pointer';
       row.addEventListener('click', function() {
-        var sel=document.getElementById('filter-region'); if(sel) sel.value=region;
-        document.getElementById('filter-search').value='';
-        document.getElementById('filter-status').value='';
-        updateClearBtn(); renderDetail();
-        document.querySelectorAll('.tab').forEach(function(tb,i){tb.classList.toggle('active',['summary','detail','comms','workflow'][i]==='detail');});
-        document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.toggle('active',p.id==='tab-detail');});
-        var toggle=document.querySelector('.lang-toggle'); if(toggle) toggle.style.display='flex';
-        setTimeout(function(){var w=document.querySelector('.detail-wrap');if(w)w.scrollIntoView({behavior:'smooth',block:'start'});},100);
+        var sel = document.getElementById('filter-region');
+        if (sel) { sel.value = region; }
+        document.getElementById('filter-search').value = '';
+        document.getElementById('filter-status').value = '';
+        updateClearBtn();
+        renderDetail();
+        document.querySelectorAll('.tab').forEach(function(tb, i) {
+          tb.classList.toggle('active', ['summary','detail','comms','workflow'][i] === 'detail');
+        });
+        document.querySelectorAll('.tab-panel').forEach(function(p) {
+          p.classList.toggle('active', p.id === 'tab-detail');
+        });
+        var toggle = document.querySelector('.lang-toggle');
+        if (toggle) toggle.style.display = 'flex';
+        setTimeout(function() {
+          var wrap = document.querySelector('.detail-wrap');
+          if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
       });
     }(p.region));
   });
-  var fl=document.getElementById('gantt-footer-left'), fr2=document.getElementById('gantt-footer-right');
-  if(fl) fl.textContent=lang==='fr'?'Avril 2026':'April 2026';
-  if(fr2) fr2.textContent=lang==='fr'?'Janvier 2027':'January 2027';
-}
-
-// ── REAL GANTT ────────────────────────────────────────────────────────────
-// Timeline: May 15 → Jan 31 = 261 days total
-// Month widths (days from May 15): May=17, Jun=30, Jul=31, Aug=31, Sep=30, Oct=31, Nov=30, Dec=31, Jan=31
-var REAL_TOTAL_DAYS = 261;
-var REAL_DAY_WIDTHS = [17, 30, 31, 31, 30, 31, 30, 31, 31];
-var REAL_MONTHS_EN = ['May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.','Jan.'];
-var REAL_MONTHS_FR = ['Mai','Juin','Juil.','Août','Sept.','Oct.','Nov.','Déc.','Jan.'];
-
-// Map each PHASE to its planned start/dur as fractions of 261 days from May 15
-// Original planned dates (from Apr 28 baseline):
-// AFR/AFO: Apr28–Jun10 → from May15: 0 to 26d → start=0, dur=26/261
-// AFR/MOI: Jun8–Jul20 → from May15: 24d to 66d
-// AFR/NG:  Jul21–Aug9 → from May15: 67d to 86d
-// AFR/ACE: Aug3–Sep14 → from May15: 80d to 122d
-// AFR/ASNE: Sep14–Oct11 → from May15: 122d to 149d
-// APMO: Oct8–Nov8 → from May15: 146d to 177d
-// EOMC: Oct27–Dec7 → from May15: 165d to 206d
-// LUB: Dec4–Jan8 → from May15: 203d to 238d
-var REAL_PHASES = [
-  { region:'AFR/AFO',   planStart:0,     planDur:0.055,  subs:["Côte d'Ivoire","Ghana","Cameroun","Guinée Equatoriale"], label:'AFR/AFO (pilot)', customColor:true },
-  { region:'EOMC_EARLY',planStart:0.068, planDur:0.045,  subs:["Réunion","Antilles Guyane"], label:'EOMC (pilot)', customColor:true },
-  { region:'AFR/AFO',   planStart:0.123, planDur:0.055,  subs:["Togo","Guinée Conakry","Sénégal","Gabon"], label:'AFR/AFO' },
-  { region:'AFR/MOI',   planStart:0.165, planDur:0.1200, subs:null },
-  { region:'AFR/NG',    planStart:0.290, planDur:0.073,  subs:null },
-  { region:'AFR/ACE',   planStart:0.345, planDur:0.1200, subs:null },
-  { region:'AFR/ASNE',  planStart:0.510, planDur:0.934, subs:null },
-  { region:'APMO',      planStart:0.600, planDur:0.1100, subs:null },
-  { region:'EOMC',      planStart:0.670, planDur:0.110,  subs:['Rép. Dominicaine','Polynésie','Jamaïque','Mayotte','Porto Rico'] },
-  { region:'LUB',       planStart:0.820, planDur:0.1341, subs:null },
-];
-
-function renderRealGantt() {
-  var monthRow = document.getElementById('real-gantt-month-row');
-  if(monthRow) {
-    var months = lang === 'fr' ? REAL_MONTHS_FR : REAL_MONTHS_EN;
-    monthRow.innerHTML = REAL_DAY_WIDTHS.map(function(d, i) {
-      return '<div class="month-cell" style="flex:none;width:' + (d/REAL_TOTAL_DAYS*100).toFixed(3) + '%">' + months[i] + '</div>';
-    }).join('');
-  }
-
-  var body = document.getElementById('real-gantt-body');
-  body.innerHTML = '';
-  var tooltip = document.getElementById('gantt-tooltip');
-
-  REAL_PHASES.forEach(function(p) {
-    // Determine subs for this row
-    var subs;
-    if(p.subs) {
-      subs = p.subs; // custom sub list (e.g. EOMC_EARLY pilot)
-    } else {
-      var regionDef = REGIONS.find(function(r) { return r.name === p.region; });
-      subs = regionDef ? regionDef.subs : [];
-    }
-
-    var totalSteps = subs.length * STEPS.length;
-    var doneSteps = 0;
-    // EOMC_EARLY pilot uses EOMC region keys; all others use p.region
-    var regionKey = (p.region === 'EOMC_EARLY') ? 'EOMC' : p.region;
-    subs.forEach(function(sub) {
-      var key = regionKey + '|' + sub;
-      STEPS.forEach(function(s) { if(state[key] && state[key][s.key]) doneSteps++; });
-    });
-
-    var progress = totalSteps > 0 ? doneSteps / totalSteps : 0;
-    var actualDur = p.planDur * progress;
-
-    var barColor = '#2E5FA3';
-    if(progress === 1) barColor = '#70AD47';
-    else if(progress > 0) barColor = '#F4B942';
-
-    // Use teal for EOMC_EARLY pilot bar
-    if(p.customColor) { barColor = '#0F6E56'; }
-
-    var row = document.createElement('div');
-    row.className = 'phase-row';
-    row.style.position = 'relative';
-
-    var area = document.createElement('div');
-    area.className = 'bar-area';
-
-    // Grid lines
-    var cum = 0;
-    var breaks = [0];
-    REAL_DAY_WIDTHS.forEach(function(d) { cum += d; breaks.push(cum/REAL_TOTAL_DAYS); });
-    breaks.forEach(function(b) {
-      var gl = document.createElement('div'); gl.className = 'grid-line'; gl.style.left = (b*100)+'%'; area.appendChild(gl);
-    });
-
-    // Planned (ghost) bar
-    var planBar = document.createElement('div');
-    planBar.style.cssText = 'position:absolute;top:50%;transform:translateY(-50%);height:26px;border-radius:6px;'
-      + 'left:' + (p.planStart*100) + '%;width:' + (p.planDur*100) + '%;'
-      + 'background:#e0e4ea;border:1.5px solid #c0c8d4;box-sizing:border-box;overflow:hidden;';
-    var planLblText = p.label || p.region;
-    var planLbl = document.createElement('span');
-    planLbl.textContent = planLblText;
-    planLbl.style.cssText = 'font-size:11px;color:#888;padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:clip;';
-    planBar.appendChild(planLbl);
-    area.appendChild(planBar);
-
-    // Actual bar
-    if(progress > 0) {
-      var actualBar = document.createElement('div');
-      actualBar.style.cssText = 'position:absolute;top:50%;transform:translateY(-50%);height:20px;border-radius:5px;'
-        + 'left:' + (p.planStart*100) + '%;width:' + (actualDur*100) + '%;'
-        + 'background:' + barColor + ';z-index:2;overflow:hidden;';
-      var pctLbl = document.createElement('span');
-      pctLbl.textContent = Math.round(progress*100) + '%';
-      pctLbl.style.cssText = 'font-size:10px;color:white;padding:0 6px;font-weight:600;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,0.3);';
-      actualBar.appendChild(pctLbl);
-      area.appendChild(actualBar);
-    }
-
-    // Tooltip
-    (function(phaseName, subsArr, prog, done, total) {
-      row.addEventListener('mouseenter', function() {
-        var subsText = subsArr.join(', ');
-        var progressText = lang === 'fr'
-          ? (Math.round(prog*100) + '% — ' + done + '/' + total + ' étapes')
-          : (Math.round(prog*100) + '% — ' + done + '/' + total + ' steps');
-        document.getElementById('tt-name').textContent = phaseName;
-        document.getElementById('tt-detail').textContent = progressText;
-        document.getElementById('tt-desc').textContent = subsText;
-        tooltip.style.opacity = '1';
-      });
-      row.addEventListener('mousemove', function(e) {
-        tooltip.style.left = (e.clientX + 14) + 'px';
-        tooltip.style.top = (e.clientY - 10) + 'px';
-      });
-      row.addEventListener('mouseleave', function() { tooltip.style.opacity = '0'; });
-    }(p.label || p.region, subs, progress, doneSteps, totalSteps));
-
-    row.appendChild(area);
-    body.appendChild(row);
-  });
-
-  var rfl = document.getElementById('real-gantt-footer-left');
-  var rfr = document.getElementById('real-gantt-footer-right');
-  var rtitle = document.getElementById('real-gantt-title');
-  var rstart = document.getElementById('real-gantt-start');
-
-  if(rfl) rfl.textContent = lang==='fr'?'Mai 2026':'May 2026';
-  if(rfr) rfr.textContent = lang==='fr'?'Janvier 2027':'January 2027';
-  if(rtitle) rtitle.textContent = lang==='fr'?'Progression R\u00e9elle – Gantt R\u00e9el':'Actual Progress – Real Gantt';
-  if(rstart) rstart.textContent = lang==='fr'?'D\u00e9but r\u00e9el : 15/05/2026':'Start: 15/05/2026';
-
+  var fl = document.getElementById('gantt-footer-left'); var fr2 = document.getElementById('gantt-footer-right');
+  if (fl) fl.textContent = lang === 'fr' ? 'Avril 2026' : 'April 2026';
+  if (fr2) fr2.textContent = lang === 'fr' ? 'Janvier 2027' : 'January 2027';
 }
 
 function renderStepsLegend() {
-  var grid=document.getElementById('steps-legend-grid'); grid.innerHTML='';
+  var grid = document.getElementById('steps-legend-grid'); grid.innerHTML = '';
   STEPS.forEach(function(s) {
-    var div=document.createElement('div'); div.className='step-pill'; div.title=lang==='en'?s.descEN:s.descFR;
-    div.innerHTML='<div class="snum">'+s.num+'</div><div><strong>'+(lang==='en'?s.labelEN:s.labelFR)+'</strong><br><span style="color:#555;font-size:10px">'+(lang==='en'?s.descEN:s.descFR)+'</span></div>';
+    var div = document.createElement('div'); div.className = 'step-pill';
+    div.title = lang==='en' ? s.descEN : s.descFR;
+    div.innerHTML = '<div class="snum">' + s.num + '</div><div><strong>' + (lang==='en'?s.labelEN:s.labelFR) + '</strong><br><span style="color:#555;font-size:10px">' + (lang==='en'?s.descEN:s.descFR) + '</span></div>';
     grid.appendChild(div);
   });
 }
 
-function makeFilterBtn(colId, title) {
-  var btn = document.createElement('button');
-  btn.className = 'col-filter-btn' + (colFilters[colId] && colFilters[colId].length ? ' active' : '');
-  btn.textContent = '\u25bc';
-  btn.title = lang === 'fr' ? 'Filtrer' : 'Filter';
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    openFilterPopup(colId, title, btn);
-  });
-  return btn;
-}
-
-function openFilterPopup(colId, title, anchorBtn) {
-  if(activeFilterPopup) { activeFilterPopup.classList.remove('open'); activeFilterPopup.remove(); activeFilterPopup = null; }
-  var popup = document.createElement('div');
-  popup.className = 'col-filter-popup open';
-
-  var titleEl = document.createElement('div');
-  titleEl.className = 'col-filter-popup-title';
-  titleEl.textContent = title;
-  popup.appendChild(titleEl);
-
-  var options = colId === 'status'
-    ? [{val:'completed',label:lang==='fr'?'Compl\u00e9t\u00e9':'Completed',icon:'\u2705'},
-       {val:'in-progress',label:lang==='fr'?'En cours':'In progress',icon:'\U0001f7e1'},
-       {val:'not-started',label:lang==='fr'?'Non d\u00e9marr\u00e9':'Not started',icon:'\u2b1c'}]
-    : [{val:'done',label:lang==='fr'?'Fait':'Done',icon:'\u2705'},
-       {val:'not-done',label:lang==='fr'?'Non fait':'Not done',icon:'\u2b1c'}];
-
-  var current = colFilters[colId] || [];
-  options.forEach(function(opt) {
-    var row = document.createElement('div'); row.className = 'col-filter-option';
-    var cb = document.createElement('input'); cb.type = 'checkbox'; cb.value = opt.val;
-    cb.checked = current.length === 0 || current.indexOf(opt.val) !== -1;
-    var lbl = document.createElement('label'); lbl.style.cursor = 'pointer';
-    lbl.textContent = opt.icon + ' ' + opt.label;
-    cb.id = 'cf-' + colId + '-' + opt.val;
-    lbl.htmlFor = 'cf-' + colId + '-' + opt.val;
-    row.appendChild(cb); row.appendChild(lbl); popup.appendChild(row);
-  });
-
-  var footer = document.createElement('div'); footer.className = 'col-filter-popup-footer';
-  var applyBtn = document.createElement('button'); applyBtn.className = 'col-filter-apply';
-  applyBtn.textContent = lang === 'fr' ? 'Appliquer' : 'Apply';
-  applyBtn.addEventListener('click', function() {
-    var checked = Array.from(popup.querySelectorAll('input[type=checkbox]:checked')).map(function(c){return c.value;});
-    if(checked.length === options.length || checked.length === 0) { delete colFilters[colId]; }
-    else { colFilters[colId] = checked; }
-    popup.classList.remove('open'); popup.remove(); activeFilterPopup = null;
-    renderDetailHeader(); renderDetail(); updateColFilterClearBtn();
-  });
-  var resetBtn = document.createElement('button'); resetBtn.className = 'col-filter-reset';
-  resetBtn.textContent = lang === 'fr' ? 'R\u00e9initialiser' : 'Reset';
-  resetBtn.addEventListener('click', function() {
-    delete colFilters[colId];
-    popup.classList.remove('open'); popup.remove(); activeFilterPopup = null;
-    renderDetailHeader(); renderDetail(); updateColFilterClearBtn();
-  });
-  footer.appendChild(applyBtn); footer.appendChild(resetBtn); popup.appendChild(footer);
-  document.body.appendChild(popup); activeFilterPopup = popup;
-
-  var rect = anchorBtn.getBoundingClientRect();
-  popup.style.top = (rect.bottom + 4) + 'px';
-  popup.style.left = Math.max(4, rect.left - 60) + 'px';
-
-  setTimeout(function() {
-    document.addEventListener('click', function handler(e) {
-      // Only close if click is outside the popup
-      if(activeFilterPopup && !activeFilterPopup.contains(e.target)) {
-        activeFilterPopup.classList.remove('open'); activeFilterPopup.remove(); activeFilterPopup = null;
-        document.removeEventListener('click', handler);
-      }
-    });
-  }, 10);
-}
-
-function updateColFilterClearBtn() {
-  var hasColFilter = Object.keys(colFilters).length > 0;
-  var existing = document.getElementById('col-filter-clear');
-  if(hasColFilter && !existing) {
-    var btn = document.createElement('button');
-    btn.id = 'col-filter-clear';
-    btn.className = 'clear-filters-btn visible';
-    btn.style.marginLeft = '4px';
-    var x = document.createElement('span'); x.textContent = '\u2715';
-    var lbl = document.createElement('span'); lbl.textContent = lang==='fr'?'Filtres colonnes':'Column filters';
-    btn.appendChild(x); btn.appendChild(lbl);
-    btn.addEventListener('click', function() {
-      colFilters = {}; btn.remove(); renderDetailHeader(); renderDetail();
-    });
-    document.querySelector('.filters').appendChild(btn);
-  } else if(!hasColFilter && existing) {
-    existing.remove();
-  }
-}
-
 function renderDetailHeader() {
   var tr = document.getElementById('detail-head');
-  tr.innerHTML = '';
-
-  function plainTh(text, cls) {
-    var th = document.createElement('th');
-    if(cls) th.className = cls;
-    th.textContent = text;
-    return th;
-  }
-
-  tr.appendChild(plainTh('', 'left'));
-  tr.appendChild(plainTh(t('thZone'), 'left'));
-  tr.appendChild(plainTh(t('thSub'), 'left'));
-  tr.appendChild(plainTh(t('thPeriod')));
-
-  STEPS.forEach(function(s) {
-    var th = document.createElement('th');
-    th.title = lang==='en' ? s.descEN : s.descFR;
-    th.style.cssText = 'white-space:nowrap;';
-    if(colFilters[s.key] && colFilters[s.key].length) th.style.background = '#1a4a8a';
-    var label = lang==='en' ? s.labelEN : s.labelFR;
-    var span = document.createElement('span'); span.textContent = label;
-    th.appendChild(span);
-    th.appendChild(makeFilterBtn(s.key, label));
-    tr.appendChild(th);
-  });
-
-  tr.appendChild(plainTh(t('thProgress')));
-
-  var statusTh = document.createElement('th');
-  statusTh.style.cssText = 'white-space:nowrap;';
-  if(colFilters['status'] && colFilters['status'].length) statusTh.style.background = '#1a4a8a';
-  var statusSpan = document.createElement('span'); statusSpan.textContent = t('thStatus');
-  statusTh.appendChild(statusSpan);
-  statusTh.appendChild(makeFilterBtn('status', t('thStatus')));
-  tr.appendChild(statusTh);
-
-  tr.appendChild(plainTh(t('thNotes')));
+  tr.innerHTML = '<th class="left" style="width:28px"></th><th class="left">' + t('thZone') + '</th><th class="left">' + t('thSub') + '</th><th>' + t('thPeriod') + '</th>'
+    + STEPS.map(function(s) { return '<th title="' + (lang==='en'?s.descEN:s.descFR) + '">' + (lang==='en'?s.labelEN:s.labelFR) + '</th>'; }).join('')
+    + '<th>' + t('thProgress') + '</th><th>' + t('thStatus') + '</th>';
 }
 
 function clearFilters() {
-  document.getElementById('filter-region').value='';
-  document.getElementById('filter-search').value='';
-  document.getElementById('filter-status').value='';
+  document.getElementById('filter-region').value = '';
+  document.getElementById('filter-search').value = '';
+  document.getElementById('filter-status').value = '';
   updateClearBtn(); renderDetail();
 }
+
 function updateClearBtn() {
-  var has=document.getElementById('filter-region').value||document.getElementById('filter-search').value||document.getElementById('filter-status').value;
-  document.getElementById('clear-filters-btn').classList.toggle('visible',!!has);
+  var hasFilter = document.getElementById('filter-region').value || document.getElementById('filter-search').value || document.getElementById('filter-status').value;
+  document.getElementById('clear-filters-btn').classList.toggle('visible', !!hasFilter);
 }
 
-var dragSrcKey=null;
-// colFilters: key = column id ('s1'..'s6' or 'status'), value = array of allowed values
-// e.g. {'s1': ['done'], 'status': ['completed','in-progress']}
-var colFilters = {};
-var activeFilterPopup = null;  // currently open popup el
+var dragSrcKey = null;
 
 function renderDetail() {
-  var filterRegion=document.getElementById('filter-region').value;
-  var filterSearch=document.getElementById('filter-search').value.toLowerCase();
-  var filterStatus=document.getElementById('filter-status').value;
-  var mf=t('monthsFull'), tbody=document.getElementById('detail-body');
-  tbody.innerHTML='';
+  var filterRegion = document.getElementById('filter-region').value;
+  var filterSearch = document.getElementById('filter-search').value.toLowerCase();
+  var filterStatus = document.getElementById('filter-status').value;
+  var mf = t('monthsFull');
+  var tbody = document.getElementById('detail-body');
+  tbody.innerHTML = '';
 
-  // Build flat list for sorting
-  var allRows=[];
   REGIONS.forEach(function(r) {
-    if(filterRegion&&filterRegion!==r.name) return;
-    var orderedSubs=subOrder[r.name]||r.subs;
+    if (filterRegion && filterRegion !== r.name) return;
+    var orderedSubs = subOrder[r.name] || r.subs;
     orderedSubs.forEach(function(sub) {
-      if(filterSearch&&!sub.toLowerCase().includes(filterSearch)) return;
-      var key=r.name+'|'+sub, stepMap=state[key], st=getStatus(stepMap);
-      if(filterStatus&&filterStatus!==st) return;
+      if (filterSearch && !sub.toLowerCase().includes(filterSearch)) return;
+      var key = r.name + '|' + sub;
+      var stepMap = state[key];
+      var st = getStatus(stepMap);
+      if (filterStatus && filterStatus !== st) return;
+      var done = STEPS.filter(function(s) { return stepMap[s.key]; }).length;
+      var pct = Math.round(done / STEPS.length * 100);
+      var period = r.start !== r.end ? (mf[r.start] + ' – ' + mf[r.end]) : mf[r.start];
 
-      // Apply column-level filters
-      var passColFilter = true;
-      Object.keys(colFilters).forEach(function(colId) {
-        var allowed = colFilters[colId];
-        if(!allowed || allowed.length === 0) return;
-        if(colId === 'status') {
-          if(allowed.indexOf(st) === -1) passColFilter = false;
-        } else {
-          var isDone = stepMap[colId] ? 'done' : 'not-done';
-          if(allowed.indexOf(isDone) === -1) passColFilter = false;
+      var tr = document.createElement('tr');
+      tr.dataset.key = key;
+      tr.setAttribute('draggable', isUnlocked ? 'true' : 'false');
+
+      // Drag handle
+      var handleTd = document.createElement('td');
+      handleTd.style.cssText = 'padding:4px 4px 4px 8px';
+      var handle = document.createElement('span');
+      handle.className = 'drag-handle' + (isUnlocked ? '' : ' locked');
+      handle.title = isUnlocked ? 'Drag to reorder' : t('lockedTip');
+      handle.textContent = '⣿';
+      handleTd.appendChild(handle);
+      tr.appendChild(handleTd);
+
+      // Zone tag
+      var zoneTd = document.createElement('td');
+      zoneTd.className = 'left';
+      zoneTd.innerHTML = '<span class="region-tag">' + r.name + '</span>';
+      tr.appendChild(zoneTd);
+
+      // Subsidiary name — link to gap analysis if available
+      var subTd = document.createElement('td');
+      subTd.className = 'left';
+      subTd.style.fontWeight = '600';
+      var gapUrl = GAP_ANALYSIS_URLS[key];
+      if (gapUrl) {
+        var link = document.createElement('a');
+        link.href = gapUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = sub;
+        link.title = lang === 'fr' ? 'Voir l\'analyse des écarts' : 'View gap analysis';
+        link.style.cssText = 'color:#2E5FA3;text-decoration:none;border-bottom:1px dashed #2E5FA3;';
+        link.addEventListener('mouseenter', function() { this.style.color='#1F3864'; this.style.borderBottomStyle='solid'; });
+        link.addEventListener('mouseleave', function() { this.style.color='#2E5FA3'; this.style.borderBottomStyle='dashed'; });
+        subTd.appendChild(link);
+      } else {
+        subTd.textContent = sub;
+      }
+      tr.appendChild(subTd);
+
+      // Period
+      var periodTd = document.createElement('td');
+      periodTd.style.cssText = 'color:#555;white-space:nowrap;font-size:11px';
+      periodTd.textContent = period;
+      tr.appendChild(periodTd);
+
+      // Step checkboxes — using DOM, no innerHTML, no onclick strings
+      STEPS.forEach(function(s) {
+        var td = document.createElement('td');
+        td.className = 'step-check ' + (isUnlocked ? 'editable' : 'locked') + (stepMap[s.key] ? ' done' : '');
+        td.title = isUnlocked ? (stepMap[s.key] ? 'Done – click to undo' : 'Click to mark done') : t('lockedTip');
+        td.textContent = stepMap[s.key] ? '✅' : '⬜';
+        if (isUnlocked) {
+          (function(k, sk) {
+            td.addEventListener('click', function() { toggleStep(k, sk); });
+          }(key, s.key));
         }
+        tr.appendChild(td);
       });
-      if(!passColFilter) return;
-      allRows.push({r:r, sub:sub, key:key, stepMap:stepMap, st:st});
+
+      // Progress bar
+      var progTd = document.createElement('td');
+      progTd.innerHTML = '<div style="display:flex;align-items:center;gap:8px;justify-content:center">'
+        + '<div class="prog-wrap"><div class="prog-bar" style="width:' + pct + '%"></div></div>'
+        + '<span style="font-size:11px;color:#555">' + pct + '%</span></div>';
+      tr.appendChild(progTd);
+
+      // Status badge
+      var statusTd = document.createElement('td');
+      statusTd.innerHTML = statusBadge(st);
+      tr.appendChild(statusTd);
+
+      tbody.appendChild(tr);
     });
   });
 
-
-
-  allRows.forEach(function(item) {
-    var r=item.r, sub=item.sub, key=item.key, stepMap=item.stepMap, st=item.st;
-    var done=STEPS.filter(function(s){return stepMap[s.key];}).length;
-    var pct=Math.round(done/STEPS.length*100);
-    var period=r.start!==r.end?(mf[r.start]+' – '+mf[r.end]):mf[r.start];
-
-    var tr=document.createElement('tr');
-    tr.dataset.key=key;
-    tr.setAttribute('draggable',isUnlocked?'true':'false');
-
-    // Drag handle
-    var handleTd=document.createElement('td'); handleTd.style.cssText='padding:4px 4px 4px 8px';
-    var handle=document.createElement('span'); handle.className='drag-handle'+(isUnlocked?'':' locked');
-    handle.title=isUnlocked?'Drag to reorder':t('lockedTip'); handle.textContent='⣿';
-    handleTd.appendChild(handle); tr.appendChild(handleTd);
-
-    // Zone
-    var zoneTd=document.createElement('td'); zoneTd.className='left';
-    zoneTd.innerHTML='<span class="region-tag">'+r.name+'</span>'; tr.appendChild(zoneTd);
-
-    // Subsidiary - link if gap analysis exists
-    var subTd=document.createElement('td'); subTd.className='left'; subTd.style.fontWeight='600';
-    var gapUrl=GAP_ANALYSIS_URLS[key];
-    if(gapUrl) {
-      var link=document.createElement('a'); link.href=gapUrl; link.target='_blank'; link.rel='noopener noreferrer';
-      link.textContent=sub; link.title=lang==='fr'?'Voir l\u2019analyse des écarts':'View gap analysis';
-      link.style.cssText='color:#2E5FA3;text-decoration:none;border-bottom:1px dashed #2E5FA3;';
-      link.addEventListener('mouseenter',function(){this.style.color='#1F3864';this.style.borderBottomStyle='solid';});
-      link.addEventListener('mouseleave',function(){this.style.color='#2E5FA3';this.style.borderBottomStyle='dashed';});
-      subTd.appendChild(link);
-    } else { subTd.textContent=sub; }
-    tr.appendChild(subTd);
-
-    // Period
-    var periodTd=document.createElement('td'); periodTd.style.cssText='color:#555;white-space:nowrap;font-size:11px';
-    periodTd.textContent=period; tr.appendChild(periodTd);
-
-    // Steps
-    STEPS.forEach(function(s) {
-      var td=document.createElement('td');
-      td.className='step-check '+(isUnlocked?'editable':'locked')+(stepMap[s.key]?' done':'');
-      td.title=isUnlocked?(stepMap[s.key]?'Done – click to undo':'Click to mark done'):t('lockedTip');
-      td.textContent=stepMap[s.key]?'✅':'⬜';
-      if(isUnlocked){(function(k,sk){td.addEventListener('click',function(){toggleStep(k,sk);});}(key,s.key));}
-      tr.appendChild(td);
-    });
-
-    // Progress
-    var progTd=document.createElement('td');
-    progTd.innerHTML='<div style="display:flex;align-items:center;gap:8px;justify-content:center"><div class="prog-wrap"><div class="prog-bar" style="width:'+pct+'%"></div></div><span style="font-size:11px;color:#555">'+pct+'%</span></div>';
-    tr.appendChild(progTd);
-
-    // Status
-    var statusTd=document.createElement('td'); statusTd.innerHTML=statusBadge(st); tr.appendChild(statusTd);
-
-    // Notes
-    var noteTd=document.createElement('td'); noteTd.style.cssText='white-space:nowrap;';
-    var existingComment=comments[key]||'';
-    var noteBtn=document.createElement('button');
-    noteBtn.className='comment-btn'+(existingComment?' has-comment':'');
-    noteBtn.textContent=existingComment?('💬 '+existingComment.slice(0,22)+(existingComment.length>22?'…':'')):t('addNote');
-    noteBtn.title=existingComment||(lang==='fr'?'Ajouter une note':'Add a note');
-    noteTd.appendChild(noteBtn); tr.appendChild(noteTd);
-
-    // Note expansion row
-    var noteRow=document.createElement('tr'); noteRow.className='comment-row'; noteRow.style.display='none';
-    var noteRowTd=document.createElement('td'); noteRowTd.colSpan=11+STEPS.length;
-    var noteBox=document.createElement('div'); noteBox.className='comment-box';
-    if(isUnlocked) {
-      var ta=document.createElement('textarea'); ta.className='comment-textarea';
-      ta.placeholder=t('notePlaceholder'); ta.value=existingComment;
-      var saveBtn=document.createElement('button'); saveBtn.className='comment-save-btn'; saveBtn.textContent=t('saveNote');
-      (function(k,btn,textarea,nb){
-        saveBtn.addEventListener('click',function(){
-          comments[k]=textarea.value.trim(); scheduleSave();
-          nb.textContent=comments[k]?('💬 '+comments[k].slice(0,22)+(comments[k].length>22?'…':'')):t('addNote');
-          nb.className='comment-btn'+(comments[k]?' has-comment':'');
-          nb.title=comments[k]||(lang==='fr'?'Ajouter une note':'Add a note');
-          noteRow.style.display='none';
-        });
-      }(key,saveBtn,ta,noteBtn));
-      noteBox.appendChild(ta); noteBox.appendChild(saveBtn);
-    } else {
-      var preview=document.createElement('div'); preview.style.cssText='font-size:12px;color:#555;font-style:italic;padding:4px 0';
-      preview.textContent=existingComment||t('noNote'); noteBox.appendChild(preview);
-    }
-    noteRowTd.appendChild(noteBox); noteRow.appendChild(noteRowTd);
-    (function(nr,nb){nb.addEventListener('click',function(){nr.style.display=nr.style.display!=='none'?'none':'table-row';});}(noteRow,noteBtn));
-
-    tbody.appendChild(tr);
-    tbody.appendChild(noteRow);
-  });
-
-  // Drag handlers (only on data rows, skip comment rows)
-  var dragOverRow=null;
+  // Drag handlers
+  var dragOverRow = null;
   tbody.querySelectorAll('tr[data-key]').forEach(function(row) {
-    row.addEventListener('dragstart',function(e){dragSrcKey=row.dataset.key;row.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
-    row.addEventListener('dragend',function(){row.classList.remove('dragging');if(dragOverRow){dragOverRow.classList.remove('drag-over');dragOverRow=null;}});
-    row.addEventListener('dragover',function(e){e.preventDefault();e.dataTransfer.dropEffect='move';if(dragOverRow&&dragOverRow!==row)dragOverRow.classList.remove('drag-over');dragOverRow=row;row.classList.add('drag-over');});
-    row.addEventListener('dragleave',function(){row.classList.remove('drag-over');if(dragOverRow===row)dragOverRow=null;});
-    row.addEventListener('drop',function(e){
-      e.preventDefault();row.classList.remove('drag-over');dragOverRow=null;
-      if(!isUnlocked||!dragSrcKey||dragSrcKey===row.dataset.key) return;
-      var sp=dragSrcKey.split('|'),sr=sp[0],ss=sp.slice(1).join('|');
-      var dp=row.dataset.key.split('|'),dr=dp[0],ds=dp.slice(1).join('|');
-      if(sr!==dr) return;
-      var order=subOrder[sr],si=order.indexOf(ss),di=order.indexOf(ds);
-      if(si===-1||di===-1) return;
-      order.splice(si,1);order.splice(di,0,ss);renderDetail();
+    row.addEventListener('dragstart', function(e) {
+      dragSrcKey = row.dataset.key;
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    row.addEventListener('dragend', function() {
+      row.classList.remove('dragging');
+      if (dragOverRow) { dragOverRow.classList.remove('drag-over'); dragOverRow = null; }
+    });
+    row.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (dragOverRow && dragOverRow !== row) dragOverRow.classList.remove('drag-over');
+      dragOverRow = row;
+      row.classList.add('drag-over');
+    });
+    row.addEventListener('dragleave', function() {
+      row.classList.remove('drag-over');
+      if (dragOverRow === row) dragOverRow = null;
+    });
+    row.addEventListener('drop', function(e) {
+      e.preventDefault();
+      row.classList.remove('drag-over');
+      dragOverRow = null;
+      if (!isUnlocked) return;
+      if (!dragSrcKey || dragSrcKey === row.dataset.key) return;
+      var srcParts = dragSrcKey.split('|'); var srcRegion = srcParts[0]; var srcSub = srcParts.slice(1).join('|');
+      var dstParts = row.dataset.key.split('|'); var dstRegion = dstParts[0]; var dstSub = dstParts.slice(1).join('|');
+      if (srcRegion !== dstRegion) return;
+      var order = subOrder[srcRegion];
+      var srcIdx = order.indexOf(srcSub); var dstIdx = order.indexOf(dstSub);
+      if (srcIdx === -1 || dstIdx === -1) return;
+      order.splice(srcIdx, 1);
+      order.splice(dstIdx, 0, srcSub);
+      renderDetail();
     });
   });
 }
 
-function toggleStep(key,stepKey){if(!isUnlocked)return;state[key][stepKey]=!state[key][stepKey];renderAll();scheduleSave();}
+function toggleStep(key, stepKey) { if (!isUnlocked) return; state[key][stepKey] = !state[key][stepKey]; renderAll(); scheduleSave(); }
 
-function renderNotes() {
-  var body = document.getElementById('notes-body');
-  if(!body) return;
-  body.innerHTML = '';
-
-  var hint = document.getElementById('notes-lock-hint');
-  if(hint) hint.textContent = isUnlocked
-    ? (lang==='fr' ? 'Mode édition actif' : 'Editing active')
-    : (lang==='fr' ? 'Déverrouiller pour ajouter des notes' : 'Unlock editing to add notes');
-
-  notesData.sections.forEach(function(sec) {
-    var sectionEl = document.createElement('div');
-    sectionEl.className = 'notes-section';
-
-    // Header
-    var header = document.createElement('div');
-    header.className = 'notes-section-header';
-    var h3 = document.createElement('h3');
-    h3.textContent = lang==='en' ? sec.titleEN : sec.titleFR;
-    var toggle = document.createElement('span');
-    toggle.className = 'section-toggle';
-    toggle.textContent = sec.collapsed ? '▶ ' + sec.items.length + ' notes' : '▼';
-    header.appendChild(h3); header.appendChild(toggle);
-    header.addEventListener('click', function() {
-      sec.collapsed = !sec.collapsed; scheduleSave(); renderNotes();
-    });
-    sectionEl.appendChild(header);
-
-    // Body
-    var sBody = document.createElement('div');
-    sBody.className = 'notes-section-body' + (sec.collapsed ? ' collapsed' : '');
-
-    // Existing notes
-    if(sec.items.length === 0 && !isUnlocked) {
-      var empty = document.createElement('p');
-      empty.style.cssText = 'font-size:12px;color:#aaa;font-style:italic;padding:8px 0';
-      empty.textContent = lang==='fr' ? 'Aucune note pour le moment.' : 'No notes yet.';
-      sBody.appendChild(empty);
-    }
-
-    sec.items.forEach(function(item, idx) {
-      var noteEl = document.createElement('div');
-      noteEl.className = 'note-item';
-
-      var noteHeader = document.createElement('div');
-      noteHeader.className = 'note-item-header';
-
-      if(item.zone) {
-        var zoneTag = document.createElement('span');
-        zoneTag.className = 'note-zone'; zoneTag.textContent = item.zone;
-        noteHeader.appendChild(zoneTag);
-      }
-
-      var prioEl = document.createElement('span');
-      prioEl.className = 'note-priority ' + (item.priority || 'medium');
-      var prioLabels = { high: lang==='fr'?'Haute':'High', medium: lang==='fr'?'Moyenne':'Medium', low: lang==='fr'?'Faible':'Low', resolved: lang==='fr'?'Résolu':'Resolved' };
-      prioEl.textContent = prioLabels[item.priority] || item.priority;
-      noteHeader.appendChild(prioEl);
-
-      var titleEl = document.createElement('span');
-      titleEl.className = 'note-title'; titleEl.textContent = item.title || '';
-      noteHeader.appendChild(titleEl);
-
-      if(item.date) {
-        var dateEl = document.createElement('span');
-        dateEl.className = 'note-date'; dateEl.textContent = item.date;
-        noteHeader.appendChild(dateEl);
-      }
-
-      noteEl.appendChild(noteHeader);
-
-      if(item.body) {
-        var bodyEl = document.createElement('div');
-        bodyEl.className = 'note-body'; bodyEl.textContent = item.body;
-        noteEl.appendChild(bodyEl);
-      }
-
-      if(isUnlocked) {
-        var delBtn = document.createElement('button');
-        delBtn.className = 'note-delete-btn'; delBtn.textContent = '✕';
-        delBtn.title = lang==='fr' ? 'Supprimer' : 'Delete';
-        (function(secRef, i){ delBtn.addEventListener('click', function() {
-          secRef.items.splice(i, 1); scheduleSave(); renderNotes();
-        }); }(sec, idx));
-        noteEl.appendChild(delBtn);
-      }
-
-      sBody.appendChild(noteEl);
-    });
-
-    // Add note form (unlocked only)
-    if(isUnlocked) {
-      var addToggle = document.createElement('button');
-      addToggle.className = 'add-note-toggle';
-      addToggle.textContent = lang==='fr' ? '+ Ajouter une note' : '+ Add note';
-      sBody.appendChild(addToggle);
-
-      var form = document.createElement('div');
-      form.className = 'add-note-form';
-      form.style.display = 'none';
-
-      var row1 = document.createElement('div'); row1.className = 'add-note-row';
-
-      var titleInput = document.createElement('input');
-      titleInput.placeholder = lang==='fr' ? 'Titre de la note…' : 'Note title…';
-      titleInput.style.flex = '2';
-
-      var prioSelect = document.createElement('select');
-      [['high', lang==='fr'?'Haute':'High'],['medium',lang==='fr'?'Moyenne':'Medium'],
-       ['low',lang==='fr'?'Faible':'Low'],['resolved',lang==='fr'?'Résolu':'Resolved']
-      ].forEach(function(o) {
-        var opt = document.createElement('option'); opt.value=o[0]; opt.textContent=o[1];
-        prioSelect.appendChild(opt);
-      });
-      prioSelect.value = 'medium';
-      prioSelect.style.flex = '1';
-
-      var zoneSelect = document.createElement('select');
-      zoneSelect.style.flex = '1';
-      var zoneOpts = [['', lang==='fr'?'— Zone (optionnel)':'— Zone (optional)']].concat(
-        REGIONS.map(function(r) { return [r.name, r.name]; })
-      );
-      zoneOpts.forEach(function(o) {
-        var opt = document.createElement('option'); opt.value=o[0]; opt.textContent=o[1];
-        zoneSelect.appendChild(opt);
-      });
-
-      row1.appendChild(titleInput); row1.appendChild(prioSelect); row1.appendChild(zoneSelect);
-      form.appendChild(row1);
-
-      var bodyArea = document.createElement('textarea');
-      bodyArea.placeholder = lang==='fr' ? 'Description, contexte, action requise…' : 'Description, context, action required…';
-      form.appendChild(bodyArea);
-
-      var row2 = document.createElement('div'); row2.className = 'add-note-row';
-      var dateInput = document.createElement('input');
-      dateInput.type = 'date'; dateInput.style.flex = '1';
-      var today = new Date(); dateInput.value = today.toISOString().split('T')[0];
-
-      var submitBtn = document.createElement('button'); submitBtn.className = 'add-note-submit';
-      submitBtn.textContent = lang==='fr' ? 'Enregistrer' : 'Save';
-      var cancelBtn = document.createElement('button'); cancelBtn.className = 'add-note-cancel';
-      cancelBtn.textContent = lang==='fr' ? 'Annuler' : 'Cancel';
-
-      row2.appendChild(dateInput); row2.appendChild(submitBtn); row2.appendChild(cancelBtn);
-      form.appendChild(row2);
-
-      addToggle.addEventListener('click', function() {
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        titleInput.focus();
-      });
-      cancelBtn.addEventListener('click', function() { form.style.display = 'none'; });
-
-      (function(secRef) {
-        submitBtn.addEventListener('click', function() {
-          if(!titleInput.value.trim()) return;
-          secRef.items.push({
-            title: titleInput.value.trim(),
-            body: bodyArea.value.trim(),
-            priority: prioSelect.value,
-            zone: zoneSelect.value,
-            date: dateInput.value
-          });
-          scheduleSave();
-          form.style.display = 'none';
-          titleInput.value = ''; bodyArea.value = '';
-          renderNotes();
-        });
-      }(sec));
-
-      sBody.appendChild(form);
-    }
-
-    sectionEl.appendChild(sBody);
-    body.appendChild(sectionEl);
-  });
-}
-
-function renderAll(){updateCards();renderGantt();renderRealGantt();renderStepsLegend();renderDetailHeader();renderDetail();renderComms();renderNotes();updateLockUI();}
+function renderAll() { updateCards(); renderGantt(); renderStepsLegend(); renderDetailHeader(); renderDetail(); renderComms(); updateLockUI(); }
 
 function setLang(l) {
-  lang=l;
-  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.textContent.trim()===l.toUpperCase());});
-  applyLang();initFilters();renderAll();
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.textContent.trim()===l.toUpperCase()); });
+  applyLang(); initFilters(); renderAll();
 }
 
 function applyLang() {
-  var ids={'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta','tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail','tab-btn-comms':'tabComms','tab-btn-workflow':'tabWorkflow','card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend','gantt-title':'ganttTitle','detail-title':'detailTitle','legend-title':'legendTitle'};
-  Object.entries(ids).forEach(function(e){var el=document.getElementById(e[0]);if(el)el.textContent=t(e[1]);});
-  document.getElementById('filter-search').placeholder=t('filterSearch');
-  var hint=document.getElementById('gantt-click-hint');
-  if(hint) hint.textContent=lang==='fr'?'👆 Cliquez sur une zone pour filtrer le Détail par Filiale':'👆 Click a zone to filter the Subsidiary Detail tab';
-  var clLbl=document.getElementById('clear-filters-label'); if(clLbl) clLbl.textContent=t('clearFilters');
+  var ids = {
+    'h-title':'hTitle','h-sub':'hSub','h-meta':'hMeta',
+    'tab-btn-summary':'tabOverview','tab-btn-detail':'tabDetail','tab-btn-comms':'tabComms','tab-btn-workflow':'tabWorkflow',
+    'card-total-lbl':'cardTotal','card-done-lbl':'cardDone','card-prog-lbl':'cardProg','card-pend-lbl':'cardPend',
+    'gantt-title':'ganttTitle','detail-title':'detailTitle','legend-title':'legendTitle'
+  };
+  Object.entries(ids).forEach(function(e) { var el=document.getElementById(e[0]); if(el) el.textContent=t(e[1]); });
+  document.getElementById('filter-search').placeholder = t('filterSearch');
+  var hint = document.getElementById('gantt-click-hint');
+  if (hint) hint.textContent = lang === 'fr'
+    ? '👆 Cliquez sur une zone pour filtrer le Détail par Filiale'
+    : '👆 Click a zone to filter the Subsidiary Detail tab';
+  var clLbl = document.getElementById('clear-filters-label');
+  if (clLbl) clLbl.textContent = t('clearFilters');
   updateLockUI();
 }
 
 function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach(function(tb,i){tb.classList.toggle('active',['summary','detail','comms','workflow','notes'][i]===tab);});
-  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.toggle('active',p.id==='tab-'+tab);});
-  var toggle=document.querySelector('.lang-toggle');
-  if(toggle) toggle.style.display=(tab==='comms'||tab==='workflow'||tab==='notes')?'none':'flex';
+  document.querySelectorAll('.tab').forEach(function(tb,i) { tb.classList.toggle('active', ['summary','detail','comms','workflow'][i]===tab); });
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.toggle('active', p.id==='tab-'+tab); });
+  var toggle = document.querySelector('.lang-toggle');
+  if (toggle) toggle.style.display = (tab === 'comms' || tab === 'workflow') ? 'none' : 'flex';
 }
 
 function initFilters() {
-  var fr=document.getElementById('filter-region'),curR=fr.value;
-  fr.innerHTML='<option value="">'+t('filterAllZones')+'</option>';
-  REGIONS.forEach(function(r){var o=document.createElement('option');o.value=r.name;o.textContent=r.name;fr.appendChild(o);}); fr.value=curR;
-  var fs=document.getElementById('filter-status'),curS=fs.value;
-  fs.innerHTML='<option value="">'+t('filterAllStatus')+'</option><option value="not-started">'+t('filterNotStarted')+'</option><option value="in-progress">'+t('filterInProgress')+'</option><option value="completed">'+t('filterCompleted')+'</option>';
-  fs.value=curS;
+  var fr = document.getElementById('filter-region'); var curR = fr.value;
+  fr.innerHTML = '<option value="">' + t('filterAllZones') + '</option>';
+  REGIONS.forEach(function(r) { var o=document.createElement('option'); o.value=r.name; o.textContent=r.name; fr.appendChild(o); }); fr.value = curR;
+  var fs = document.getElementById('filter-status'); var curS = fs.value;
+  fs.innerHTML = '<option value="">' + t('filterAllStatus') + '</option><option value="not-started">' + t('filterNotStarted') + '</option><option value="in-progress">' + t('filterInProgress') + '</option><option value="completed">' + t('filterCompleted') + '</option>'; fs.value = curS;
 }
 
-async function init(){await loadFromStorage();applyLang();initFilters();renderAll();document.getElementById('loading-overlay').classList.add('hidden');}
+async function init() { await loadFromStorage(); applyLang(); initFilters(); renderAll(); document.getElementById('loading-overlay').classList.add('hidden'); }
 init();
 </script>
 </body>
