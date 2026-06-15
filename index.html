@@ -330,6 +330,8 @@
       <div class="comms-cards" id="comms-inapp-cards"></div>
       <div class="comms-section-title" id="comms-email-title">📧 Company Email — Contractor Company Contact (Customer.io)</div>
       <div class="comms-cards" id="comms-email-cards"></div>
+      <div class="comms-section-title" id="comms-closure-title">✅ Project Closure Email — Subsidiary Administrator (Step 6)</div>
+      <div class="comms-cards" id="comms-closure-cards"></div>
     </div>
   </div>
 
@@ -506,6 +508,10 @@ const TEMPLATES = {
     fr: "Bonjour {{first_name}},\n\nVotre profil IZI Safety a été mis à jour dans le cadre du projet d'harmonisation des profils utilisateurs de TotalEnergies {{entity}}.\n\nVoici ce qui change pour vous :\n\n📘 Nouveaux e-learnings à compléter :\n• {{new_elearnings}}\n\n✅ Ressources retirées de votre profil :\n• {{removed_resources}}\n\nMerci de compléter les nouveaux modules dès que possible afin de maintenir votre conformité.\n\nUne question ? Contactez le support IZI Safety : support@izisafety.com\n\nL'équipe IZI Safety",
     en: "Hello {{first_name}},\n\nYour IZI Safety profile has been updated as part of TotalEnergies {{entity}}'s user profile harmonisation project.\n\nHere is what has changed for you:\n\n📘 New e-learnings to complete:\n• {{new_elearnings}}\n\n✅ Resources removed from your profile:\n• {{removed_resources}}\n\nPlease complete the new modules as soon as possible to maintain your compliance status.\n\nAny questions? Contact IZI Safety support: support@izisafety.com\n\nThe IZI Safety Team"
   },
+  closure: {
+    fr: "Bonjour a vous,\n\nJ'espere que vous allez bien.\n\nJe reviens vers vous pour vous informer que l'harmonisation des profils utilisateurs sur le perimetre de votre filiale est finalisee. Pour plus d'informations sur l'analyse d'impact, veuillez visiter cette page : {{gap_analysis_url}}\n\nLes referents des entreprises contractantes concernees ont ete informes par email des modifications apportees a leurs profils, et invites a veiller a ce que leurs employes prennent connaissance des nouvelles ressources requises afin de maintenir leur conformite.\n\nJe reste bien entendu disponible pour tout point complementaire, et nous suivrons ensemble la progression de la mise en conformite dans les prochaines semaines.\n\nUn grand merci pour votre disponibilite et votre engagement tout au long de ce deploiement, votre reactivite a beaucoup facilite le travail.\n\nBien cordialement,",
+    en: "Dear all,\n\nI hope this message finds you well.\n\nI am writing to inform you that the user profile harmonisation for your subsidiary is now complete. For more information on the impact analysis, please visit this page: {{gap_analysis_url}}\n\nThe contacts of the relevant contractor companies have been notified by email of the changes made to their profiles, and invited to ensure that their employees review the newly required resources in order to maintain their compliance.\n\nI remain of course available for any further discussion, and we will monitor the compliance progress together over the coming weeks.\n\nA big thank you for your availability and commitment throughout this deployment — your responsiveness made the work much easier.\n\nBest regards,"
+  },
   email: {
     fr: "Objet : Mise à jour des profils utilisateurs dans IZI Safety {{entity}}\n\nBonjour,\n\nDans le cadre du projet d'harmonisation des profils \"Utilisateurs\" piloté par TotalEnergies {{entity}}, nous vous informons que certains d'entre eux ont été mis à jour sur la plateforme.\n\nCes modifications s'inscrivent dans un effort de standardisation des exigences de sécurité à l'échelle de toutes les filiales TotalEnergies. Votre personnel est invité à compléter les nouveaux modules et/ou transmettre les documents requis.\n\nNous vous recommandons de vous assurer qu'ils prennent connaissance de ces mises à jour dans les meilleurs délais afin de maintenir leur conformité.\n\nPour toute question : support@izi.net\n\nCordialement,\nL'équipe IZI Safety",
     en: "Subject: User profile harmonization in IZI Safety - {{entity}}\n\nHello,\n\nAs part of the \"User\" profile harmonization project led by TotalEnergies {{entity}}, we inform you that some of them have been updated on the platform.\n\nThese changes are part of an effort to standardize security requirements across all TotalEnergies subsidiaries. Your staff are invited to complete the new modules and/or submit the required documents.\n\nWe recommend that you ensure they are aware of these updates as soon as possible to maintain their compliance.\n\nAny questions? Contact support at: support@izi.net\n\nBest regards,\nThe IZI Safety Team"
@@ -514,9 +520,10 @@ const TEMPLATES = {
 
 function renderComms() {
   var sections = [
-    { el: document.getElementById('comms-init-cards'),  type: 'initiation', channel: lang === 'fr' ? 'Email – Étape 1' : 'Email – Step 1' },
-    { el: document.getElementById('comms-inapp-cards'), type: 'inapp',      channel: lang === 'fr' ? 'Notification in-app' : 'In-app notification' },
-    { el: document.getElementById('comms-email-cards'), type: 'email',      channel: lang === 'fr' ? 'Email Customer.io' : 'Customer.io email' },
+    { el: document.getElementById('comms-init-cards'),    type: 'initiation', channel: lang === 'fr' ? 'Email – Étape 1' : 'Email – Step 1' },
+    { el: document.getElementById('comms-inapp-cards'),   type: 'inapp',      channel: lang === 'fr' ? 'Notification in-app' : 'In-app notification' },
+    { el: document.getElementById('comms-email-cards'),   type: 'email',      channel: lang === 'fr' ? 'Email Customer.io' : 'Customer.io email' },
+    { el: document.getElementById('comms-closure-cards'), type: 'closure',    channel: lang === 'fr' ? 'Email – Étape 6' : 'Email – Step 6' },
   ];
   sections.forEach(function(s) {
     var el = s.el, type = s.type, channel = s.channel;
@@ -530,6 +537,7 @@ function renderComms() {
   });
   document.getElementById('comms-inapp-title').textContent = lang === 'fr' ? '📱 Notification In-App — Collaborateur individuel (Étapes 4 & 6)' : '📱 In-App Notification — Individual Worker (Steps 4 & 6)';
   document.getElementById('comms-email-title').textContent = lang === 'fr' ? '📧 Email Entreprise — Contact société contractante (Customer.io)' : '📧 Company Email — Contractor Company Contact (Customer.io)';
+  document.getElementById('comms-closure-title').textContent = lang === 'fr' ? '✅ Email de Clôture — Administrateur de filiale (Étape 6)' : '✅ Project Closure Email — Subsidiary Administrator (Step 6)';
   document.getElementById('comms-title').textContent = lang === 'fr' ? 'Modèles de Communication' : 'Communication Templates';
   document.getElementById('comms-sub').textContent = lang === 'fr' ? "Modèles prêts à l'emploi pour les étapes 4 et 6. Cliquez sur \"Copier\" pour copier dans le presse-papier." : 'Ready-to-use templates for Step 4 and Step 6. Click "Copy" to copy any template to your clipboard.';
 }
