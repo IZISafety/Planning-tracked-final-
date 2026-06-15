@@ -269,6 +269,21 @@
   .note-zone { display: inline-block; background: #e8eef8; color: #2E5FA3; padding: 1px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; margin-right: 6px; }
   .note-delete-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; cursor: pointer; color: #ccc; font-size: 14px; padding: 2px 6px; border-radius: 4px; }
   .note-delete-btn:hover { background: #fff0f0; color: #c00; }
+  .note-edit-btn { position: absolute; top: 10px; right: 36px; background: none; border: none; cursor: pointer; color: #bbb; font-size: 13px; padding: 2px 6px; border-radius: 4px; }
+  .note-edit-btn:hover { background: #f0f4ff; color: #2E5FA3; }
+  .note-status { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 10px; font-weight: 700; margin-right: 6px; }
+  .note-status.open     { background: #FDDCDC; color: #A12B2B; }
+  .note-status.watching { background: #FEF3C7; color: #92400E; }
+  .note-status.resolved { background: #DCFCE7; color: #166534; }
+  .note-edit-form { margin-top: 10px; padding: 10px; background: #f0f4ff; border-radius: 8px; border: 1px dashed #c8d8f0; display: none; }
+  .note-edit-form input, .note-edit-form textarea, .note-edit-form select {
+    width: 100%; border: 1.5px solid #dde6f5; border-radius: 6px; padding: 6px 10px;
+    font-size: 12px; font-family: Arial, sans-serif; outline: none; margin-bottom: 6px;
+    background: white; box-sizing: border-box;
+  }
+  .note-edit-form textarea { min-height: 60px; resize: vertical; }
+  .note-edit-save { background: #2E5FA3; color: white; border: none; border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: Arial, sans-serif; margin-right: 6px; }
+  .note-edit-cancel { background: #f0f0f0; color: #666; border: none; border-radius: 6px; padding: 6px 10px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: Arial, sans-serif; }
 
   .add-note-form { border: 1.5px dashed #c8d8f0; border-radius: 8px; padding: 16px; margin-top: 8px; background: #f8faff; }
   .add-note-form input, .add-note-form textarea, .add-note-form select {
@@ -303,6 +318,14 @@
       const DOC_REF = db.collection('tracker').doc('state');
       window.firebaseLoad = async function() { try { const snap = await DOC_REF.get(); if (snap.exists) return snap.data(); } catch(e) { console.warn('Firebase load failed:', e); } return null; };
       window.firebaseSave = async function(data) { try { await DOC_REF.set(data); return true; } catch(e) { console.warn('Firebase save failed:', e); return false; } };
+      // Real-time listener — updates all connected clients when data changes
+      window.firebaseSubscribe = function(callback) {
+        try {
+          return DOC_REF.onSnapshot(function(snap) {
+            if (snap.exists) callback(snap.data());
+          });
+        } catch(e) { console.warn('Firebase subscribe failed:', e); return null; }
+      };
       window.firebaseReady = true;
     } catch(e) { console.warn('Firebase init failed:', e); window.firebaseReady = false; }
   </script>
@@ -773,7 +796,7 @@ async function saveToStorage() {
   var data = {};
   Object.keys(state).forEach(function(k) { data[k] = Object.assign({}, state[k]); });
   data['__comments__'] = Object.assign({}, comments);
-  data['__notes__'] = { sections: notesData.sections.map(function(s) { return { id:s.id, items:s.items.slice(), collapsed:s.collapsed }; }) };
+  data['__notes__'] = { sections: notesData.sections.map(function(s) { return { id:s.id, items:s.items.map(function(item){ return Object.assign({}, item); }), collapsed:s.collapsed }; }) };
   var savedRemote = false;
   var ready = await waitForFirebase(3000);
   if (ready && window.firebaseSave) { savedRemote = await window.firebaseSave(data); }
@@ -1422,6 +1445,16 @@ function renderNotes() {
       prioEl.textContent = prioLabels[item.priority] || item.priority;
       noteHeader.appendChild(prioEl);
 
+      // Status badge — only for friction + nextsteps sections
+      var hasStatus = (sec.id === 'friction' || sec.id === 'nextsteps');
+      if(hasStatus && item.status) {
+        var statusEl = document.createElement('span');
+        statusEl.className = 'note-status ' + item.status;
+        var statusLabels = { open: lang==='fr'?'Ouvert':'Open', watching: lang==='fr'?'En suivi':'Watching', resolved: lang==='fr'?'Résolu':'Resolved' };
+        statusEl.textContent = statusLabels[item.status] || item.status;
+        noteHeader.appendChild(statusEl);
+      }
+
       var titleEl = document.createElement('span');
       titleEl.className = 'note-title'; titleEl.textContent = item.title || '';
       noteHeader.appendChild(titleEl);
@@ -1441,6 +1474,60 @@ function renderNotes() {
       }
 
       if(isUnlocked) {
+        // Edit button
+        var editBtn = document.createElement('button');
+        editBtn.className = 'note-edit-btn'; editBtn.textContent = '✎';
+        editBtn.title = lang==='fr' ? 'Modifier' : 'Edit';
+
+        // Inline edit form
+        var editForm = document.createElement('div');
+        editForm.className = 'note-edit-form';
+
+        var editRow1 = document.createElement('div'); editRow1.style.cssText = 'display:flex;gap:6px;';
+        var editTitle = document.createElement('input'); editTitle.value = item.title || ''; editTitle.placeholder = lang==='fr'?'Titre':'Title'; editTitle.style.flex='2';
+        var editPrio = document.createElement('select'); editPrio.style.flex='1';
+        [['high',lang==='fr'?'Haute':'High'],['medium',lang==='fr'?'Moyenne':'Medium'],['low',lang==='fr'?'Faible':'Low'],['resolved',lang==='fr'?'Résolu':'Resolved']].forEach(function(o){
+          var opt=document.createElement('option'); opt.value=o[0]; opt.textContent=o[1]; if(o[0]===item.priority) opt.selected=true; editPrio.appendChild(opt);
+        });
+        editRow1.appendChild(editTitle); editRow1.appendChild(editPrio);
+
+        if(hasStatus) {
+          var editStatus = document.createElement('select'); editStatus.style.flex='1';
+          [['','— Status'],['open',lang==='fr'?'Ouvert':'Open'],['watching',lang==='fr'?'En suivi':'Watching'],['resolved',lang==='fr'?'Résolu':'Resolved']].forEach(function(o){
+            var opt=document.createElement('option'); opt.value=o[0]; opt.textContent=o[1]; if(o[0]===(item.status||'')) opt.selected=true; editStatus.appendChild(opt);
+          });
+          editRow1.appendChild(editStatus);
+        }
+        editForm.appendChild(editRow1);
+
+        var editBody = document.createElement('textarea'); editBody.value = item.body || ''; editBody.placeholder = lang==='fr'?'Description…':'Description…';
+        editForm.appendChild(editBody);
+
+        var editRow2 = document.createElement('div'); editRow2.style.cssText='display:flex;gap:6px;align-items:center;';
+        var editDate = document.createElement('input'); editDate.type='date'; editDate.value=item.date||''; editDate.style.flex='1';
+        var editSave = document.createElement('button'); editSave.className='note-edit-save'; editSave.textContent=lang==='fr'?'Enregistrer':'Save';
+        var editCancel = document.createElement('button'); editCancel.className='note-edit-cancel'; editCancel.textContent=lang==='fr'?'Annuler':'Cancel';
+        editRow2.appendChild(editDate); editRow2.appendChild(editSave); editRow2.appendChild(editCancel);
+        editForm.appendChild(editRow2);
+
+        (function(itm, ef, eb, ep, et, ed, es_el, hasS) {
+          editBtn.addEventListener('click', function() {
+            ef.style.display = ef.style.display === 'none' ? 'block' : 'none';
+          });
+          editCancel.addEventListener('click', function() { ef.style.display = 'none'; });
+          editSave.addEventListener('click', function() {
+            itm.title = et.value.trim();
+            itm.body = eb.value.trim();
+            itm.priority = ep.value;
+            itm.date = ed.value;
+            if(hasS && es_el) itm.status = es_el.value;
+            scheduleSave(); renderNotes();
+          });
+        }(item, editForm, editBody, editPrio, editTitle, editDate, hasStatus ? editForm.querySelector('select:last-of-type') : null, hasStatus));
+
+        noteEl.appendChild(editForm);
+
+        // Delete button
         var delBtn = document.createElement('button');
         delBtn.className = 'note-delete-btn'; delBtn.textContent = '✕';
         delBtn.title = lang==='fr' ? 'Supprimer' : 'Delete';
@@ -1448,6 +1535,7 @@ function renderNotes() {
           secRef.items.splice(i, 1); scheduleSave(); renderNotes();
         }); }(sec, idx));
         noteEl.appendChild(delBtn);
+        noteEl.appendChild(editBtn);
       }
 
       sBody.appendChild(noteEl);
@@ -1491,6 +1579,17 @@ function renderNotes() {
       });
 
       row1.appendChild(titleInput); row1.appendChild(prioSelect); row1.appendChild(zoneSelect);
+
+      // Status select — only for friction + nextsteps
+      var addStatusSelect = null;
+      if(sec.id === 'friction' || sec.id === 'nextsteps') {
+        addStatusSelect = document.createElement('select');
+        addStatusSelect.style.flex = '1';
+        [['','— Status'],['open',lang==='fr'?'Ouvert':'Open'],['watching',lang==='fr'?'En suivi':'Watching'],['resolved',lang==='fr'?'Résolu':'Resolved']].forEach(function(o){
+          var opt=document.createElement('option'); opt.value=o[0]; opt.textContent=o[1]; addStatusSelect.appendChild(opt);
+        });
+        row1.appendChild(addStatusSelect);
+      }
       form.appendChild(row1);
 
       var bodyArea = document.createElement('textarea');
@@ -1519,13 +1618,15 @@ function renderNotes() {
       (function(secRef) {
         submitBtn.addEventListener('click', function() {
           if(!titleInput.value.trim()) return;
-          secRef.items.push({
+          var newItem = {
             title: titleInput.value.trim(),
             body: bodyArea.value.trim(),
             priority: prioSelect.value,
             zone: zoneSelect.value,
             date: dateInput.value
-          });
+          };
+          if(addStatusSelect) newItem.status = addStatusSelect.value;
+          secRef.items.push(newItem);
           scheduleSave();
           form.style.display = 'none';
           titleInput.value = ''; bodyArea.value = '';
@@ -1576,7 +1677,37 @@ function initFilters() {
   fs.value=curS;
 }
 
-async function init(){await loadFromStorage();applyLang();initFilters();renderAll();document.getElementById('loading-overlay').classList.add('hidden');}
+async function init(){
+  applyLang();
+  initFilters();
+
+  // Use onSnapshot as primary loader — fires immediately with current data, then on every change
+  var loaded = false;
+  if(window.firebaseSubscribe) {
+    window.firebaseSubscribe(function(data) {
+      applyStateFromObj(data);
+      renderAll();
+      if(!loaded) {
+        loaded = true;
+        document.getElementById('loading-overlay').classList.add('hidden');
+      }
+    });
+    // Fallback: if Firebase doesn't respond in 4s, load from localStorage
+    setTimeout(function() {
+      if(!loaded) {
+        loaded = true;
+        try { var raw = localStorage.getItem(STORAGE_KEY); if(raw) applyStateFromObj(JSON.parse(raw)); } catch(e) {}
+        renderAll();
+        document.getElementById('loading-overlay').classList.add('hidden');
+      }
+    }, 4000);
+  } else {
+    // No Firebase — load from localStorage
+    await loadFromStorage();
+    renderAll();
+    document.getElementById('loading-overlay').classList.add('hidden');
+  }
+}
 init();
 </script>
 </body>
