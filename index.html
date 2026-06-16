@@ -387,7 +387,7 @@
       </div>
     </div>
     <div id="gantt-click-hint" style="font-size:11px;color:#bbb;text-align:center;margin-top:2px;padding-bottom:2px">
-      👆 Click a zone to filter the Subsidiary Detail tab
+      👆 Click a zone in the real Gantt below to filter the Subsidiary Detail tab
     </div>
 
     <!-- REAL GANTT -->
@@ -581,29 +581,14 @@ This has now been resolved and deployed. The platform now allows administrators 
 • Antilles Guyane: time zone difference combined with limited morning availability  -  scheduling windows are narrow.
 • Ghana &amp; Guinée Équatoriale: step 3 confirmation in progress.</div>
           </div>
-        </div>
-      </div>
+          <div class="note-item">
+            <div class="note-item-header">
+              <span class="note-priority medium">Medium</span>
+              <span class="note-title">Profile-Level Decisions Requiring Trilateral Validation</span>
+            </div>
+            <div class="note-body">During the Ivory Coast deployment, the "temporary worker" profile - the most widely used in the entity - was not included in the harmonised matrix. Applying the harmonisation to it would have directly impacted the compliance status of a large number of active workers, risking disruption to ongoing site operations.
 
-      <!-- SECTION  -  ACTION PLAN -->
-      <div class="notes-section">
-        <div class="notes-section-header" onclick="this.nextElementSibling.classList.toggle('collapsed')">
-          <h3 id="actions-title">Action Plan</h3>
-          <span class="section-toggle">▼</span>
-        </div>
-        <div class="notes-section-body">
-          <div class="note-item">
-            <div class="note-item-header">
-              <span class="note-priority high">High</span>
-              <span class="note-title">1  -  Reminder to subsidiary directors</span>
-            </div>
-            <div class="note-body">A reminder to subsidiary directors on the importance of their IZI Safety administrator's availability for validation meetings  -  a target response window of 5 business days would meaningfully help.</div>
-          </div>
-          <div class="note-item">
-            <div class="note-item-header">
-              <span class="note-priority high">High</span>
-              <span class="note-title">2  -  Deployment deadline for subsidiary admins</span>
-            </div>
-            <div class="note-body">A clear deadline will be set for each subsidiary administrator to validate the proposed changes. If no response is received within the agreed window, IZI Safety is authorised to proceed with the deployment without formal sign-off  -  ensuring the project timeline is not held up by unresponsiveness.</div>
+After confirmation between the subsidiary admin, IZI Safety and HQ, the decision was made to keep this profile unchanged. This case highlighted that some profiles require case-by-case assessment and trilateral sign-off, which adds time that is difficult to anticipate upfront.</div>
           </div>
         </div>
       </div>
@@ -611,33 +596,23 @@ This has now been resolved and deployed. The platform now allows administrators 
       <!-- SECTION 5  -  NEXT STEPS -->
       <div class="notes-section">
         <div class="notes-section-header" onclick="this.nextElementSibling.classList.toggle('collapsed')">
-          <h3 id="nextsteps-title">Next Steps</h3>
+          <h3 id="nextsteps-title">Notes</h3>
           <span class="section-toggle">▼</span>
         </div>
         <div class="notes-section-body">
           <div class="note-item">
             <div class="note-item-header">
               <span class="note-priority high">High</span>
-              <span class="note-title">Antilles Guyane  -  unblock validation</span>
-              <span class="note-date">Week of June 16</span>
+              <span class="note-title">Remind subsidiary directors: 5-day response window for validation</span>
             </div>
-            <div class="note-body">Identify a validation slot this week.</div>
+            <div class="note-body">Directors to be reminded that their admin's availability is critical. A 5-business-day response window is the target.</div>
           </div>
           <div class="note-item">
             <div class="note-item-header">
               <span class="note-priority high">High</span>
-              <span class="note-title">Ghana &amp; Guinée Équatoriale  -  move to Step 3</span>
-              <span class="note-date">June 16</span>
+              <span class="note-title">Set deployment deadline: no reply means we proceed</span>
             </div>
-            <div class="note-body">Send confirmation emails to Ghana and Guinée Équatoriale to move them into step 3.</div>
-          </div>
-          <div class="note-item">
-            <div class="note-item-header">
-              <span class="note-priority high">High</span>
-              <span class="note-title">Cameroun  -  validation meeting</span>
-              <span class="note-date">June 23</span>
-            </div>
-            <div class="note-body">Validation meeting scheduled immediately upon admin's return.</div>
+            <div class="note-body">A clear deadline will be set for each subsidiary admin to validate. If no response is received, IZI Safety is authorised to proceed without formal sign-off.</div>
           </div>
           <div class="note-item">
             <div class="note-item-header">
@@ -647,6 +622,8 @@ This has now been resolved and deployed. The platform now allows administrators 
             </div>
             <div class="note-body">Send an updated timeline to the team, with buffer time built in for AFR/MOI and the waves that follow.</div>
           </div>
+
+
         </div>
       </div>
 
@@ -721,6 +698,16 @@ REGIONS.forEach(function(r) { r.subs.forEach(function(s) {
 
 const subOrder = {};
 REGIONS.forEach(function(r) { subOrder[r.name] = r.subs.slice(); });
+
+// Subsidiaries that are part of a pilot wave
+var PILOT_SUBS = {
+  "AFR/AFO|Côte d'Ivoire": true,
+  "AFR/AFO|Ghana": true,
+  "AFR/AFO|Cameroun": true,
+  "AFR/AFO|Guinée Equatoriale": true,
+  "EOMC|Réunion": true,
+  "EOMC|Antilles Guyane": true
+};
 
 // Comments store  -  key: "REGION|Sub", value: string
 var comments = {};
@@ -1022,19 +1009,7 @@ function renderGantt() {
     });
     row.addEventListener('mousemove', function(e){tooltip.style.left=(e.clientX+14)+'px';tooltip.style.top=(e.clientY-10)+'px';});
     row.addEventListener('mouseleave', function(){tooltip.style.opacity='0';});
-    (function(region) {
-      row.style.cursor='pointer';
-      row.addEventListener('click', function() {
-        var sel=document.getElementById('filter-region'); if(sel) sel.value=region;
-        document.getElementById('filter-search').value='';
-        document.getElementById('filter-status').value='';
-        updateClearBtn(); renderDetail();
-        document.querySelectorAll('.tab').forEach(function(tb,i){tb.classList.toggle('active',['summary','detail','comms','workflow'][i]==='detail');});
-        document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.toggle('active',p.id==='tab-detail');});
-        var toggle=document.querySelector('.lang-toggle'); if(toggle) toggle.style.display='flex';
-        setTimeout(function(){var w=document.querySelector('.detail-wrap');if(w)w.scrollIntoView({behavior:'smooth',block:'start'});},100);
-      });
-    }(p.region));
+    row.style.cursor='default';
   });
   var fl=document.getElementById('gantt-footer-left'), fr2=document.getElementById('gantt-footer-right');
   if(fl) fl.textContent=lang==='fr'?'Avril 2026':'April 2026';
@@ -1172,6 +1147,22 @@ function renderRealGantt() {
       });
       row.addEventListener('mouseleave', function() { tooltip.style.opacity = '0'; });
     }(p.label || p.region, subs, progress, doneSteps, totalSteps));
+
+    // Click -> filter Subsidiary Detail by region
+    (function(regionKey) {
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', function() {
+        var sel = document.getElementById('filter-region');
+        if(sel) sel.value = regionKey;
+        document.getElementById('filter-search').value = '';
+        document.getElementById('filter-status').value = '';
+        updateClearBtn(); renderDetail();
+        document.querySelectorAll('.tab').forEach(function(tb,i){tb.classList.toggle('active',['summary','detail','comms','workflow','notes'][i]==='detail');});
+        document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.toggle('active',p.id==='tab-detail');});
+        var toggle=document.querySelector('.lang-toggle'); if(toggle) toggle.style.display='flex';
+        setTimeout(function(){var w=document.querySelector('.detail-wrap');if(w)w.scrollIntoView({behavior:'smooth',block:'start'});},100);
+      });
+    }(p.region === 'EOMC_EARLY' ? 'EOMC' : p.region));
 
     row.appendChild(area);
     body.appendChild(row);
@@ -1772,7 +1763,7 @@ function applyLang() {
   Object.entries(ids).forEach(function(e){var el=document.getElementById(e[0]);if(el)el.textContent=t(e[1]);});
   document.getElementById('filter-search').placeholder=t('filterSearch');
   var hint=document.getElementById('gantt-click-hint');
-  if(hint) hint.textContent=lang==='fr'?'👆 Cliquez sur une zone pour filtrer le Détail par Filiale':'👆 Click a zone to filter the Subsidiary Detail tab';
+  if(hint) hint.textContent=lang==='fr'?'👆 Cliquez sur une barre du Gantt réel pour filtrer le Détail par Filiale':'👆 Click a zone in the real Gantt below to filter the Subsidiary Detail tab';
   var clLbl=document.getElementById('clear-filters-label'); if(clLbl) clLbl.textContent=t('clearFilters');
   updateLockUI();
 }
