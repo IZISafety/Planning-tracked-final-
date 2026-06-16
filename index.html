@@ -316,25 +316,14 @@
       const app = firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
       const DOC_REF = db.collection('tracker').doc('state');
-      const NOTES_REF = db.collection('tracker').doc('notes');
-
       window.firebaseLoad = async function() {
         try { const snap = await DOC_REF.get(); if (snap.exists) return snap.data(); } catch(e) { console.warn('Firebase load failed:', e); } return null;
       };
-      window.firebaseLoadNotes = async function() {
-        try { const snap = await NOTES_REF.get(); if (snap.exists) return snap.data(); } catch(e) { console.warn('Firebase notes load failed:', e); } return null;
-      };
       window.firebaseSave = async function(data) {
-        try { await DOC_REF.set(data); return true; } catch(e) { console.warn('Firebase save failed:', e); return false; }
-      };
-      window.firebaseSaveNotes = async function(data) {
-        try { await NOTES_REF.set(data); return true; } catch(e) { console.warn('Firebase notes save failed:', e); return false; }
+        try { await DOC_REF.set(data, { merge: true }); return true; } catch(e) { console.warn('Firebase save failed:', e); return false; }
       };
       window.firebaseSubscribe = function(callback) {
         try { return DOC_REF.onSnapshot(function(snap) { if (snap.exists) callback(snap.data()); }); } catch(e) { return null; }
-      };
-      window.firebaseSubscribeNotes = function(callback) {
-        try { return NOTES_REF.onSnapshot(function(snap) { callback(snap.exists ? snap.data() : {}); }); } catch(e) { return null; }
       };
       window.firebaseReady = true;
     } catch(e) { console.warn('Firebase init failed:', e); window.firebaseReady = false; }
@@ -1708,42 +1697,27 @@ async function init(){
   applyLang();
   initFilters();
 
-  var stepsLoaded = false;
-  var notesLoaded = false;
-
-  function checkAllLoaded() {
-    if(stepsLoaded && notesLoaded) {
-      renderAll();
-      document.getElementById('loading-overlay').classList.add('hidden');
-    }
-  }
+  var loaded = false;
 
   if(window.firebaseSubscribe) {
-    // Subscribe to steps (tracker/state)
     window.firebaseSubscribe(function(data) {
       applyStateFromObj(data);
-      if(!stepsLoaded) { stepsLoaded = true; checkAllLoaded(); }
-      else { updateCards(); renderGantt(); renderRealGantt(); renderDetailHeader(); renderDetail(); }
+      applyNotesFromObj(data);
+      renderAll();
+      if(!loaded) {
+        loaded = true;
+        document.getElementById('loading-overlay').classList.add('hidden');
+      }
     });
-
-    // Subscribe to notes (tracker/notes) — mark loaded even if doc doesn't exist yet
-    if(window.firebaseSubscribeNotes) {
-      window.firebaseSubscribeNotes(function(data) {
-        if(data) applyNotesFromObj(data);
-        if(!notesLoaded) { notesLoaded = true; checkAllLoaded(); }
-        else { renderNotes(); }
-      });
-    }
-
-    // Fallback: hide spinner after 3s regardless — handles empty/missing docs
+    // Fallback after 4s
     setTimeout(function() {
-      if(!stepsLoaded || !notesLoaded) {
-        stepsLoaded = true; notesLoaded = true;
-        try { var raw = localStorage.getItem(STORAGE_KEY); if(raw) applyStateFromObj(JSON.parse(raw)); } catch(e) {}
+      if(!loaded) {
+        loaded = true;
+        try { var raw = localStorage.getItem(STORAGE_KEY); if(raw) { var d=JSON.parse(raw); applyStateFromObj(d); applyNotesFromObj(d); } } catch(e) {}
         renderAll();
         document.getElementById('loading-overlay').classList.add('hidden');
       }
-    }, 3000);
+    }, 4000);
   } else {
     await loadFromStorage();
     renderAll();
